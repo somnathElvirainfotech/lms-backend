@@ -5,6 +5,8 @@
 
 # Node artifact files
 node_modules/
+uploads/
+csvfolder/
 
 
 # Compiled Java class files
