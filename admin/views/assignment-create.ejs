@@ -1,0 +1,227 @@
+<%- include('./include/header.ejs') %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!-- <h1 class="m-0">Dashboard</h1> -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Create Assignment</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="/assignment">
+                                    <button type="button" class="btn btn-primary">Back</button>
+                                </a>
+                            </div>
+
+                            <div class="card-body">
+                                <form action="/assignment/create" method="post" onsubmit="return formValidation()"
+                                    enctype="multipart/form-data">
+
+                                    <div class="row">
+
+                                        <div class="input-group col-md-6 mb-3">
+                                            <input required type="text" name="assignment_name"
+                                                id="assignment_name" class="form-control"
+                                                placeholder="Enter Assigment Name">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group col-md-6 mb-3">
+
+                                            <select required name="user_group_id" id="user_group_id" class="form-control">
+                                                <option value=""> -- select User Group -- </option>
+                                                <% group.forEach(item=>{ %>
+
+                                                    <option value="<%= item.id %>">
+                                                        <%= item.g_name%>
+                                                    </option>
+
+                                                    <% }) %>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+
+
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="input-group col-md-6 mb-3">
+
+                                            <select required name="course_id" id="course_id" class="form-control">
+                                                <option value=""> -- select Course -- </option>
+                                                <% course.forEach(item=>{ %>
+
+                                                    <option value="<%= item.id %>">
+                                                        <%= item.course_name%>
+                                                    </option>
+
+                                                    <% }) %>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group col-md-6 mb-3">
+                                            <input required type="number" name="assigment_duration"
+                                                id="assigment_duration" class="form-control"
+                                                placeholder="Enter Assigment Duration(Enter value in Days)">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="input-group col-md-6 mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span class="">Upload File</span>
+                                                </div>
+                                            </div>
+
+                                            <input required type="file" name="assigment_file" id="assigment_file"
+                                                class="form-control" placeholder="Enter Assigment File">
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="input-group-prepend ml-2">
+                                            <div class="">
+                                                <h5>Enter Assigment Description</h5>
+                                            </div>
+                                        </div>
+                                        <div class="input-group col-md-12 mb-3">
+                                            <div class="card-body">
+                                                <textarea id="summernote" name="assigment_desc" style="display: none;">
+    </textarea>
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class=" col-md-4 mb-3">
+                                        <div class="col-4">
+                                            <button id="submit" type="submit" class="btn btn-success">Create</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <%- include('./include/footer.ejs') %>
+
+        <script>
+            let err_msg = `<%= err_msg%>`;
+            let err_type = `<%= err_type %>`;
+            if (err_msg) {
+                if (err_type) {
+                    toastr.success(err_msg)
+                }
+                else {
+                    toastr.error(err_msg)
+                }
+            }
+
+        </script>
+
+        <script>
+            $(function () {
+                // Summernote
+                $('#summernote').summernote(
+                    {
+                        height: "200px"
+                    }
+                )
+
+
+                // CodeMirror
+                CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                    mode: "htmlmixed",
+                    theme: "monokai"
+                });
+            })
+
+            function formValidation() {
+
+                // Allowing file type
+                var allowedFileExtensions = /(\.pdf|\.xls|\.doc)$/i;
+
+                var assigment_file = document.getElementById("assigment_file").value;
+
+
+                if (assigment_file) {
+                    if (!allowedFileExtensions.exec(assigment_file)) {
+                        toastr.error("Invalid file type, file type must be pdf,xls,doc")
+                        return false;
+                    }
+                }
+
+            }
+
+        </script>

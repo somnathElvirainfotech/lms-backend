@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Log in</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/admin-property/plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="/admin-property/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/admin-property/dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="../../index2.html"><b>Admin</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Sign in to start your session / <span><a href="/admin/login">Sign In</a></span></p>
+        <span id="loginError" style="font-weight:bold; color:red;"></span>
+        <% if(emsg !='' ) { %>
+          <span style="font-weight:bold; color:red;">
+            <%= emsg %>
+          </span>
+          <% } else if(smsg !='' ) { %>
+            <span style="font-weight:bold; color:green;">
+              <%= smsg %>
+            </span>
+            <% } %>
+
+
+              <form name="loginForm" action="/admin/register" method="post" onsubmit="return formValidation()">
+
+
+                <!-- <div class="input-group mb-3">
+            <input type="text" name="username" id="username" class="form-control" placeholder="User Name" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div> -->
+
+                <div class="input-group mb-3">
+                  <input type="email" name="email" id="email" class="form-control" placeholder="email">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <input type="password" name="password1" id="password1" class="form-control" placeholder="password">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <input type="password" name="password2" id="password2" class="form-control" placeholder="password">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="input-group mb-3">
+            <input type="number" name="admin_type" id="admin_type" class="form-control" placeholder="admin_type" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div> -->
+
+                <!-- <div class="input-group mb-3">
+            <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div> -->
+
+
+                <!-- <div class="input-group mb-3">
+            <input type="number" name="phone" id="phone" class="form-control" placeholder="phone" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div> -->
+                <div class="row">
+
+                  <!-- /.col -->
+                  <div class="col-4">
+                    <button id="login" type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                  </div>
+                  <!-- /.col -->
+                </div>
+              </form>
+
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="/admin-property/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/admin-property/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/admin-property/dist/js/adminlte.min.js"></script>
+
+  <script>
+    function formValidation() {
+      var msg = document.getElementById('loginError');
+      var email = document.forms['loginForm']['email'].value;
+      var password1 = document.forms['loginForm']['password1'].value;
+      var password2 = document.forms['loginForm']['password2'].value;
+      var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if (email == '') {
+        msg.innerHTML = "Please fill email address";
+        return false;
+      }
+      else {
+        if (!filter.test(email)) {
+          msg.innerHTML = "Please provide a valid email address";
+          return false;
+        }
+      }
+      if (password1 != '') {
+
+        if (password2 != '') {
+          if (password1 !== password2) {
+            msg.innerHTML = " password and confirm password not match";
+            return false;
+          }
+        }
+        else {
+          msg.innerHTML = "Please fill confirm password";
+          return false;
+        }
+      }
+      else {
+        msg.innerHTML = "Please fill password";
+        return false;
+      }
+
+    }
+  </script>
+
+
+</body>
+
+</html>

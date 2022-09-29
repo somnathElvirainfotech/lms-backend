@@ -1,0 +1,13 @@
+name: getCookieData().username,
+email: getCookieData().email
+
+
+<script>
+
+		function getCookieData() {
+			var cookieObj = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({ ...accumulator, [key.trim()]: JSON.parse(decodeURIComponent(value)) }), {});
+			// console.log(cookieObj.user_info)
+			return cookieObj.user_info;
+		}
+
+	</script>

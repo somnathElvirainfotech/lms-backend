@@ -1,0 +1,110 @@
+<%- include('./include/header.ejs') %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!-- <h1 class="m-0">Dashboard</h1> -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Maintenance Mode</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Maintenance Mode </h3>
+                            </div>
+
+                            <div class="card-body">
+                                <form action="/maintenance" method="post">
+
+                                    <input type="hidden" name="id" value="<%= result.id %>">
+                                    <div class="row">
+                                        <div class="input-group form-group col-md-4 mb-3">
+
+                                            <select required name="status" id="status" class="form-control">
+                                                <option value=""> ---Select Status--- </option>
+
+                                                <option <%=result.status=="active" ?'selected':'' %>
+                                                    value="active">Active</option>
+                                                <option <%=result.status=="deactive" ?'selected':'' %>
+                                                    value="deactive">De-Active</option>
+
+                                            </select>
+
+                                        </div>
+
+                                       
+
+                                        <div class="input-group form-group col-md-4 mb-3">
+                                            <label for="">END DATE</label>
+                                            <input  type="datetime-local" name="date" id="date" class="form-control ml-2 "
+                                                placeholder="Enter Date" value="<%= result.date %>">
+
+                                        </div>
+
+                                        <div class="input-group form-group col-md-12 mb-3">
+                                            <textarea required placeholder="maintenance text ..." class="form-control"
+                                                id="maintenance_text" name="maintenance_text"
+                                                rows="3"><%= result.maintenance_text %></textarea>
+
+                                        </div>
+
+
+                                        <div class="input-group col-md-6 mb-3">
+                                            <div class="col-4">
+                                                <button id="submit" type="submit"
+                                                    class="btn btn-success">Submit</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <%- include('./include/footer.ejs') %>
+
+        <script>
+            let err_msg = `<%= err_msg%>`;
+            let err_type = `<%= err_type %>`;
+            if (err_msg) {
+                if (err_type) {
+                    toastr.success(err_msg)
+                }
+                else {
+                    toastr.error(err_msg)
+                }
+            }
+
+        </script>

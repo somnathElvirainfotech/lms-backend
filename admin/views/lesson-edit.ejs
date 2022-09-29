@@ -1,0 +1,317 @@
+<%- include('./include/header.ejs') %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!-- <h1 class="m-0">Dashboard</h1> -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Edit Lesson</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="/lesson">
+                                    <button type="button" class="btn btn-primary">Back</button>
+                                </a>
+                            </div>
+
+                            <input type="hidden" name="chapterId" id="chapterId" value="<%= result.chapter_id %>">
+
+                            <div class="card-body">
+                                <form action="/lesson/edit" method="post" onsubmit="return formValidation()"
+                                    enctype="multipart/form-data">
+
+
+                                    <input type="hidden" name="id" value="<%= result.id %>">
+                                    <div class="row">
+
+                                        <div class="input-group col-md-6 mb-3">
+
+                                            <select onchange="getLesson()" required name="course_id" id="course_id"
+                                                class="form-control">
+                                                <option value=""> -- select Course -- </option>
+                                                <% course.forEach(item=>{ %>
+
+                                                    <% if(result.course_id==item.id){%>
+                                                        <option selected value="<%= item.id %>">
+                                                            <%= item.course_name%>
+                                                        </option>
+                                                        <%}else{%>
+                                                            <option value="<%= item.id %>">
+                                                                <%= item.course_name%>
+                                                            </option>
+                                                            <%} }) %>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group col-md-6 mb-3">
+
+                                            <select required name="chapter_id" id="chapter_id" class="form-control">
+                                                <option value=""> -- select Chapter -- </option>
+                                                <% chapter.forEach(item=>{ %>
+
+                                                    <% if(result.chapter_id==item.id){%>
+                                                        <option selected value="<%= item.id %>">
+                                                            <%= item.course_name%>
+                                                        </option>
+                                                        <%}else{%>
+                                                            <option value="<%= item.id %>">
+                                                                <%= item.course_name%>
+                                                            </option>
+
+
+                                                            <!-- <option value="<%= item.id %>">
+                                                        <%= item.chapter_name%>
+                                                    </option> -->
+
+                                                            <%} }) %>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-group col-md-6 mb-3">
+                                            <input type="text" name="lesson_name" id="lesson_name" class="form-control"
+                                                placeholder="Enter Lesson Name" value="<%= result.lesson_name %>">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="input-group col-md-6 mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span class="">Upload Vedio</span>
+                                                </div>
+                                            </div>
+
+                                            <input type="file" name="lesson_vedio" id="lesson_vedio"
+                                                class="form-control" placeholder="Enter Lesson Name">
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+
+                                        <div class="input-group col-md-6 mb-3">
+
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span class="">Attachment File</span>
+                                                </div>
+                                            </div>
+                                            <input type="file" name="lesson_file" id="lesson_file" class="form-control"
+                                                placeholder="Enter Lesson Name">
+
+                                            <% if(result.lesson_file){%>
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <a href="<%= result.lesson_file%>"
+                                                            download="<%= result.lesson_name %>">
+                                                            <span class="fas fa-download"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <%}%>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-group-prepend ml-2">
+                                            <div class="">
+                                                <h5>Enter Lesson Description</h5>
+                                            </div>
+                                        </div>
+                                        <div class="input-group col-md-12 mb-3">
+
+                                            <textarea class="form-control" placeholder="Enter Lesson Description"
+                                                name="lesson_details" id="lesson_details" cols="30" rows="5"><%= result.lesson_details %></textarea>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- vedio file -->
+                                    <% if(result.lesson_vedio){%>
+                                        <div class="row m-2" id="lvedio">
+                                            <div class="col-md-4"></div>
+                                            <div class="input-group col-md-4 mb-3">
+
+                                                <div class="input-group-prepend">
+
+                                                    <video width="320" height="240" controls>
+                                                        <source src="<%= result.lesson_vedio %>" type="video/mp4">
+                                                    </video>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4"></div>
+                                        </div>
+                                        <%}%>
+
+                                            <div class="input-group col-md-4 mb-3">
+                                                <div class="col-4">
+                                                    <button id="submit" type="submit"
+                                                        class="btn btn-success">Update</button>
+                                                </div>
+                                            </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <script>
+                    getLesson();
+                    async function getLesson() {
+                        var course = document.getElementById("course_id");
+                        var courseId = course.value;
+                        var option = {
+                            mode: 'cors',
+                            method: "get",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }
+
+                        var data = await fetch("/course/chapter/" + courseId, option)
+                            .then(res => res.json())
+                            .catch(err => console.log(err))
+
+
+
+                        var temp = '';
+                        var chapter_id = document.getElementById('chapter_id');
+                        chapter_id.innerHTML = "";
+
+                        cpId = document.getElementById('chapterId');
+
+
+                        var option = document.createElement("option");
+                        option.value = "";
+                        option.text = "-- select Chapter --";
+                        chapter_id.appendChild(option)
+
+                        for (var item of data.data) {
+                            var option = document.createElement("option");
+                            if (cpId.value == item.id) {
+                                option.value = item.id;
+                                option.text = item.chapter_name;
+                                option.selected = true;
+                                // alert(cpId.value)
+                            }
+                            else {
+                                option.value = item.id;
+                                option.text = item.chapter_name;
+                            }
+
+
+                            chapter_id.appendChild(option)
+                        }
+
+
+                    }
+
+
+                    function formValidation() {
+
+
+
+                        // Allowing image file type
+                        var allowedVedioExtensions = /(\.mp4)$/i;
+
+                        // Allowing file type
+                        var allowedFileExtensions = /(\.pdf|\.xls|\.doc)$/i;
+
+                        var lesson_vedio = document.getElementById("lesson_vedio").value;
+                        // var avatar_image = document.getElementById("avatar_image").value;
+                        var lesson_file = document.getElementById("lesson_file").value;
+
+
+
+                        if (lesson_vedio) {
+                            // alert(2)
+                            if (!allowedVedioExtensions.exec(lesson_vedio)) {
+                                alert('Invalid file type, file type must be mp4');
+                                return false;
+                            }
+                        }
+
+                        if (lesson_file) {
+                            if (!allowedFileExtensions.exec(lesson_file)) {
+                                alert('Invalid file type, file type must be pdf,xls,doc');
+                                return false;
+                            }
+                        }
+
+                    }
+
+
+                </script>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <%- include('./include/footer.ejs') %>
+
+        <script>
+            let err_msg = `<%= err_msg%>`;
+            let err_type = `<%= err_type %>`;
+            if (err_msg) {
+                if (err_type) {
+                    toastr.success(err_msg)
+                }
+                else {
+                    toastr.error(err_msg)
+                }
+            }
+
+        </script>

@@ -1,0 +1,181 @@
+<%- include('./include/header.ejs') %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!-- <h1 class="m-0">Dashboard</h1> -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Create User</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="/user-list">
+                                    <button type="button" class="btn btn-primary">Back</button>
+                                </a>
+                            </div>
+
+                            <div class="card-body">
+                                <form action="/create-user" method="post">
+                                    <div class="row">
+                                        <div class="input-group mb-3 col-md-6">
+                                            <input type="text" name="firstname" id="firstname" class="form-control"
+                                                placeholder="First Name">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-user"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3 col-md-6">
+                                            <input type="text" name="lastname" id="lastname" class="form-control"
+                                                placeholder="Last Name">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-user"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group mb-3 col-md-6">
+                                            <input type="email" name="email" id="email" class="form-control"
+                                                placeholder="Email">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-envelope"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3 col-md-3">
+                                            <select name="role" id="role" class="form-control">
+                                                <option value=""> ---Select User Type--- </option>
+                                                <option value="2">Supervisor</option>
+                                                <option value="3">Manager</option>
+                                                <option value="4">Creator</option>
+                                                <option value="5">User</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-envelope"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="input-group mb-3 col-md-3">
+                                            <select name="group_id" id="group_id" class="form-control">
+                                                <option value=""> ---Select Group --- </option>
+                                                <% group.forEach((item)=>{ %>
+                                                    <% if(item.g_status=='active') {%>
+                                                        <option value="<%= item.id %>"><%= item.g_name %></option>
+                                                        <%}%>
+                                                    <% }) %>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-envelope"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group mb-3 col-sm-6">
+                                            <input type="text" name="password1" id="password1" class="form-control"
+                                                placeholder="Password">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-lock"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3 col-sm-6">
+                                            <input type="text" name="password2" id="password2" class="form-control"
+                                                placeholder="Confirm Password">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-lock"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <button id="submit" type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </form>
+
+
+                                <div class="row">
+
+                                    <div class="col-md-6 mt-4">
+                                        <form action="/admin/user-csv" method="post" enctype="multipart/form-data">
+                                            
+                                            <label for="user_csv_file">USER CSV FILE UPLOAD</label>
+                                            <div class="input-group mb-3 ">
+                                                <input type="file" name="user_csv_file" id="user_csv_file" class="form-control"
+                                                    placeholder="First Name">
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <span class="fas fa-user"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-success" type="submit">Upload</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <%- include('./include/footer.ejs') %>
+
+
+    <script>
+        let err_msg = `<%= err_msg%>`;
+        let err_type = `<%= err_type %>`;
+        if (err_msg) {
+            if (err_type) {
+                toastr.success(err_msg)
+            }
+            else{
+                toastr.error(err_msg)
+            }
+        }
+
+    </script>

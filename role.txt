@@ -1,0 +1,5 @@
+admin role 1
+supervisor role 2
+manager role 3
+creator role 4
+user role 5

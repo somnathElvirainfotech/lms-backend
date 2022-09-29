@@ -1,0 +1,302 @@
+<%- include('./include/header.ejs') %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!-- <h1 class="m-0">Dashboard</h1> -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Assignment List</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+
+        <!-- <%- req.toastr.render() %> -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="">
+                                    <div class="row">
+
+                                        <div class="input-group col-md-3 mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span>Course</span>
+                                                </div>
+                                            </div>
+                                            <select name="cid" id="cid" class="form-control">
+                                                <option value=""> -- Select Course -- </option>
+                                                <% course.forEach(item=>{ %>
+
+                                                    <option value="<%= item.id %>">
+                                                        <%= item.course_name.toUpperCase() %>
+                                                    </option>
+
+                                                    <% }) %>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="input-group col-md-3 mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span>From Date</span>
+                                                </div>
+                                            </div>
+                                            <input type="date" name="fromdate" id="fromdate" class="form-control"
+                                                placeholder="Enter FRoge">
+
+                                        </div>
+
+                                        <div class="input-group col-md-3 mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span>To Date</span>
+                                                </div>
+                                            </div>
+                                            <input type="date" name="todate" id="todate" class="form-control"
+                                                placeholder="Enter FRoge">
+
+                                        </div>
+
+                                        <div class="input-group col-md-3 mb-3">
+                                            <div class="col-4">
+                                                <button id="fsubmit" type="button"
+                                                    class="btn btn-success">Search</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Date</th>
+                                            <th>Student Name</th>
+                                            <th>Course Name</th>
+                                            <th>Course Type</th>
+                                            <th>User Progress</th>
+                                            <th>Teacher’s Name</th>
+                                            <th>Points Won</th>
+                                            <th>Assignment no</th>
+
+                                            <!-- <th>Action</th> -->
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        <% var i=1; %>
+                                            <% result.forEach((data)=>{ %>
+                                                <tr id="del<%= data.id %>">
+                                                    <td>
+                                                        <%= i %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data.enrollment_create_date %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data.user_details[0].firstname?`${data.user_details[0].firstname.toUpperCase()}
+                                                            ${data.user_details[0].lastname.toUpperCase()}`:'' %>
+                                                    </td>
+                                                    <td>
+                                                        <%=  data.course_details[0].course_name ?data.course_details[0].course_name.toUpperCase():'' %>
+                                                    </td>
+                                                    <td>
+                                                        <%=  data.course_details[0].category_name?data.course_details[0].category_name.toUpperCase():'' %>
+                                                    </td>
+
+                                                    <td>
+                                                        0%
+                                                    </td>
+                                                    <td>
+                                                        <%= data.assignment_details?data.assignment_details[0].user_name:''
+                                                            %>
+                                                    </td>
+                                                    <td>
+                                                        0
+                                                    </td>
+                                                    <td>
+                                                        <%= data.assignment_details?data.assignment_details.length:0 %>
+                                                    </td>
+
+
+
+                                                    <td>
+
+
+
+                                                        <!-- <button onclick="deleteData(`<%= data.id%>`)"
+                                                            class="btn btn-sm btn-danger"><span
+                                                                class="fas fa-trash"></span></button> -->
+
+                                                    </td>
+
+
+                                                </tr>
+                                                <% i++; }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+
+
+    <%- include('./include/footer.ejs') %>
+
+        <script type="text/javascript">
+
+
+            function deleteData(id) {
+                // console.log(`<%= req.session.username %>`);
+
+                var del = document.getElementById("del" + id);
+
+                var option = {
+                    mode: 'cors',
+                    method: "get",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                fetch("/assignment/delete/" + id, option)
+                    .then(res => {
+                        del.style.display = 'none';
+                    })
+                    .catch(err => console.log(err))
+
+
+            }
+
+            $(document).ready(function () {
+                $("#fsubmit").click(function (e) {
+                    var cid = $("#cid").val();
+                    var fromdate = $("#fromdate").val();
+                    var todate = $("#todate").val();
+                    // alert(fromdate)
+
+                    $.ajax({
+                        url: "/enrollment-search",
+                        type: "post",
+                        data: {
+                            cid: cid,
+                            fromdate: fromdate,
+                            todate: todate,
+                            user_email:'',
+                            std_no:''
+                        },
+                        success: function (data) {
+                            console.log(data.result)
+
+
+
+                            var tdata = '';
+
+                            var rdata = data.result;
+
+                            rdata.forEach((element, i) => {
+
+                                tdata += `<tr>
+<td>
+${i}
+</td>
+<td>
+${element.enrollment_create_date}
+</td>
+<td>
+
+${element.user_details[0].fullname ? element.user_details[0].fullname : ""}
+</td>
+<td>
+
+${element.course_details[0].course_name}
+</td>
+<td>
+
+${element.course_details[0].category_name}
+</td>
+
+<td>
+0%
+</td>
+<td>
+${element.assignment_details ? element.assignment_details[0].user_name : ''}
+</td>
+<td>
+0
+</td>
+<td>
+    ${element.assignment_details ? element.assignment_details.length : 0}
+</td>
+
+<td>
+
+
+</td>
+
+
+</tr>`;
+
+
+
+                            });
+
+                            // console.log(tdata)
+                            // $("#cid").val('');
+                            // $("#fromdate").val('');
+                            // $("#todate").val('');
+
+
+                            $("#tbody").html(tdata)
+
+
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+
+
+                })
+            })
+
+        </script>

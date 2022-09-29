@@ -1,0 +1,120 @@
+<%- include('./include/header.ejs') %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!-- <h1 class="m-0">Dashboard</h1> -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Update Chapter</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="/chapter">
+                                    <button type="button" class="btn btn-primary">Back</button>
+                                </a>
+                            </div>
+
+                            <div class="card-body">
+                                <form action="/chapter/edit" method="post">
+
+                                    <input type="hidden" name="id" id="id" value="<%= result.id %>">
+
+                                    <div class="row">
+
+                                        <div class="input-group col-md-6 mb-3">
+
+                                            <select required name="course_id" id="course_id" class="form-control">
+                                                <option value=""> -- select Course -- </option>
+                                                <% course.forEach(item=>{ %>
+
+                                                    <% if(result.course_id==item.id){%>
+                                                        <option selected value="<%= item.id %>">
+                                                            <%= item.course_name%>
+                                                        </option>
+                                                        <%} else {%>
+                                                            <option value="<%= item.id %>">
+                                                                <%= item.course_name%>
+                                                            </option>
+
+                                                            <% }}) %>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="input-group col-md-6 mb-3">
+                                            <input type="text" name="chapter_name" id="chapter_name"
+                                                class="form-control" placeholder="Enter Chapter Name"
+                                                value="<%= result.chapter_name %>">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <span class="fas fa-language"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group col-md-6 mb-3">
+                                            <div class="col-4">
+                                                <button id="submit" type="submit"
+                                                    class="btn btn-success">Update</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <%- include('./include/footer.ejs') %>
+
+        <script>
+            let err_msg = `<%= err_msg%>`;
+            let err_type = `<%= err_type %>`;
+            if (err_msg) {
+                if (err_type) {
+                    toastr.success(err_msg)
+                }
+                else {
+                    toastr.error(err_msg)
+                }
+            }
+
+        </script>

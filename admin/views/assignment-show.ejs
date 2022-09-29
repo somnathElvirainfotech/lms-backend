@@ -1,0 +1,141 @@
+<%- include('./include/header.ejs') %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!-- <h1 class="m-0">Dashboard</h1> -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Assignment List</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+
+        <!-- <%- req.toastr.render() %> -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="/assignment/create">
+                                    <button type="button" class="btn btn-primary">Add</button>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Course Name</th>
+                                            <th>Group Name</th>
+                                            <th>Assignment Name</th>
+                                            <th>Assignment Create</th>
+                                            <th>Assignment Deadline</th>
+                                            <th>Created By</th>
+                                            
+                                            <th>Action</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i=1; %>
+                                            <% result.forEach((data)=>{ %>
+                                                <tr id="del<%= data.id %>" >
+                                                    <td>
+                                                        <%= i %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data.course_name?data.course_name.toUpperCase():'' %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data.group_name %> 
+                                                    </td>
+                                                    <td>
+                                                        <%= data.assignment_name %> 
+                                                    </td>
+
+                                                    <td>
+                                                        <%= data.assignment_create %> 
+                                                    </td>
+                                                    <td>
+                                                        <%= data.assignment_deadline %> 
+                                                    </td>
+                                                    <td>
+                                                        <%= data.created_by %> 
+                                                    </td>
+                                                    
+                                                     
+                                                   
+                                                    <td>
+                                                        <a href="/assignment/edit/<%= data.id %>">
+                                                            <button class="btn btn-sm btn-success"> <span class="fas fa-pen"></span></button>
+                                                        </a>
+                                                         
+                                                        
+                                                            <button  onclick="deleteData(`<%= data.id%>`)" class="btn btn-sm btn-danger"><span class="fas fa-trash"></span></button>
+                                                        
+                                                    </td>
+
+                                                   
+                                                </tr>
+                                                <% i++; }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+
+
+    <%- include('./include/footer.ejs') %>
+
+        <script type="text/javascript">
+
+
+            function deleteData(id) {
+                // console.log(`<%= req.session.username %>`);
+                
+                var del=document.getElementById("del"+id);
+                
+                var option = {
+                    mode: 'cors',
+                    method: "get",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                fetch("/assignment/delete/"+id, option)
+                .then(res=>{
+                    del.style.display='none';
+                })
+                .catch(err => console.log(err))
+
+
+            }
+
+        </script>

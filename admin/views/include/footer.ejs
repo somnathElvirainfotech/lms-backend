@@ -1,0 +1,37 @@
+<footer class="main-footer">
+  <strong>Copyright &copy; 2022 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+  All rights reserved.
+  <div class="float-right d-none d-sm-inline-block">
+    <b>Version</b> 3.1.0
+  </div>
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<%- include('js-link'); %>
+  <!-- jQuery -->
+
+  <script>
+    $(function () {
+      $('.toastrDefaultSuccess').click(function () {
+        toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+      });
+      $('.toastrDefaultInfo').click(function () {
+        toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+      });
+      $('.toastrDefaultError').click(function () {
+        toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+      });
+      $('.toastrDefaultWarning').click(function () {
+        toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+      });
+    })
+  </script>
+  </body>
+
+  </html>
