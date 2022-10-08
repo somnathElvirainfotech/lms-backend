@@ -477,6 +477,7 @@ exports.updateUser = (req, res) => {
   // console.log(req.body)
 
   if (email) {
+    console.log("uuuuuuu   ",req.body)
     userModel.updateUser(req.body, email, (err, result) => {
       if (err) {
         console.log(result);
@@ -519,6 +520,7 @@ exports.updateUserById = (req, res) => {
     is_active: req.body.status,
     user_hr_no: req.body.user_hr_no,
     organization_unit: req.body.organization_unit,
+    login_type:req.body.login_type
   };
 
   console.log("upppppppppppp", data);

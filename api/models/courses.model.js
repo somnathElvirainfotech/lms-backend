@@ -4,7 +4,7 @@ require("dotenv").config();
 
 class Courses {
   create(data, callback) {
-    const sql = `INSERT INTO courses(course_name,user_id, short_description, image, avatar_image,attachment_file, course_level,sub_category_id, category_id, course_tag, published_status,xapi_attachment_file,course_type,created_at,long_description,certificate_id,xapi_file_name)
+    const sql = `INSERT INTO courses(course_name,user_id, short_description, image, avatar_image,attachment_file, course_level,sub_category_id, category_id, course_tag, published_status,xapi_attachment_file,course_type,created_at,long_description,certificate_id,xapi_file_name,course_certificate_name,author_name,author_email)
         VALUES 
         (${mysql.escape(data.course_name)},
         ${mysql.escape(data.user_id)},
@@ -20,9 +20,12 @@ class Courses {
         ${mysql.escape(data.xapi_attachment_file)},
         ${mysql.escape(data.course_type)},
         NOW(),
-        ${mysql.escape(data.long_description)},
+        ${mysql.escape(data.long_description)}, 
         ${mysql.escape(data.certificate_id)},
-        ${mysql.escape(data.xapi_file_name)})`;
+        ${mysql.escape(data.xapi_file_name)},
+        ${mysql.escape(data.course_certificate_name)},
+        ${mysql.escape(data.author_name)},
+        ${mysql.escape(data.author_email)})`;
 
     console.log(sql);
 
@@ -158,6 +161,7 @@ class Courses {
               updated_at: item.updated_at,
               course_languages_id: item.course_languages_id,
               course_type: item.course_type,
+              course_certificate_name:item.course_certificate_name
             };
 
             data.push(temp);
@@ -202,6 +206,7 @@ class Courses {
             created_at: result[0].created_at,
             updated_at: result[0].updated_at,
             course_type: result[0].course_type,
+            course_certificate_name:result[0].course_certificate_name,
             xapi_attachment_file:
               result[0].xapi_attachment_file != null
                 ? process.env.xapi_file_path +
@@ -211,6 +216,8 @@ class Courses {
             certificate_id: result[0].certificate_id
               ? result[0].certificate_id
               : "",
+              author_name:result[0].author_name,
+              author_email:result[0].author_email
           };
 
           var sql = `SELECT course_group.*,groups.g_name FROM course_group LEFT JOIN groups on groups.id=course_group.group_id WHERE course_group.course_id=${data.id}`;
@@ -287,6 +294,8 @@ class Courses {
             updated_at: item.updated_at,
             course_languages_id: item.course_languages_id,
             course_type: item.course_type,
+            author_name:item.author_name,
+              author_email:item.author_email
           };
 
           data.push(temp);

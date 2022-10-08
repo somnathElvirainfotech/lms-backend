@@ -32,8 +32,7 @@ exports.create = async (req, res) => {
     long_description &&
     category_id &&
     lang &&
-    published_status &&
-    certificate_id
+    published_status 
   ) {
     //console.log(req.body)
     if (req.files) {
@@ -135,10 +134,15 @@ exports.create = async (req, res) => {
       course_type: req.body.course_type,
       certificate_id: certificate_id,
       xapi_file_name: req.body.xapi_file_name ? req.body.xapi_file_name : null,
+      course_certificate_name:req.body.course_certificate_name,
+      author_email:req.body.author_email,
+      author_name:req.body.author_name
     };
 
     console.log("course ... ", data);
 
+    if(req.body.course_type=="xapi")
+    {
     var chk_xapi_name = await new Promise((resolve, reject) => {
       courseModule.chkXapiFileName(
         {
@@ -151,8 +155,9 @@ exports.create = async (req, res) => {
         }
       );
     });
+  }
 
-    if (chk_xapi_name) {
+    if (chk_xapi_name && req.body.course_type=="xapi") {
         res.status(200).json({
             status: false,
             msg: "Xapi name allready exists",
@@ -296,6 +301,9 @@ exports.update = async (req, res) => {
       published_status: req.body.published_status,
       course_type: req.body.course_type,
       certificate_id: certificate_id,
+      course_certificate_name:req.body.course_certificate_name,
+      author_email:req.body.author_email,
+      author_name:req.body.author_name
     };
 
     if (req.body.user_id) {

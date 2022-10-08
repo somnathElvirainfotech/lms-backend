@@ -939,6 +939,7 @@ class Enrollment {
                 if (result.length > 0) {
                   var data = {
                     course_type: result[0].course_type,
+                    course_certificate_name:result[0].course_certificate_name,
                     creator_name:
                       result[0].u_firstname + " " + result[0].u_lastname,
                     creator_email: result[0].u_email,

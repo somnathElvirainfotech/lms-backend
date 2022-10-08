@@ -1,0 +1,16 @@
+PORT = 3000
+jwt_secret_key = "84C1E2rSdNToYc+GDQdlMXBrNRnTRrlMFAUr4+gJmc4="
+
+db_host="localhost"
+db_user="root"
+db_password=""
+db_name="lms"
+
+api_url='http://localhost:3000/api/'
+XAPI_URL="https://lrs.duolms.com/data/xAPI"
+
+images_path="http://localhost:3000/images/"
+files_path="http://localhost:3000/files/"
+vedios_path="http://localhost:3000/vedios/"
+xapi_file_path="http://localhost:3000/xapi/"
+certificate_file_path="http://localhost:3000/certificate/"
