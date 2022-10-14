@@ -23,6 +23,7 @@ const userTaskController = require("../controllers/userTask.controller");
 const maintenanceController = require("../controllers/maintenanceController");
 const xapiQuestionAns = require('../controllers/xapi.controllers');
 const certificateController = require('../controllers/certificate.controller');
+const qnsAnsController=require('../controllers/qnsAnsController');
 
 
 // admin user
@@ -213,6 +214,7 @@ router.post(apiRoutes.maintenance, checkUserAuth, maintenanceController.create)
 
 // xapi qus and ans read by course id and user email
 router.post("/xapi/question-answer", xapiQuestionAns.xapiRead);
+router.post("/xapi/result-save", xapiQuestionAns.resultSave);
 
 
 // certificate
@@ -221,5 +223,12 @@ router.get(apiRoutes.certificateId, checkUserAuth, certificateController.getUser
 router.post(apiRoutes.certificate, checkUserAuth, certificateController.create);
 router.put(apiRoutes.certificate, checkUserAuth, certificateController.update);
 router.delete(apiRoutes.certificateId, checkUserAuth, certificateController.delete);
+
+// anstion and answer comment
+router.post("/qns-ans-comment", qnsAnsController.create);
+router.post("/qns-ans-comment-search", qnsAnsController.show);
+router.put("/qns-ans-comment/:id", qnsAnsController.update);
+router.delete("/qns-ans-comment/:id", qnsAnsController.delete);
+
 
 module.exports = router;
