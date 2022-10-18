@@ -38,6 +38,7 @@ app.use("/files", express.static(path.join(__dirname, "uploads/files")));
 app.use("/vedios", express.static(path.join(__dirname, "uploads/vedios")));
 app.use("/xapi", express.static(path.join(__dirname, "uploads/task_files")));
 app.use("/certificate", express.static(path.join(__dirname, "uploads/certificate")));
+app.use("/signature", express.static(path.join(__dirname, "uploads/signature")));
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 

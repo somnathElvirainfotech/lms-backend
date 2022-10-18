@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "1fb291e6-d787-4a44-8be6-945df398fcbf",
+		"_postman_id": "7285a9a2-b6cf-443e-8deb-81f713b653e4",
 		"name": "LMS Copy 3",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19532194"
 	},
 	"item": [
 		{
@@ -56,7 +57,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"admin@gmail.com\",\n\t\"password\":\"admin\"\n}"
+							"raw": "{\n\t\"email\":\"admin@gmail.com\",\n\t\"password\":\"admin@gmail.com\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/api/admin/login",
@@ -379,12 +380,7 @@
 									"value": "3",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/qns-ans-comment",
@@ -424,12 +420,7 @@
 									"value": "saddsf",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/qns-ans-comment/2",
@@ -567,12 +558,7 @@
 									"type": "file",
 									"src": "/home/elviradev/Desktop/certificates_ppt/sertifikate1.pptx"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/certificate",
@@ -617,12 +603,7 @@
 									"type": "file",
 									"src": []
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/certificate",
@@ -663,6 +644,188 @@
 							"path": [
 								"api",
 								"certificate",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "signature",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjYwMTM0NDcsImV4cCI6MTY2NjQ0NTQ0N30.FAYCro3s84gvwRbN4o14Y09757xLAcSzO7MHn4mjhuA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/signature",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjYwMTM0NDcsImV4cCI6MTY2NjQ0NTQ0N30.FAYCro3s84gvwRbN4o14Y09757xLAcSzO7MHn4mjhuA"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/signature/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signature",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjYwMTM0NDcsImV4cCI6MTY2NjQ0NTQ0N30.FAYCro3s84gvwRbN4o14Y09757xLAcSzO7MHn4mjhuA"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "certificate_file",
+									"type": "file",
+									"src": "/home/somnath/Desktop/LMS_FINAL/signature.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/signature",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjYwMTM0NDcsImV4cCI6MTY2NjQ0NTQ0N30.FAYCro3s84gvwRbN4o14Y09757xLAcSzO7MHn4mjhuA"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "certificate_file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/signature",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjYwMTM0NDcsImV4cCI6MTY2NjQ0NTQ0N30.FAYCro3s84gvwRbN4o14Y09757xLAcSzO7MHn4mjhuA"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/signature/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signature",
 								"4"
 							]
 						}
@@ -857,12 +1020,7 @@
 									"value": "dddddddddddddddddddddddffff",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/task",
@@ -919,12 +1077,7 @@
 									"value": "",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/task/search",
@@ -1005,12 +1158,7 @@
 									"value": "ssssssss",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/task",
@@ -1169,12 +1317,7 @@
 									"value": "5",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/task/comment/rating/course",
@@ -1232,12 +1375,7 @@
 									"value": "sdfdsfsfsdfdsdffdsfsdf",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/api/comment/rating",

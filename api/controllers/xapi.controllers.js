@@ -476,6 +476,8 @@ exports.resultSave = async (req, res) => {
     var tempChk = [];
     var finalArr = [];
 
+    
+
     for (var i of tempArr.reverse()) {
       if (!tempChk.includes(i.questionAns.id)) {
         finalArr.push(i);
@@ -483,6 +485,10 @@ exports.resultSave = async (req, res) => {
       }
     }
 
+    if(responceViewAll.data.statements.length>0 && xresponce.data.statements.length>0)
+    {
+
+    
     // delete-----------------
 
     var sql = `SELECT * FROM question WHERE enrollment_id=${mysql.escape(
@@ -620,12 +626,23 @@ exports.resultSave = async (req, res) => {
     }
 
     //------------------------------------------------------------------------
-
+  
     res.status(200).json({
       status: true,
       msg: "result store data ",
       data: [],
     });
+
+  }
+  else{
+    res.status(200).json({
+      status: true,
+      msg: "result don't store local database ",
+      data: [],
+    });
+
+  }
+
   } else {
     res.status(200).json({
       status: false,

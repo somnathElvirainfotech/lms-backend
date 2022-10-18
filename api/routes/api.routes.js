@@ -24,6 +24,7 @@ const maintenanceController = require("../controllers/maintenanceController");
 const xapiQuestionAns = require('../controllers/xapi.controllers');
 const certificateController = require('../controllers/certificate.controller');
 const qnsAnsController=require('../controllers/qnsAnsController');
+const directorsign=require("../controllers/directorSign.controller")
 
 
 // admin user
@@ -223,6 +224,13 @@ router.get(apiRoutes.certificateId, checkUserAuth, certificateController.getUser
 router.post(apiRoutes.certificate, checkUserAuth, certificateController.create);
 router.put(apiRoutes.certificate, checkUserAuth, certificateController.update);
 router.delete(apiRoutes.certificateId, checkUserAuth, certificateController.delete);
+
+// signature
+router.get("/signature", checkUserAuth, directorsign.getAllUser);
+router.get("/signature/:id", checkUserAuth, directorsign.getUser);
+router.post("/signature", checkUserAuth, directorsign.create);
+router.put("/signature", checkUserAuth, directorsign.update);
+router.delete("/signature/:id", checkUserAuth, directorsign.delete);
 
 // anstion and answer comment
 router.post("/qns-ans-comment", qnsAnsController.create);

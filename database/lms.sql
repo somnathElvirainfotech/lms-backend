@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 14, 2022 at 04:25 PM
+-- Generation Time: Oct 18, 2022 at 04:53 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- PHP Version: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -92,6 +92,26 @@ INSERT INTO `certificate_list` (`id`, `certificate_name`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `certificate_sign_img`
+--
+
+CREATE TABLE `certificate_sign_img` (
+  `id` int(11) NOT NULL,
+  `signature_name` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `certificate_sign_img`
+--
+
+INSERT INTO `certificate_sign_img` (`id`, `signature_name`, `created_at`, `updated_at`) VALUES
+(2, '1666014150885_signature.png', '2022-10-17 13:42:30', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `chapters`
 --
 
@@ -152,11 +172,11 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `user_id`, `course_name`, `author_name`, `author_email`, `xapi_file_name`, `short_description`, `long_description`, `image`, `avatar_image`, `attachment_file`, `course_type`, `xapi_attachment_file`, `course_level`, `group_id`, `category_id`, `sub_category_id`, `course_tag`, `rating`, `certificate_id`, `course_certificate_name`, `published_status`, `approved_status`, `created_at`, `updated_at`) VALUES
-(1, 62, 'python ', 'fsddfs', 'dsfdsf@g.i', 'xapi_practice3', '<p>dfddsdsf</p>', '<p>dsffdsfsdfds</p>', '1664527275948_download.jpeg', '1664527275948_download8.jpeg', NULL, 'xapi', 'xapi_practice3/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 0, 'python ml', 'active', 'active', '2022-09-30 08:41:15', '2022-10-12 10:15:35'),
+(1, 62, 'python ', 'fsddfs', 'dsfdsf@g.i', 'xapi_practice3', '<p>ars old. Richard McClintock, a Latin professor at Hampden-Sy</p>', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero,</p>', '1665989155065_download (3).jpeg', '1665989155065_download (1).png', NULL, 'xapi', 'xapi_practice3/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 2, 'python ml', 'active', 'active', '2022-09-30 08:41:15', '2022-10-17 10:38:45'),
 (2, 62, 'new compliance', NULL, NULL, 'Pozarkviz1', '<p>pozar short</p>', '<p>pozar long</p>', '1664604141781_xls.jpeg', '1664604141782_database_crs.png', NULL, 'xapi', 'Pozarkviz1/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 2, 'Obuke za zaštitu od požara', 'active', 'active', '2022-10-01 06:02:22', NULL),
 (3, 62, 'Video excel', NULL, NULL, 'undefined', '<p>dfadfa mst a ddaga. dsfsrtr fasd fdsta ako d da ne mogu da probam dovo da&nbsp;</p>', '<p>In this course you will learn how to use Excel in business.</p><p>In 34 lections we will guide you from basic understanding to creating complex formulas and linking sheets and files (workbooks).</p><p><br></p><p><a href=\"https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf\" title=\"\">https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf</a></p><p>asdfds</p>', '1664610453982_image002.png', '1664610453982_xls.jpeg', '1664610453982_registration_form.pdf', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'Excel za zaposlene', 'active', 'active', '2022-10-01 07:47:33', '2022-10-07 12:47:30'),
-(4, 62, 'it security 1', NULL, NULL, 'kurs_bezb1', '<p>short bezbednosti<br></p>', '<p>long description bezbednosti<br></p>', '1664782376173_xls.jpeg', '1664782376174_certificate.jpg', NULL, 'xapi', 'kurs_bezb1/res/index.html', 'beginner', NULL, 2, NULL, NULL, NULL, 3, 'IT Bezbednosti #1', 'active', 'active', '2022-10-03 07:32:57', NULL),
-(6, 62, 'ggtrere', 'sssss', 'sd@g.in', 'undefined', '<p>sddsfjfff</p>', '<p>hhajjhsaomnath hsjj</p>', '1665754149870_online-course-vector-27123059.jpg', '1665754149872_istockphoto-1366428092-170667a.jpg', '1665754149872_p_obuka_reqs-v3 (4).docx', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 0, 'safdsfds', 'active', 'active', '2022-10-14 13:29:09', '2022-10-14 14:02:17');
+(4, 62, 'it security 1', 'ZxZXZ', 'dsfdsf@g.i', 'kurs_bezb1', '<p>short bezbednosti<br></p>', '<p>long description bezbednosti<br></p>', '1665989189202_download (5).jpeg', '1665989189202_images (1).jpeg', NULL, 'xapi', 'kurs_bezb1/res/index.html', 'beginner', NULL, 2, NULL, NULL, NULL, 3, 'IT Bezbednosti #1', 'active', 'active', '2022-10-03 07:32:57', '2022-10-17 06:46:29'),
+(6, 62, 'ggtrere', 'sssss', 'sd@g.in', 'undefined', '<p>sddsfjfff</p>', '<p>hhajjhsaomnath hsjj</p>', '1665989125740_download.jpeg', '1665989125742_download8.jpeg', '1665754149872_p_obuka_reqs-v3 (4).docx', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'safdsfds', 'active', 'active', '2022-10-14 13:29:09', '2022-10-17 10:38:09');
 
 -- --------------------------------------------------------
 
@@ -204,16 +224,16 @@ INSERT INTO `course_group` (`id`, `course_id`, `group_id`) VALUES
 (4, 2, 3),
 (5, 2, 2),
 (6, 2, 1),
-(8, 4, 3),
-(9, 4, 2),
-(10, 4, 1),
 (14, 3, 2),
-(24, 1, 3),
-(25, 1, 2),
-(26, 1, 1),
-(30, 6, 3),
-(31, 6, 2),
-(32, 6, 1);
+(39, 4, 3),
+(40, 4, 2),
+(41, 4, 1),
+(45, 6, 3),
+(46, 6, 2),
+(47, 6, 1),
+(48, 1, 3),
+(49, 1, 2),
+(50, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -233,11 +253,11 @@ CREATE TABLE `course_languages` (
 
 INSERT INTO `course_languages` (`id`, `course_id`, `language_id`) VALUES
 (2, 2, 2),
-(4, 4, 2),
 (8, 3, 2),
 (9, 5, 2),
-(12, 1, 2),
-(14, 6, 2);
+(17, 4, 2),
+(19, 6, 2),
+(20, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -260,7 +280,8 @@ CREATE TABLE `course_track` (
 INSERT INTO `course_track` (`id`, `user_id`, `course_id`, `created_at`, `updated_at`) VALUES
 (1, 81, 3, '2022-10-01 08:01:25', '2022-10-01 09:57:25'),
 (2, 82, 3, '2022-10-01 21:08:49', '2022-10-01 21:10:50'),
-(3, 84, 3, '2022-10-03 13:22:41', '2022-10-07 08:18:58');
+(3, 84, 3, '2022-10-03 13:22:41', '2022-10-07 08:18:58'),
+(4, 87, 6, '2022-10-17 08:50:28', '2022-10-17 08:51:52');
 
 -- --------------------------------------------------------
 
@@ -291,7 +312,8 @@ INSERT INTO `course_track_details` (`id`, `course_track_id`, `chapter_id`, `less
 (4, 2, 1, 1, 1, '0.66', 'onprogress', '2022-10-01 21:08:49', '2022-10-01 21:10:50'),
 (5, 3, 2, 4, 11, '6.92', 'onprogress', '2022-10-03 13:22:41', NULL),
 (6, 3, 1, 1, 2, '1.86', 'onprogress', '2022-10-07 08:16:39', '2022-10-07 08:17:48'),
-(7, 3, 1, 2, 25, '8.76', 'onprogress', '2022-10-07 08:18:58', NULL);
+(7, 3, 1, 2, 25, '8.76', 'onprogress', '2022-10-07 08:18:58', NULL),
+(8, 4, 3, 7, 100, '8.13', 'completed', '2022-10-17 08:50:28', '2022-10-17 08:51:52');
 
 -- --------------------------------------------------------
 
@@ -334,9 +356,11 @@ INSERT INTO `enrollments` (`id`, `user_id`, `course_id`, `enrollment_status`, `c
 (12, 84, 2, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-03', '2022-10-07 09:19:26', '2022-10-07 09:19:26'),
 (13, 84, 3, 'onprogress', 1, 2, 0, 0, 0, 'active', '2022-10-03', '2022-10-07 08:18:58', '2022-10-07 08:18:58'),
 (14, 80, 1, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-08', '2022-10-09 19:11:45', '2022-10-09 19:11:45'),
-(15, 87, 1, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-11', '2022-10-14 12:23:18', '2022-10-14 12:23:18'),
+(15, 87, 1, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-11', '2022-10-17 14:06:15', '2022-10-17 14:06:15'),
 (16, 88, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-11', '2022-10-12 09:55:32', '2022-10-12 09:55:32'),
-(17, 89, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-12', '2022-10-12 12:36:34', '2022-10-12 12:36:34');
+(17, 89, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-12', '2022-10-12 12:36:34', '2022-10-12 12:36:34'),
+(18, 87, 4, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-17', '2022-10-17 14:06:15', '2022-10-17 14:06:15'),
+(19, 87, 6, 'completed', 3, 7, 100, 0, 0, 'active', '2022-10-17', '2022-10-17 08:51:52', '2022-10-17 08:51:52');
 
 -- --------------------------------------------------------
 
@@ -415,7 +439,7 @@ INSERT INTO `lessons` (`id`, `course_id`, `chapter_id`, `lesson_name`, `lesson_n
 (4, 3, 2, 'lesson4', 5, NULL, 'https://vimeo.com/413483813', 'link', '1.01', NULL, '<p>lesson 4 description</p>', '2022-10-03 12:52:24', NULL),
 (5, 3, 2, 'lesson5 as 4', 4, NULL, 'https://vimeo.com/639845104', 'link', '1.30', NULL, '<p><br></p>', '2022-10-03 12:55:16', NULL),
 (6, 3, 2, '666666', 6, NULL, 'https://vimeo.com/545491292', 'link', '29.08', NULL, '<p>w6</p>', '2022-10-03 13:00:42', '2022-10-03 13:02:46'),
-(7, 6, 3, 'lesson', 1, '1665754535464_mixkit-curvy-road-on-a-tree-covered-hill-41537-medium.mp4', 'undefined', 'video', '28.987292', '1665754535464_p_obuka_reqs-v3 (5).docx', '<p>ggff</p>', '2022-10-14 13:35:36', NULL);
+(7, 6, 3, 'lesson', 1, '1665996590207_277805125_499317378356506_4349196775249074300_n.mp4', NULL, 'video', NULL, '1665754535464_p_obuka_reqs-v3 (5).docx', '<p>ggff</p>', '2022-10-14 13:35:36', '2022-10-17 08:49:50');
 
 -- --------------------------------------------------------
 
@@ -508,7 +532,24 @@ INSERT INTO `login` (`id`, `user_id`, `last_signin_date`, `last_signin_ip`, `cre
 (69, 63, '2022-10-13 11:46:26', '::1', '2022-10-13 11:46:26', NULL),
 (70, 87, '2022-10-13 11:46:42', '::1', '2022-10-13 11:46:42', NULL),
 (71, 88, '2022-10-14 12:23:41', '::ffff:127.0.0.1', '2022-10-14 12:23:41', NULL),
-(72, 63, '2022-10-14 12:28:42', '::1', '2022-10-14 12:28:42', NULL);
+(72, 63, '2022-10-14 12:28:42', '::1', '2022-10-14 12:28:42', NULL),
+(73, 87, '2022-10-16 04:32:33', '::1', '2022-10-16 04:32:33', NULL),
+(74, 87, '2022-10-17 03:44:37', '::1', '2022-10-17 03:44:37', NULL),
+(75, 63, '2022-10-17 06:44:58', '::1', '2022-10-17 06:44:58', NULL),
+(76, 87, '2022-10-17 06:46:46', '::1', '2022-10-17 06:46:46', NULL),
+(77, 63, '2022-10-17 06:47:40', '::1', '2022-10-17 06:47:40', NULL),
+(78, 87, '2022-10-17 06:48:19', '::1', '2022-10-17 06:48:19', NULL),
+(79, 87, '2022-10-17 06:48:45', '::1', '2022-10-17 06:48:45', NULL),
+(80, 63, '2022-10-17 08:48:48', '::1', '2022-10-17 08:48:48', NULL),
+(81, 87, '2022-10-17 08:50:11', '::1', '2022-10-17 08:50:11', NULL),
+(82, 63, '2022-10-17 09:01:09', '::ffff:127.0.0.1', '2022-10-17 09:01:09', NULL),
+(83, 63, '2022-10-17 09:57:36', '::1', '2022-10-17 09:57:36', NULL),
+(84, 87, '2022-10-17 09:59:51', '::1', '2022-10-17 09:59:51', NULL),
+(85, 63, '2022-10-17 10:00:17', '::1', '2022-10-17 10:00:17', NULL),
+(86, 63, '2022-10-17 10:34:17', '::ffff:127.0.0.1', '2022-10-17 10:34:17', NULL),
+(87, 87, '2022-10-17 10:39:04', '::1', '2022-10-17 10:39:04', NULL),
+(88, 1, '2022-10-17 13:30:47', '::1', '2022-10-17 13:30:47', NULL),
+(89, 87, '2022-10-17 13:58:50', '::1', '2022-10-17 13:58:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -618,10 +659,10 @@ INSERT INTO `question` (`id`, `enrollment_id`, `question_name`, `user_answer`, `
 (164, 17, 'answer 2', '0_right', '0_right', 'true', '2022-10-12 12:36:34', NULL),
 (165, 17, 'Match the following items with their descriptions: \n1-1 and 2-2 is right answer', '0_Item_1[.]0_Match_1[,]1_Item_2[.]1_Match_2', '0_Item_1[.]0_Match_1[,]1_Item_2[.]1_Match_2', 'true', '2022-10-12 12:36:34', NULL),
 (166, 17, 'check all for correct answer', '0_Option_1[,]1_Option_2[,]2_Option_3', '0_Option_1[,]1_Option_2[,]2_Option_3', 'true', '2022-10-12 12:36:34', NULL),
-(439, 15, 'answer the question 1', '0_this_is_right', '0_this_is_right', 'true', '2022-10-13 13:04:32', NULL),
-(440, 15, 'answer 2', '0_right', '0_right', 'true', '2022-10-13 13:04:32', NULL),
-(441, 15, 'Match the following items with their descriptions: \n1-1 and 2-2 is right answer', '0_Item_1[.]0_Match_1[,]1_Item_2[.]1_Match_2', '0_Item_1[.]0_Match_1[,]1_Item_2[.]1_Match_2', 'true', '2022-10-13 13:04:32', NULL),
-(442, 15, 'check all for correct answer', '0_Option_1[,]1_Option_2', '0_Option_1[,]1_Option_2[,]2_Option_3', 'false', '2022-10-13 13:04:32', NULL);
+(1191, 15, 'answer the question 1', '0_this_is_right', '0_this_is_right', 'true', '2022-10-17 14:06:19', NULL),
+(1192, 15, 'answer 2', '0_right', '0_right', 'true', '2022-10-17 14:06:19', NULL),
+(1193, 15, 'Match the following items with their descriptions: \n1-1 and 2-2 is right answer', '0_Item_1[.]0_Match_1[,]1_Item_2[.]1_Match_2', '0_Item_1[.]0_Match_1[,]1_Item_2[.]1_Match_2', 'true', '2022-10-17 14:06:19', NULL),
+(1194, 15, 'check all for correct answer', '0_Option_1[,]1_Option_2[,]2_Option_3', '0_Option_1[,]1_Option_2[,]2_Option_3', 'true', '2022-10-17 14:06:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -668,18 +709,18 @@ INSERT INTO `question_options` (`id`, `question_id`, `option_name`, `option_id`,
 (471, 166, 'Option 1', '0_Option_1', 'choices', '2022-10-12 12:36:34', NULL),
 (472, 166, 'Option 2', '1_Option_2', 'choices', '2022-10-12 12:36:34', NULL),
 (473, 166, 'Option 3', '2_Option_3', 'choices', '2022-10-12 12:36:34', NULL),
-(1290, 439, 'this is right', '0_this_is_right', 'choices', '2022-10-13 13:04:32', NULL),
-(1291, 439, 'wrong answer', '1_wrong_answer', 'choices', '2022-10-13 13:04:32', NULL),
-(1292, 440, 'right', '0_right', 'choices', '2022-10-13 13:04:32', NULL),
-(1293, 440, 'wrong', '1_wrong', 'choices', '2022-10-13 13:04:32', NULL),
-(1294, 440, 'also wrong', '2_also_wrong', 'choices', '2022-10-13 13:04:32', NULL),
-(1295, 441, 'Item 1', '0_Item_1', 'source', '2022-10-13 13:04:32', NULL),
-(1296, 441, 'Item 2', '1_Item_2', 'source', '2022-10-13 13:04:32', NULL),
-(1297, 441, 'Match 1', '0_Match_1', 'target', '2022-10-13 13:04:32', NULL),
-(1298, 441, 'Match 2', '1_Match_2', 'target', '2022-10-13 13:04:32', NULL),
-(1299, 442, 'Option 1', '0_Option_1', 'choices', '2022-10-13 13:04:32', NULL),
-(1300, 442, 'Option 2', '1_Option_2', 'choices', '2022-10-13 13:04:32', NULL),
-(1301, 442, 'Option 3', '2_Option_3', 'choices', '2022-10-13 13:04:32', NULL);
+(3546, 1191, 'this is right', '0_this_is_right', 'choices', '2022-10-17 14:06:19', NULL),
+(3547, 1191, 'wrong answer', '1_wrong_answer', 'choices', '2022-10-17 14:06:19', NULL),
+(3548, 1192, 'right', '0_right', 'choices', '2022-10-17 14:06:19', NULL),
+(3549, 1192, 'wrong', '1_wrong', 'choices', '2022-10-17 14:06:19', NULL),
+(3550, 1192, 'also wrong', '2_also_wrong', 'choices', '2022-10-17 14:06:19', NULL),
+(3551, 1193, 'Item 1', '0_Item_1', 'source', '2022-10-17 14:06:19', NULL),
+(3552, 1193, 'Item 2', '1_Item_2', 'source', '2022-10-17 14:06:19', NULL),
+(3553, 1193, 'Match 1', '0_Match_1', 'target', '2022-10-17 14:06:19', NULL),
+(3554, 1193, 'Match 2', '1_Match_2', 'target', '2022-10-17 14:06:19', NULL),
+(3555, 1194, 'Option 1', '0_Option_1', 'choices', '2022-10-17 14:06:19', NULL),
+(3556, 1194, 'Option 2', '1_Option_2', 'choices', '2022-10-17 14:06:19', NULL),
+(3557, 1194, 'Option 3', '2_Option_3', 'choices', '2022-10-17 14:06:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -951,7 +992,7 @@ CREATE TABLE `user_task` (
 INSERT INTO `user_task` (`id`, `task_id`, `user_id`, `no_attempted`, `user_task_status`, `created_at`, `updated_at`) VALUES
 (1, 1, 79, 1, 'passed', '2022-09-30 08:47:28', '2022-09-30 08:50:05'),
 (2, 1, 81, 1, 'passed', '2022-10-01 06:17:20', '2022-10-01 23:38:50'),
-(3, 1, 87, 1, 'passed', '2022-10-11 07:39:10', '2022-10-13 13:04:30'),
+(3, 1, 87, 1, 'passed', '2022-10-11 07:39:10', '2022-10-17 14:06:15'),
 (4, 1, 88, 1, 'passed', '2022-10-11 09:23:01', '2022-10-12 09:55:32'),
 (5, 1, 89, 1, 'passed', '2022-10-12 12:35:41', '2022-10-12 12:36:34');
 
@@ -975,6 +1016,12 @@ ALTER TABLE `category`
 -- Indexes for table `certificate_list`
 --
 ALTER TABLE `certificate_list`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `certificate_sign_img`
+--
+ALTER TABLE `certificate_sign_img`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1141,7 +1188,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `certificate_list`
 --
 ALTER TABLE `certificate_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `certificate_sign_img`
+--
+ALTER TABLE `certificate_sign_img`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `chapters`
@@ -1165,31 +1218,31 @@ ALTER TABLE `course_comments`
 -- AUTO_INCREMENT for table `course_group`
 --
 ALTER TABLE `course_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `course_languages`
 --
 ALTER TABLE `course_languages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `course_track`
 --
 ALTER TABLE `course_track`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `course_track_details`
 --
 ALTER TABLE `course_track_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -1213,7 +1266,7 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `maintenance`
@@ -1237,13 +1290,13 @@ ALTER TABLE `qualification`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=443;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1195;
 
 --
 -- AUTO_INCREMENT for table `question_options`
 --
 ALTER TABLE `question_options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1302;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3558;
 
 --
 -- AUTO_INCREMENT for table `role`

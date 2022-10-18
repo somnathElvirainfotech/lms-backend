@@ -8,7 +8,7 @@ class CourseTrackModel {
         // track status
         var track_status = '';
 
-        if (data.lesson_percentage == 100)
+        if (data.lesson_percentage >= 90)
             track_status = 'completed';
         else if (data.lesson_percentage == 0)
             track_status = 'pending';
@@ -74,7 +74,7 @@ class CourseTrackModel {
                 console.log(courseTrackDetailsStatus);
 
                 var payload = {
-                    lesson_percentage: courseTrackDetailsPercentage == 100 ? 100 : data.lesson_percentage,
+                    lesson_percentage: courseTrackDetailsPercentage >=90 ? 100 : data.lesson_percentage,
                     current_play_sec: data.current_play_sec,
                     status: courseTrackDetailsStatus == 'completed' ? 'completed' : track_status,
                     id: courseTrackDetailsId
@@ -285,7 +285,7 @@ class CourseTrackModel {
         var coursePercentage = (completeLesson / Number(singleCourseData.total_lesson)) * 100;
 
 
-        if (coursePercentage == 100) {
+        if (coursePercentage >= 90) {
             courseStatus = 'completed';
         }
 
