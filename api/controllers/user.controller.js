@@ -72,6 +72,8 @@ exports.registration = (req, res) => {
             login_type: req.body.login_type,
           };
 
+          if(req.body.language_id) userData.language_id=req.body.language_id;
+
           console.log("dsdsddsdsdsd", userData);
           userModel.create(userData, (err, result) => {
             if (err) {
@@ -125,8 +127,7 @@ exports.login = (req, res) => {
               user[0].role === 5 ||
               user[0].role === 4 ||
               user[0].role === 2 ||
-              user[0].role === 3 ||
-              user[0].role === 1
+              user[0].role === 3 
             ) {
               const token = jwt.sign(
                 {
@@ -154,6 +155,7 @@ exports.login = (req, res) => {
                 created_at: user[0].created_at,
                 updated_at: user[0].updated_at,
                 login_type: user[0].login_type,
+                language_id:user[0].language_id
               };
               var clientIp = requestIp.getClientIp(req);
               var loginData = {
@@ -348,7 +350,7 @@ exports.getUser = (req, res) => {
 
 // get by email
 exports.getUserByEmail = (req, res) => {
-  const { email } = req.body;
+  const { email,l_type } = req.body;
 
   if (email) {
     userModel.getUserProfile(email, (err, result) => {
@@ -369,29 +371,73 @@ exports.getUserByEmail = (req, res) => {
         );
 
         console.log("log type",result);
+        var clientIp = requestIp.getClientIp(req);
+        var loginData = {
+          userId: result.id,
+          clientIp: clientIp,
+        };
 
-        res.status(200).json({
-          status: true,
-          msg: statusMessages.dataFound,
-          data: [
-            {
-              firstname: result.firstname,
-              lastname: result.lastname,
-              email: result.email,
-              login_type: result.login_type,
-              username: result.firstname + " " + result.lastname,
-              id: result.id,
-              status: result.is_active,
-              role: result.role,
-              group_id: result.group_id,
-              group_details: result.group_details,
-              created_at: result.created_at,
-              updated_at: result.updated_at,
-            },
-          ],
+        if(result.login_type==l_type)
+        {
+          userModel.loginInsert(loginData, (error, data) => {
+            // console.log(data)
+  
+            res.status(200).json({
+              status: true,
+              msg: statusMessages.dataFound,
+              data: [
+                {
+                  firstname: result.firstname,
+                  lastname: result.lastname,
+                  email: result.email,
+                  login_type: result.login_type,
+                  username: result.firstname + " " + result.lastname,
+                  id: result.id,
+                  status: result.is_active,
+                  role: result.role,
+                  group_id: result.group_id,
+                  group_details: result.group_details,
+                  created_at: result.created_at,
+                  updated_at: result.updated_at,
+                  language_id:result.language_id
+                },
+              ],
+    
+              token: "Bearer " + token,
+            });
+  
+  
+          });
+        }else{
 
-          token: "Bearer " + token,
-        });
+          res.status(200).json({
+            status: true,
+            msg: statusMessages.dataFound,
+            data: [
+              {
+                firstname: result.firstname,
+                lastname: result.lastname,
+                email: result.email,
+                login_type: result.login_type,
+                username: result.firstname + " " + result.lastname,
+                id: result.id,
+                status: result.is_active,
+                role: result.role,
+                group_id: result.group_id,
+                group_details: result.group_details,
+                created_at: result.created_at,
+                updated_at: result.updated_at,
+                language_id:result.language_id
+              },
+            ],
+  
+            token: "Bearer " + token,
+          });
+
+        }
+        
+
+       
       }
     });
   } else {
@@ -478,7 +524,19 @@ exports.updateUser = (req, res) => {
 
   if (email) {
     console.log("uuuuuuu   ",req.body)
-    userModel.updateUser(req.body, email, (err, result) => {
+    const {firstname,lastname,social_link_1,social_link_2,details,language_id,qualification_id}=req.body;
+
+    var data={};
+    if(firstname) data.firstname=firstname;
+    if(lastname) data.lastname=lastname;
+    if(social_link_1) data.social_link_1=social_link_1;
+    if(social_link_2) data.social_link_2=social_link_2;
+    if(details) data.details=details;
+    if(language_id) data.language_id=language_id;
+    if(qualification_id) data.qualification_id=qualification_id;
+    
+
+    userModel.updateUser(data, email, (err, result) => {
       if (err) {
         console.log(result);
         res.status(200).json({

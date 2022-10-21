@@ -64,9 +64,9 @@ class User {
             //  console.log( noReg);
 
 
-            const { role, date, firstname, user_hr_no, lastname, qualification_id, group_id, email, password, status, organization_unit, login_type } = data;
+            const { role, date, firstname, user_hr_no, lastname, qualification_id, group_id, email, password, status, organization_unit, login_type,language_id } = data;
 
-            let sql = `INSERT INTO users(role,user_hr_no,firstname,lastname,email,password, is_active,qualification_id,date, created_at,organization_unit,login_type) VALUES (${mysql.escape(role)},${mysql.escape(user_hr_no)},${mysql.escape(firstname)},${mysql.escape(lastname)},${mysql.escape(email)},${mysql.escape(password)},${mysql.escape(status)},${mysql.escape(qualification_id)},${mysql.escape(date)},NOW(),${mysql.escape(organization_unit)},${mysql.escape(login_type)})`;
+            let sql = `INSERT INTO users(role,user_hr_no,firstname,lastname,email,password, is_active,qualification_id,date, created_at,organization_unit,login_type,language_id) VALUES (${mysql.escape(role)},${mysql.escape(user_hr_no)},${mysql.escape(firstname)},${mysql.escape(lastname)},${mysql.escape(email)},${mysql.escape(password)},${mysql.escape(status)},${mysql.escape(qualification_id)},${mysql.escape(date)},NOW(),${mysql.escape(organization_unit)},${mysql.escape(login_type)},${mysql.escape(language_id)})`;
             console.log(sql);
             conn.query(sql, (err, result) => {
                 if (err) {
@@ -174,7 +174,7 @@ class User {
     static getAllUser(data, callback) {
         try {
 
-            const sql = `SELECT users.login_type,users.organization_unit, users.social_link_1,users.social_link_2,users.user_hr_no,users.id,users.role,users.username,users.firstname,users.lastname,CONCAT_WS(" ",users.firstname,users.lastname) AS fullname,users.email,users.is_active,users.created_at,users.updated_at,role.name as user_type,(SELECT COUNT(login.user_id) from login WHERE login.user_id=users.id) AS login_count,(SELECT login.last_signin_date FROM login WHERE login.user_id=users.id ORDER BY login.id DESC LIMIT 1 ) AS last_sign_date,(SELECT COUNT(enrollments.id) FROM enrollments WHERE enrollments.user_id=users.id) AS course_count FROM users LEFT JOIN role ON role.id=users.role WHERE users.role !=1  ORDER BY users.id DESC`;
+            const sql = `SELECT users.language_id,users.login_type,users.organization_unit, users.social_link_1,users.social_link_2,users.user_hr_no,users.id,users.role,users.username,users.firstname,users.lastname,CONCAT_WS(" ",users.firstname,users.lastname) AS fullname,users.email,users.is_active,users.created_at,users.updated_at,role.name as user_type,(SELECT COUNT(login.user_id) from login WHERE login.user_id=users.id) AS login_count,(SELECT login.last_signin_date FROM login WHERE login.user_id=users.id ORDER BY login.id DESC LIMIT 1 ) AS last_sign_date,(SELECT COUNT(enrollments.id) FROM enrollments WHERE enrollments.user_id=users.id) AS course_count FROM users LEFT JOIN role ON role.id=users.role WHERE users.role !=1  ORDER BY users.id DESC`;
 
             conn.query(sql, async (err, result) => {
                 if (err) {
@@ -575,7 +575,8 @@ class User {
                         social_link_2: item.social_link_2,
                         details: item.details,
                         user_hr_no: item.user_hr_no,
-                        login_type: item.login_type
+                        login_type: item.login_type,
+                        language_id:item.language_id,
                     };
 
                     console.log("password  ", item.password);
@@ -628,12 +629,12 @@ class User {
                     })
                 }
                 else {
-
+                    
                     const salt = await bcrypt.genSalt(12);
                     const hashPassword = await bcrypt.hash(item.password, salt);
 
                     const status = item.is_active ? item.is_active : 0;
-                    const sql = `INSERT INTO users(role,user_hr_no,firstname,lastname,email,password, is_active, created_at,social_link_1,social_link_2,login_type) VALUES (${mysql.escape(item.role)},${mysql.escape(item.user_hr_no)},${mysql.escape(item.firstname)},${mysql.escape(item.lastname)},${mysql.escape(item.email)},${mysql.escape(hashPassword)},${mysql.escape(status)},NOW(),${mysql.escape(item.social_link_1)},${mysql.escape(item.social_link_2)},${mysql.escape(item.login_type)})`;
+                    const sql = `INSERT INTO users(role,user_hr_no,firstname,lastname,email,password, is_active, created_at,social_link_1,social_link_2,login_type,language_id) VALUES (${mysql.escape(item.role)},${mysql.escape(item.user_hr_no)},${mysql.escape(item.firstname)},${mysql.escape(item.lastname)},${mysql.escape(item.email)},${mysql.escape(hashPassword)},${mysql.escape(status)},NOW(),${mysql.escape(item.social_link_1)},${mysql.escape(item.social_link_2)},${mysql.escape(item.login_type)},${mysql.escape(item.language_id)})`;
 
                     console.log(sql)
 

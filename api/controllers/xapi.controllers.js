@@ -367,35 +367,54 @@ exports.resultSave = async (req, res) => {
 
   if (course_type == "xapi" && course_name && user_email && enrollment_id) {
     var tarr = course_name.split("xapi_");
-    course_name = tarr[1];
+    course_name = tarr[1]?tarr[1]:tarr[0];
+
+    var tempChk = [];
+    var finalArr = [];
+
+    console.log("course_name ", course_name);
 
     var agent = user_email;
     var activity = "";
     var verb = "";
 
-    var data = {
-      agent: '{"mbox": "mailto:' + agent + '"}',
-      activity: activity,
-      verb: "", //`http://adlnet.gov/expapi/verbs/${verb}`
-    };
+    var sql = `SELECT * FROM question WHERE enrollment_id=${mysql.escape(
+      enrollment_id
+    )} `;
+    var qnsAllOne = await new Promise((resolve, reject) => {
+      conn.query(sql, (err, result) => {
+        if (err) throw err;
+       if(result.length>0) resolve(result);
+       else resolve([])
+      });
+    });
+
+    // var data = {
+    //   agent: '{"mbox": "mailto:' + agent + '"}',
+    //   activity: activity,
+    //   verb: "", //`http://adlnet.gov/expapi/verbs/${verb}`
+    // };
 
     // ------ xapi course total user enroll`
     //var totalCourse = ["practice1", "practice2"];
 
     var xapiCourse = [];
 
-    var responceAll = await XapiService.getXapiStatements(data);
+   // var responceAll = await XapiService.getXapiStatements(data);
 
     // get all xapi course id  ----------------
     var xapiCourseIdArr = [];
 
-    for (var course of responceAll.data.statements) {
-      var xapiCourseId = course.context.contextActivities.grouping[0].id;
+    // for (var course of responceAll.data.statements) {
 
-      if (!xapiCourseIdArr.includes(xapiCourseId)) {
-        xapiCourseIdArr.push(xapiCourseId);
-      }
-    }
+    //   var xapiCourseId = course.context.contextActivities.grouping[0].id;
+
+    //   if (!xapiCourseIdArr.includes(xapiCourseId)) {
+    //     xapiCourseIdArr.push(xapiCourseId);
+    //   }
+    // }
+
+    // console.log("xapiCourseIdArr ",xapiCourseIdArr);
     //  -----------------------------------
 
     var data = {
@@ -406,37 +425,47 @@ exports.resultSave = async (req, res) => {
     var responceViewAll = await XapiService.getXapiStatements(data);
     var view_idArr = [];
     for (var course of responceViewAll.data.statements) {
-      var extensionsView_id = course.context.extensions["ispring://view_id"];
 
+      var extensionsView_id = course.context.extensions["ispring://view_id"];
+     var tarr=course.object.definition.name.und.split("xapi_");
+     var c_n=tarr[1]?tarr[1]:tarr[0];
       if (
         !view_idArr.includes(extensionsView_id) &&
-        xapiCourseIdArr[0] == course.context.contextActivities.grouping[0].id
+        course_name == c_n
       ) {
+       
         view_idArr.push(extensionsView_id);
         break;
       }
     }
 
-    // console.log(view_idArr);
+    // console.log("view_idArr ",view_idArr);
 
     //console.log(totalCourse);
 
     //  console.log(data);
 
     // --------------------------------------------
-    for (var item of xapiCourseIdArr) {
-      var arr = item.split("/");
+    // for (var item of xapiCourseIdArr) {
+    //   var arr = item.split("/");
 
-      if (arr.includes(course_name)) {
-        var aa = {
-          course_name: course_name,
-          xapi_course_id: item,
-        };
+    //   if (arr.includes(course_name)) {
+    //     var aa = {
+    //       course_name: course_name,
+    //       xapi_course_id: item,
+    //     };
 
-        xapiCourse.push(aa);
-      }
-    }
+    //     xapiCourse.push(aa);
+    //   }
+    // }
+
+    // console.log("xapiCourse ",xapiCourse);
     // --------------------------------------------
+
+    var chkTimestam=qnsAllOne.length>0?(qnsAllOne[0].updated_at == null?qnsAllOne[0].created_at:qnsAllOne[0].updated_at):null;
+
+    if(view_idArr.length>0)
+    {
 
     var tempArr = [];
 
@@ -457,7 +486,10 @@ exports.resultSave = async (req, res) => {
             var qusAns = {
               result: {},
               questionAns: {},
+              timestamp:singleRes.timestamp,
             };
+
+
 
             if ("result" in singleRes) {
               qusAns.result = singleRes.result;
@@ -467,15 +499,20 @@ exports.resultSave = async (req, res) => {
               qusAns.questionAns = singleRes.object;
             }
 
-            tempArr.push(qusAns);
+            if(!chekDupQns(tempArr,singleRes.object.definition.description.und))
+            {
+              // ------------- qnns chk ------------------
+              tempArr.push(qusAns);
+            }
+
+           
           }
         }
       }
     }
 
-    var tempChk = [];
-    var finalArr = [];
 
+    console.log("tempArr  ",tempArr);
     
 
     for (var i of tempArr.reverse()) {
@@ -484,8 +521,11 @@ exports.resultSave = async (req, res) => {
         tempChk.push(i.questionAns.id);
       }
     }
+  }
 
-    if(responceViewAll.data.statements.length>0 && xresponce.data.statements.length>0)
+    // console.log("finalArr ---- ",finalArr);
+
+    if(view_idArr.length>0 && finalArr.length>0)
     {
 
     
@@ -497,33 +537,75 @@ exports.resultSave = async (req, res) => {
     var qnsAll = await new Promise((resolve, reject) => {
       conn.query(sql, (err, result) => {
         if (err) throw err;
-        resolve(result);
+       if(result.length>0) resolve(result);
+       else resolve([])
       });
     });
 
-    var sql = `DELETE FROM question WHERE enrollment_id=${mysql.escape(
-      enrollment_id
-    )} `;
-    var qnsId = await new Promise((resolve, reject) => {
-      conn.query(sql, (err, result) => {
-        if (err) throw err;
-        resolve(true);
-      });
-    });
+  
+   var chk=false;
 
-    for (i of qnsAll) {
-      var sql = `DELETE FROM question_options WHERE question_id=${mysql.escape(
-        i.id
-      )} `;
-      var qnsId = await new Promise((resolve, reject) => {
-        conn.query(sql, (err, result) => {
-          if (err) throw err;
-          resolve(true);
+   if(qnsAll.length>0)
+   {
+
+    var qtarr=[qnsAll[0]];
+
+    for (i of qtarr.reverse()) {
+
+     // console.log(finalArr[0].timestamp);
+    //  console.log(i.created_at);
+
+      if(Date.parse(finalArr[0].timestamp) > Date.parse(i.created_at))
+      {
+        //console.log("enter ",i.question_name);
+        var sql = `DELETE FROM question WHERE enrollment_id=${mysql.escape(
+          enrollment_id
+        )} `;
+        await new Promise((resolve, reject) => {
+          conn.query(sql, (err, result) => {
+            if (err) throw err;
+            resolve(true);
+          });
         });
-      });
+    
+    
+    
+    
+        for (i of qnsAll) {
+          var sql = `DELETE FROM question_options WHERE question_id=${mysql.escape(
+            i.id
+          )} `;
+           await new Promise((resolve, reject) => {
+            conn.query(sql, (err, result) => {
+              if (err) throw err;
+              resolve(true);
+            });
+          });
+        }
+
+        console.log("time del");
+
+        chk=true;
+
+      }
+
+      
     }
 
+    
+
+  }else{
+    chk=true;
+  }
+
+
+    
+
     // final result dataset--------------------------------------------------
+if(chk)
+{
+
+  console.log("object");
 
     var lastArr = [];
     for (var item of finalArr) {
@@ -533,11 +615,13 @@ exports.resultSave = async (req, res) => {
         user_answer: item.result.response,
         correct_answer: item.questionAns.definition.correctResponsesPattern[0],
         enrollment_id: enrollment_id,
+        total_marks:item.result.score.max,
+        user_marks:item.result.score.raw
       };
 
       if ("choices" in item.questionAns.definition)
       {
-        temp.answer_status = item.result.response == item.questionAns.definition.correctResponsesPattern[0] ? "true" : "false";
+        temp.answer_status = resultMatching2(item.result.response, item.questionAns.definition.correctResponsesPattern[0]) ? "true" : "false";
       }else if( "source" in item.questionAns.definition &&
       "target" in item.questionAns.definition)
       {
@@ -622,9 +706,12 @@ exports.resultSave = async (req, res) => {
             });
           });
         }
+
       }
+
     }
 
+  
     //------------------------------------------------------------------------
   
     res.status(200).json({
@@ -633,10 +720,18 @@ exports.resultSave = async (req, res) => {
       data: [],
     });
 
+  }else{
+    res.status(200).json({
+      status: false,
+      msg: "result don't store local database ",
+      data: [],
+    });
+  }
+
   }
   else{
     res.status(200).json({
-      status: true,
+      status: false,
       msg: "result don't store local database ",
       data: [],
     });
@@ -656,6 +751,9 @@ function resultMatching(payload, payload2) {
   var arr = payload.split("[,]");
   var arr1 = payload2.split("[,]");
 
+  console.log("arr-------------- ",arr);
+  console.log("arr1 ------------------",arr1);
+
   for (var i of arr) {
     if (!arr1.includes(i)) {
       return false;
@@ -663,4 +761,47 @@ function resultMatching(payload, payload2) {
   }
 
   return true;
+}
+
+function resultMatching2(payload, payload2)
+{
+  var final=payload.includes("[,]");
+
+
+if(final)
+{
+
+  var arr = payload.split("[,]");
+  // var tarr = payload2.split("[,]");
+  var arr1=payload2.split("[,]");
+
+  for (var i of arr) {
+    if (!arr1.includes(i)) {
+      return false;
+    }
+  }
+
+  return true;
+
+}else{
+
+  if(payload == payload2) return true;
+  else return false
+
+}
+
+
+
+
+}
+
+
+function chekDupQns(arr,qns)
+{
+  for(var item of arr)
+  {
+      if(item.questionAns.definition.description.und==qns)
+      return true;
+  }
+  return false;
 }
