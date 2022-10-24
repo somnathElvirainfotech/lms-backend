@@ -621,16 +621,24 @@ if(chk)
 
       if ("choices" in item.questionAns.definition)
       {
-        temp.answer_status = resultMatching2(item.result.response, item.questionAns.definition.correctResponsesPattern[0]) ? "true" : "false";
+        // temp.answer_status = await new Promise((resolve,reject)=>{
+        //   var status=resultMatching2(item.result.response, item.questionAns.definition.correctResponsesPattern[0])==true ? "true" : "false";
+        //   resolve(status);
+        // })
+
+        temp.answer_status=item.result.score.raw===item.result.score.max? "true" : "false";
+
       }else if( "source" in item.questionAns.definition &&
       "target" in item.questionAns.definition)
       {
-        temp.answer_status = resultMatching(
-          item.result.response,
-          item.questionAns.definition.correctResponsesPattern[0]
-        )
-          ? "true"
-          : "false";
+        // temp.answer_status = resultMatching(
+        //   item.result.response,
+        //   item.questionAns.definition.correctResponsesPattern[0]
+        // )
+        //   ? "true"
+        //   : "false";
+        
+        temp.answer_status=item.result.score.raw===item.result.score.max? "true" : "false";
       }
 
       var sql = `INSERT INTO question set created_at=NOW(), ? `;
