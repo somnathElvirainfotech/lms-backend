@@ -819,6 +819,7 @@ class Courses {
                 updated_at: result[0].updated_at,
                 course_languages_id: result[0].course_languages_id,
                 course_type: result[0].course_type,
+                xapi_file_name:result[0].	xapi_file_name,
                 xapi_attachment_file:
                   result[0].xapi_attachment_file != null
                     ? process.env.xapi_file_path +
@@ -930,6 +931,155 @@ class Courses {
     } catch (err) {
       console.log(err);
     }
+  }
+
+
+  webCourseByName(name,callback)
+  {
+    var sql = `SELECT c.*,cl.id as course_languages_id FROM courses c LEFT JOIN course_languages cl ON cl.course_id=c.id WHERE c.published_status='active'  AND c.course_name=?`;
+
+        conn.query(sql, name, async (err, result) => {
+          if (err) {
+            callback(true, err);
+          } else {
+            if (result.length > 0) {
+              var data = {
+                course_name: result[0].course_name,
+                short_description: result[0].short_description,
+                long_description: result[0].long_description,
+                id: result[0].id,
+                creator_id: result[0].user_id,
+                image:
+                  result[0].image != null
+                    ? process.env.images_path + `${result[0].image}`
+                    : "",
+                avatar_image:
+                  result[0].avatar_image != null
+                    ? process.env.images_path + `${result[0].avatar_image}`
+                    : "",
+                attachment_file:
+                  result[0].attachment_file != null
+                    ? process.env.images_path + `${result[0].attachment_file}`
+                    : "",
+                course_level: result[0].course_level,
+                group_id: result[0].group_id,
+                group_details: [],
+                category_id: result[0].category_id,
+                sub_category_id: result[0].sub_category_id,
+                course_tag: null,
+                published_status: result[0].published_status,
+                approved_status: result[0].approved_status,
+                created_at: result[0].created_at,
+                updated_at: result[0].updated_at,
+                course_languages_id: result[0].course_languages_id,
+                course_type: result[0].course_type,
+                xapi_attachment_file:
+                  result[0].xapi_attachment_file != null
+                    ? process.env.xapi_file_path +
+                      `${result[0].xapi_attachment_file}`
+                    : "",
+                chapters: [],
+              };
+
+              // group details add
+              var sql = `SELECT course_group.*,groups.g_name FROM course_group LEFT JOIN groups on groups.id=course_group.group_id WHERE course_group.course_id=${result[0].id}`;
+
+              var groups = await new Promise((resolve, reject) => {
+                conn.query(sql, (err, result) => {
+                  if (err) throw err;
+                  resolve(result);
+                });
+              });
+              data.group_details = groups;
+
+              // chapter details
+
+              var sql2 = `SELECT * FROM (SELECT * FROM chapters WHERE course_id=${result[0].id})p  ORDER BY chapter_no ASC `;
+              var chapter_data = await new Promise(function (resolve, reject) {
+                conn.query(sql2, (err, result) => {
+                  if (err) throw err;
+                  if (result.length > 0) {
+                    var data = [];
+                    for (var i of result) {
+                      var temp = {
+                        id: i.id,
+                        course_id: i.course_id,
+                        chapter_name: i.chapter_name,
+                        created_at: i.created_at,
+                        updated_at: i.updated_at,
+                        chapter_no: i.chapter_no,
+                        lessons: [],
+                      };
+
+                      data.push(temp);
+                    }
+
+                    resolve(data);
+                  } else {
+                    resolve([]);
+                  }
+                });
+              });
+
+              //  console.log(chapter_data)
+
+              data.chapters = chapter_data;
+
+              // lesson details
+              // console.log(data.chapters)
+              for (let chapter = 0; chapter < data.chapters.length; chapter++) {
+                var sql2 = `SELECT * FROM (SELECT * FROM lessons WHERE course_id=${result[0].id} and chapter_id=${data.chapters[chapter].id})p ORDER BY lesson_no ASC `;
+                console.log(sql2);
+                var lesson = await new Promise(function (resolve, reject) {
+                  conn.query(sql2, (err, result) => {
+                    if (err) throw err;
+
+                    if (result.length > 0) {
+                      var data = [];
+                      for (let i of result) {
+                        var temp = {
+                          id: i.id,
+                          course_id: i.course_id,
+                          chapter_id: i.chapter_id,
+                          lesson_name: i.lesson_name,
+                          lesson_vedio: i.lesson_vedio
+                            ? process.env.vedios_path + i.lesson_vedio
+                            : "",
+                          lesson_file: i.lesson_file
+                            ? process.env.files_path + i.lesson_file
+                            : "",
+                          lesson_details: i.lesson_details,
+                          created_at: i.created_at,
+                          updated_at: i.updated_at,
+                          lesson_vedio_type: i.lesson_vedio_type,
+                          lesson_vedio_link: i.lesson_vedio_link
+                            ? i.lesson_vedio_link
+                            : "",
+                          duration: i.duration ? i.duration : "",
+                        };
+                        data.push(temp);
+                      }
+
+                      // console.log(result.length)
+
+                      resolve(data);
+                    } else {
+                      resolve([]);
+                    }
+                  });
+                });
+
+                data.chapters[chapter].lessons = lesson;
+              }
+
+              console.log(data);
+
+              callback(false, data);
+            } else {
+              callback(true, result);
+            }
+          }
+        });
   }
 
   statusActiveInactive(data, callback) {
@@ -1226,6 +1376,10 @@ class Courses {
       }
     });
   }
+
+
+  
+
 }
 
 module.exports = new Courses();

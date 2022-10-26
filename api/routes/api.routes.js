@@ -104,7 +104,8 @@ router.post(apiRoutes.courseSearch, courseController.searchCourse);
 
 // web course shhow details and single course
 router.get(apiRoutes.webCourse, courseController.webCourseDEtailsShow);
-router.get(apiRoutes.webCourseId, courseController.webCourseDEtailsShowId);
+router.get(apiRoutes.webCourseId, courseController.webCourseDEtailsShowId); 
+router.get(apiRoutes.webCourseName, courseController.webCourseByName); 
 
 
 // category

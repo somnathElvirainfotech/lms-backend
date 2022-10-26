@@ -377,8 +377,14 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  if (req.params.id) {
-    courseModule.show(req.params.id, (err, result) => {
+
+  var {id}=req.params;
+
+  if (id) {
+
+    
+
+    courseModule.show(id, (err, result) => {
       if (err) {
         res.status(200).json({
           status: false,
@@ -401,6 +407,8 @@ exports.findOne = (req, res) => {
     });
   }
 };
+
+
 
 exports.delete = (req, res) => {
   if (req.params.id) {
@@ -471,11 +479,38 @@ exports.statusActiveInactive = (req, res) => {
   }
 };
 
-exports.webCourseDEtailsShowId = (req, res) => {
+exports.webCourseDEtailsShowId = (req, res) => {  
   const { id } = req.params;
 
   if (id) {
+
+    console.log("value type of ",typeof(id))
+
     courseModule.webCouseDetailShow(id, (err, result) => {
+      if (err) {
+        res.status(200).json({
+          status: false,
+          msg: statusMessages.dataNotFound,
+          data: [],
+        });
+      } else {
+        res.status(200).json({
+          status: true,
+          msg: statusMessages.dataFound,
+          data: result,
+        });
+      }
+    });
+  }
+};
+
+
+exports.webCourseByName = (req, res) => {  
+  const { name } = req.params;
+
+  if (name) {
+
+    courseModule.webCourseByName(name, (err, result) => {
       if (err) {
         res.status(200).json({
           status: false,

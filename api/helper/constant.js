@@ -65,6 +65,7 @@ module.exports = {
         courseApproveStatus: '/course-approve',
         webCourse: '/web-course',
         webCourseId: '/web-course/:id',
+        webCourseName: '/web-course-name/:name',
         showByCreatorId: '/course-show-user/:id',
 
         courseSearch: '/course/search',
