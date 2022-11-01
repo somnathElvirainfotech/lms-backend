@@ -1,3 +1,5 @@
+// get cookie -------------------------------------------------------
+
 name: getCookieData().username,
 email: getCookieData().email
 
@@ -10,4 +12,33 @@ email: getCookieData().email
 			return cookieObj.user_info;
 		}
 
-	</script>
+</script>
+
+-----------------------------------------------------------------------------
+
+
+// send xapi to local server -------------------------------------------------
+
+var url="http://lmsbackend.elvirainfotech.org/api/xapi/store-result";
+var option = {
+      mode: "cors",
+      method: "post",
+      body: JSON.stringify({
+        USER_EMAIL: "%USER_EMAIL%",
+        USER_ID: "%USER_ID%",
+        XAPI_NAME: "%XAPI_NAME%",
+        USER_ROLE:"%USER_ROLE%"
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(url, option)
+	.then((response) => response.text())
+    .then((response) => console.log(response))
+	.catch((err) =>
+      console.log(err)
+    );
+
+----------------------------------------------------------------------------------

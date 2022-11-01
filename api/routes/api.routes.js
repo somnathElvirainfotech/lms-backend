@@ -217,6 +217,7 @@ router.post(apiRoutes.maintenance, checkUserAuth, maintenanceController.create)
 // xapi qus and ans read by course id and user email
 router.post("/xapi/question-answer", xapiQuestionAns.xapiRead);
 router.post("/xapi/result-save", xapiQuestionAns.resultSave);
+router.post("/xapi/store-result", xapiQuestionAns.storeResult);
 
 
 // certificate

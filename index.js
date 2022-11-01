@@ -108,7 +108,10 @@ app.post('/course/approve/status', loginAuth, courseController.approveStatus);
 
 //maintenance mode
 app.get('/maintenance', loginAuth, maintenanceController.getAll);
-app.post('/maintenance', loginAuth, maintenanceController.create)
+app.post('/maintenance', loginAuth, maintenanceController.create);
+
+ 
+
 
 
 

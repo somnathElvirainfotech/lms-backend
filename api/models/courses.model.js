@@ -608,7 +608,7 @@ class Courses {
           if (result.length > 0) {
             resolve(result);
           } else {
-            resolve(null);
+            resolve([]);
           }
         });
       });
