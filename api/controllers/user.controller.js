@@ -11,6 +11,9 @@ var mail = require("../config/mailconfig");
 const path = require("path");
 
 const multer = require("multer");
+const conn = require("../config/dbconfig");
+const { resolve } = require("path");
+const { rejects } = require("assert");
 const upload = multer({ dest: path.join(__dirname + "uploads/") });
 exports.uploadImg = upload.single("photo");
 
@@ -108,6 +111,40 @@ exports.registration = (req, res) => {
   }
 };
 
+// =======================================================
+
+exports.loginStatus=async(req,res)=>{
+  const {status,email}=req.body;
+
+  if(status && email)
+  {
+    var sql=`UPDATE users SET updated_at=NOW(),login_Status='${status}' WHERE email='${email}'`;
+
+    await new Promise((resolve,reject)=>{
+      conn.query(sql,(err,result)=>{
+        if(err)throw err;
+        resolve(true)
+      })
+    })
+
+    res.status(200).json({
+      status: true,
+      msg: "login status change successfull ",
+      data: [],
+    });
+
+  }else{
+    res.status(200).json({
+      status: false,
+      msg: "status and email required",
+      data: [],
+    });
+  }
+
+}
+
+// ========================================================
+
 exports.login = (req, res) => {
   const { email, password } = req.body;
 
@@ -126,8 +163,8 @@ exports.login = (req, res) => {
             if (
               user[0].role === 5 ||
               user[0].role === 4 ||
-              user[0].role === 2 ||
-              user[0].role === 3 
+              user[0].role === 2 
+              // user[0].role === 3 
             ) {
               const token = jwt.sign(
                 {

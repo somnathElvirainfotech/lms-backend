@@ -1262,118 +1262,122 @@ class Courses {
         }
 
         callback(false, data);
-      } else {
-        var result2 = await new Promise((resolve, reject) => {
-          conn.query(nosearchSql, async (err, result) => {
-            var data = [];
-            for (var item of result) {
-              const sql2 = `SELECT c_name from category WHERE id=${item.category_id}`;
-              const parentCatagoryName = await new Promise(function (
-                resolve,
-                reject
-              ) {
-                conn.query(sql2, (err2, result2) => {
-                  if (err2) throw err2;
+      } 
+      else {
+        // var result2 = await new Promise((resolve, reject) => {
+        //   conn.query(nosearchSql, async (err, result) => {
+        //     var data = [];
+        //     for (var item of result) {
+        //       const sql2 = `SELECT c_name from category WHERE id=${item.category_id}`;
+        //       const parentCatagoryName = await new Promise(function (
+        //         resolve,
+        //         reject
+        //       ) {
+        //         conn.query(sql2, (err2, result2) => {
+        //           if (err2) throw err2;
 
-                  if (result2.length > 0) {
-                    resolve(result2);
-                  } else {
-                    resolve(null);
-                  }
-                });
-              });
+        //           if (result2.length > 0) {
+        //             resolve(result2);
+        //           } else {
+        //             resolve(null);
+        //           }
+        //         });
+        //       });
 
-              const sql3 = `SELECT firstname,lastname from users WHERE id=${mysql.escape(
-                item.user_id
-              )}`;
-              const creators = await new Promise(function (resolve, reject) {
-                conn.query(sql3, (err3, result3) => {
-                  if (err3) throw err3;
+        //       const sql3 = `SELECT firstname,lastname from users WHERE id=${mysql.escape(
+        //         item.user_id
+        //       )}`;
+        //       const creators = await new Promise(function (resolve, reject) {
+        //         conn.query(sql3, (err3, result3) => {
+        //           if (err3) throw err3;
 
-                  if (result3.length > 0) {
-                    //console.log(result3
-                    var name = result3[0].firstname + " " + result3[0].lastname;
-                    resolve(name);
-                  } else {
-                    resolve(null);
-                  }
-                });
-              });
+        //           if (result3.length > 0) {
+        //             //console.log(result3
+        //             var name = result3[0].firstname + " " + result3[0].lastname;
+        //             resolve(name);
+        //           } else {
+        //             resolve(null);
+        //           }
+        //         });
+        //       });
 
-              var temp = {
-                course_name: item.course_name,
-                xapi_file_name: item.xapi_file_name?item.xapi_file_name:'',
-                creator_name: creators,
-                short_description: item.short_description,
-                long_description: item.long_description,
-                id: item.id,
-                image:
-                  item.image != null
-                    ? process.env.images_path + `${item.image}`
-                    : "",
-                avatar_image:
-                  item.avatar_image != null
-                    ? process.env.images_path + `${item.avatar_image}`
-                    : "",
-                attachment_file:
-                  item.attachment_file != null
-                    ? process.env.images_path + `${item.attachment_file}`
-                    : "",
-                course_level: item.course_level,
-                group_id: item.group_id,
-                group_details: [],
-                category_id: item.category_id,
-                total_enroll_no: 0,
-                category_name:
-                  parentCatagoryName != null
-                    ? parentCatagoryName[0].c_name
-                    : null,
-                sub_category_id: item.sub_category_id,
-                course_tag: null,
-                published_status: item.published_status,
-                approved_status: item.approved_status,
-                created_at: item.created_at,
-                updated_at: item.updated_at,
-                course_languages_id: item.course_languages_id,
-                language_id: item.language_id,
-              };
+        //       var temp = {
+        //         course_name: item.course_name,
+        //         xapi_file_name: item.xapi_file_name?item.xapi_file_name:'',
+        //         creator_name: creators,
+        //         short_description: item.short_description,
+        //         long_description: item.long_description,
+        //         id: item.id,
+        //         image:
+        //           item.image != null
+        //             ? process.env.images_path + `${item.image}`
+        //             : "",
+        //         avatar_image:
+        //           item.avatar_image != null
+        //             ? process.env.images_path + `${item.avatar_image}`
+        //             : "",
+        //         attachment_file:
+        //           item.attachment_file != null
+        //             ? process.env.images_path + `${item.attachment_file}`
+        //             : "",
+        //         course_level: item.course_level,
+        //         group_id: item.group_id,
+        //         group_details: [],
+        //         category_id: item.category_id,
+        //         total_enroll_no: 0,
+        //         category_name:
+        //           parentCatagoryName != null
+        //             ? parentCatagoryName[0].c_name
+        //             : null,
+        //         sub_category_id: item.sub_category_id,
+        //         course_tag: null,
+        //         published_status: item.published_status,
+        //         approved_status: item.approved_status,
+        //         created_at: item.created_at,
+        //         updated_at: item.updated_at,
+        //         course_languages_id: item.course_languages_id,
+        //         language_id: item.language_id,
+        //       };
 
-              // group details add
-              var sql = `SELECT course_group.*,groups.g_name FROM course_group LEFT JOIN groups on groups.id=course_group.group_id WHERE course_group.course_id=${item.id}`;
+        //       // group details add
+        //       var sql = `SELECT course_group.*,groups.g_name FROM course_group LEFT JOIN groups on groups.id=course_group.group_id WHERE course_group.course_id=${item.id}`;
 
-              var groups = await new Promise((resolve, reject) => {
-                conn.query(sql, (err, result) => {
-                  if (err) throw err;
-                  resolve(result);
-                });
-              });
-              temp.group_details = groups;
+        //       var groups = await new Promise((resolve, reject) => {
+        //         conn.query(sql, (err, result) => {
+        //           if (err) throw err;
+        //           resolve(result);
+        //         });
+        //       });
+        //       temp.group_details = groups;
 
-              // total enroll no
-              var sql = `SELECT COUNT(id) as no_enroll FROM enrollments where course_id=${item.id} AND user_enroll_status='active' `;
+        //       // total enroll no
+        //       var sql = `SELECT COUNT(id) as no_enroll FROM enrollments where course_id=${item.id} AND user_enroll_status='active' `;
 
-              var total_enroll_no = await new Promise((resolve, reject) => {
-                conn.query(sql, (err, result) => {
-                  if (err) throw err;
+        //       var total_enroll_no = await new Promise((resolve, reject) => {
+        //         conn.query(sql, (err, result) => {
+        //           if (err) throw err;
 
-                  if (result.length > 0) {
-                    resolve(result[0].no_enroll);
-                  } else {
-                    resolve(0);
-                  }
-                });
-              });
-              temp.total_enroll_no = total_enroll_no;
+        //           if (result.length > 0) {
+        //             resolve(result[0].no_enroll);
+        //           } else {
+        //             resolve(0);
+        //           }
+        //         });
+        //       });
+        //       temp.total_enroll_no = total_enroll_no;
 
-              data.push(temp);
-            }
+        //       data.push(temp);
+        //     }
 
-            resolve(data);
-          });
-        });
+        //     resolve(data);
+        //   });
+        // });
 
-        callback(false, result2);
+       // callback(false, result2);
+       callback(false,[]);
       }
+
+     
     });
   }
 

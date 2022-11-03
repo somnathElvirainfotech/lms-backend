@@ -1,16 +1,30 @@
 // get cookie -------------------------------------------------------
-
+===================Previous ==========
 name: getCookieData().username,
 email: getCookieData().email
+===========New =================
+name: getSearchParams().username,
+email: getSearchParams().email
 
 
 <script>
-
+================== Previous ===================
 		function getCookieData() {
 			var cookieObj = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({ ...accumulator, [key.trim()]: JSON.parse(decodeURIComponent(value)) }), {});
 			// console.log(cookieObj.user_info)
 			return cookieObj.user_info;
 		}
+================= new =================
+    function getSearchParams()
+    {
+      const queryParams = new URLSearchParams(window.location.search);
+      var obj={
+        username:queryParams.get('USER_NAME'),
+        email:queryParams.get('USER_EMAIL')
+      }
+
+      return obj;
+    }
 
 </script>
 
@@ -42,3 +56,6 @@ var option = {
     );
 
 ----------------------------------------------------------------------------------
+
+
+file:///media/elviradev/DATA/new_project/LMS_FINAL/xapi_3/xapi_local_7/index.html?USER_ID=4&ENROLL_ID=999&TASK_ID=666&USER_EMAIL=asad@gmail.com

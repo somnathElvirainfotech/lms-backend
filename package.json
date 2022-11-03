@@ -36,6 +36,7 @@
     "nodemailer": "^6.7.8",
     "nodemon": "^2.0.15",
     "ppt-png": "^2.0.0",
-    "request-ip": "^2.2.0"
+    "request-ip": "^2.2.0",
+    "xml2js": "^0.4.23"
   }
 }

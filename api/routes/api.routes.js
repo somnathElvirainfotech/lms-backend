@@ -42,6 +42,7 @@ router.post(apiRoutes.status, checkUserAuth, userController.statusActiveInactive
 router.post(apiRoutes.userSearch, checkUserAuth, userController.userSearch);
 router.post(apiRoutes.generatePassword, checkUserAuth, userController.generatePassword);
 router.post("/login-type", userController.getUserByEmail)
+router.post("/login-status", userController.loginStatus);
 
 
 // get user by role id

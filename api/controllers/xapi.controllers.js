@@ -4,6 +4,7 @@ const conn = require("../config/dbconfig");
 const mysql = require("mysql");
 const { param } = require("../routes/api.routes");
 const enrollmentModel = require("../models/enrollment.model");
+var { parseString } = require("xml2js");
 
 exports.xapiRead = async (req, res) => {
   var { course_type, enrollment_id } = req.body;
@@ -325,11 +326,11 @@ exports.xapiRead = async (req, res) => {
         target: [],
       };
       for (var i of data) {
-        if (i.option_type == "choices") {
+        if (i.option_type == "choice") {
           ditem.choices.push(i);
-        } else if (i.option_type == "source") {
+        } else if (i.option_type == "matching_premise") {
           ditem.source.push(i);
-        } else if (i.option_type == "target") {
+        } else if (i.option_type == "matching_response") {
           ditem.target.push(i);
         }
       }
@@ -338,7 +339,7 @@ exports.xapiRead = async (req, res) => {
 
       item.option_type = data[0].option_type;
 
-      console.log(data[0].option_type);
+      // console.log(data[0].option_type);
 
       l_arr.push(item);
     }
@@ -731,11 +732,6 @@ exports.resultSave = async (req, res) => {
   }
 };
 
-
-
-
-
-
 // xapi store result -----------------------------------------------------------
 var resultSave2 = async (rdata) => {
   var { course_type, course_name, user_email, enrollment_id } = rdata;
@@ -1046,18 +1042,419 @@ var resultSave2 = async (rdata) => {
   }
 };
 
-// for xapi api--------
+// for xapi api------------------------------------------------------------------
 exports.storeResult = async (req, res) => {
-  const { USER_EMAIL, USER_ID, USER_ROLE, XAPI_NAME } = req.body;
+  console.log("xap--------  i", req.body);
 
-  if(USER_EMAIL && USER_ID && USER_ROLE && XAPI_NAME)
+  // Without parser
+
+  //  var data= await new Promise((resolve,reject)=>{
+  //   parseString(req.body.dr, {trim: true}, function (err, result) {
+  // console.dir(result['quizReport']['groups'][0].group[0]['$'])
+
+  // // question
+  // console.dir(result['quizReport']['questions'][0].multipleChoiceQuestion[0].direction[0])
+
+  // // anser
+  // console.dir(result['quizReport']['questions'][0].multipleChoiceQuestion[0].answers[0]['answer'])
+
+  // // c ans
+  // console.dir(result['quizReport']['questions'][0].multipleChoiceQuestion[0]['$'].maxPoints)
+  // console.dir(result['quizReport']['questions'][0].multipleChoiceQuestion[0]['$'].awardedPoints)
+  // console.dir(result['quizReport']['questions'][0].multipleChoiceQuestion[0]['$'].status)
+
+  //   console.dir(result['quizReport'])
+
+  //   // console.dir(result['quizReport']['questions'][0].multipleChoiceQuestion)
+
+  //   resolve(result)
+  // });
+  // })
+
+  //console.dir(Object.keys(data).length)
+
+  //  console.dir(data['quizReport']['groups'][0].group[0]['$'])
+
+  // const { USER_EMAIL, USER_ID, USER_ROLE, XAPI_NAME } = req.body;
+
+  // if(USER_EMAIL && USER_ID && USER_ROLE && XAPI_NAME)
+  // {
+  //     await xapiCourseSubmit(USER_ID, USER_ROLE, XAPI_NAME,USER_EMAIL);
+  //     res.send("success full ");
+  // }else{
+  //   res.send(" USER EMAIL, USER ID, USER ROLE, XAPI COURSE NAME REQUIRED")
+  // }
+
+  // sp --> user Earned points
+  // tp --> total user point
+  // ps --> passign ponit
+  // dr --> result details
+
+  const {ENROLL_ID,TASK_ID,USER_ID,USER_ROLE,USER_EMAIL}=req.body;
+
+  var sql=`SELECT * FROM users WHERE email='${USER_EMAIL}' AND login_Status='active'`;
+ var chk= await new Promise((resolve,reject)=>{
+    conn.query(sql,(err,result)=>{
+      if(err) throw err;
+      if(result.length>0)
+      resolve(true)
+      else
+      resolve(false)
+    })
+  })
+
+  if(chk)
   {
-      await xapiCourseSubmit(USER_ID, USER_ROLE, XAPI_NAME,USER_EMAIL);
-      res.send("success full ");
+if(USER_ROLE==5)
+{
+  if (req.body.sp >= req.body.ps) {
+    var data = await new Promise((resolve, reject) => {
+      parseString(req.body.dr, { trim: true }, function (err, result) {
+        if (err) throw err;
+        resolve(result);
+      });
+    });
+
+
+
+
+      // delete question -----------------------------------------------
+
+      var sql = `SELECT * FROM question WHERE enrollment_id=${mysql.escape(ENROLL_ID)} `;
+      var qnsAll = await new Promise((resolve, reject) => {
+        conn.query(sql, (err, result) => {
+          if (err) throw err;
+          if (result.length > 0) resolve(result);
+          else resolve([]);
+        });
+      });
+
+
+      var sql = `DELETE FROM question WHERE enrollment_id=${mysql.escape(ENROLL_ID)} `;
+      await new Promise((resolve, reject) => {
+        conn.query(sql, (err, result) => {
+          if (err) throw err;
+          resolve(true);
+        });
+      });
+
+      for (i of qnsAll) {
+        var sql = `DELETE FROM question_options WHERE question_id=${mysql.escape(i.id)} `;
+        await new Promise((resolve, reject) => {
+          conn.query(sql, (err, result) => {
+            if (err) throw err;
+            resolve(true);
+          });
+        });
+      }
+
+      // end delete question -----------------------------------------------
+
+      //console.log(data['quizReport'])
+
+      // quess name arr
+      var allQnsName=Object.keys(data['quizReport']['questions'][0])
+
+      // console.log(data['quizReport']['questions'][0].matchingQuestion[0].direction);
+      // console.log(data['quizReport']['questions'].multipleChoiceQuestion);
+
+      for(var q of allQnsName)
+      {
+       
+        if(q=="multipleChoiceQuestion")
+        {
+          
+         await quessStore(data['quizReport']['questions'][0].multipleChoiceQuestion,ENROLL_ID,TASK_ID,USER_ID,req.body.sp,req.body.tp)
+        }
+        else if(q=="multipleResponseQuestion")
+        {
+         await quessStore(data['quizReport']['questions'][0].multipleResponseQuestion,ENROLL_ID,TASK_ID,USER_ID,req.body.sp,req.body.tp)
+        }
+        else if(q=="matchingQuestion")
+        {
+         await quessStore(data['quizReport']['questions'][0].matchingQuestion,ENROLL_ID,TASK_ID,USER_ID,req.body.sp,req.body.tp)
+        }
+        
+
+      }
+
+      
+
   }else{
-    res.send(" USER EMAIL, USER ID, USER ROLE, XAPI COURSE NAME REQUIRED")
+    
+    if(USER_ROLE==5)
+    {
+    // enrollment update --------------------------------------------------
+    if(ENROLL_ID != 0)
+    {
+    await new Promise((resolve, reject) => {
+      var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+        0
+      )},enrollment_status='failed',total_number=${mysql.escape(
+        req.body.tp
+      )},score_number=${mysql.escape(
+        req.body.sp
+      )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+      conn.query(sql, (err, result) => {
+        if (err) throw err;
+        resolve("true");
+      });
+    });
   }
+
+
+    // task update ---------------------------------------------------------
+
+    if(TASK_ID != 0 )
+    {
+    await new Promise((resolve, reject) => {
+      var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='failed' WHERE task_id=${mysql.escape(
+        TASK_ID
+      )} AND user_id=${mysql.escape(USER_ID)}`;
+      conn.query(sql, (err, result) => {
+        if (err) throw err;
+        resolve("true");
+      });
+    });
+  }
+  }
+
+  }
+  res.json({mag:"operation successfull"});
+}else{
+  res.json({mag:"not a valid user"});
+}
+}else{
+  res.json({mag:"not a valid user"});
+}
+
+  
 };
+
+
+var quessStore=async(data,ENROLL_ID,TASK_ID,USER_ID,user_point,total_point)=>{
+
+  // console.log(data);
+
+  for(var i of data)
+  {
+   
+    // console.log(i['$']);
+    // console.log(i['$'].status);
+
+    var optionData=[];
+    var premiseArr=[];
+    var responseArr=[];
+
+    var questionData = {
+      question_name: i.direction[0].text[0],
+      // correct_answer:item.questionAns.definition.correctResponsesPattern[0],
+      enrollment_id: ENROLL_ID,
+      total_marks: i['$'].maxPoints,
+      user_marks: i['$'].awardedPoints,
+      answer_status:i['$'].status
+    };
+    
+    // var tempAr
+
+    // question name
+    // i.direction[0].text[0]
+    // console.log(i.direction[0].text[0]);
+
+    if(i.answers != undefined) //chooices
+    {
+      if(i.answers[0]['$'] != undefined)
+      {
+        // console.log(i.answers[0]['$'].correctAnswerIndex);
+        // console.log(i.answers[0]['$'].userAnswerIndex);
+
+        
+        var tempArr=i.answers[0].answer;
+        for(var item of tempArr)
+        {
+          optionData.push(item.text[0])
+        }
+
+
+        // user answer ------------------------------
+        questionData.user_answer=optionData[Number(i.answers[0]['$'].userAnswerIndex)];
+
+      }else{
+
+       
+        var user_answer='';
+        var tempArr=i.answers[0].answer;
+        for(var item of tempArr)
+        {
+          if(item['$'].selected == 'true')
+          user_answer+=item.text[0]+",";
+          optionData.push(item.text[0])
+        }
+
+
+         // user answer ------------------------------
+         questionData.user_answer=user_answer;
+
+
+      }
+
+      
+      // console.log(i.answers[0].answer);
+
+
+    }else if(i.userAnswer != undefined) //matching
+    {
+      // item
+      //console.log(i.premises[0].premise);
+      var items=i.premises[0].premise;
+      
+      for(var item of items)
+      {
+        console.log(item.text[0]);
+        premiseArr.push(item.text[0]);
+
+      }
+
+      // matching 
+      //console.log(i.responses[0].response);
+      var matchings=i.responses[0].response;
+     
+      for(var item of matchings)
+            {
+              console.log(item.text[0]);
+              responseArr.push(item.text[0]);
+
+            }
+
+      // userAnswer
+     console.log(i.userAnswer[0].match);
+     var uresult=i.userAnswer[0].match;
+      var user_answer='';
+     for(var item of uresult)
+     {
+      user_answer+=premiseArr[Number(item['$'].premiseIndex)]+" "+responseArr[Number(item['$'].responseIndex)]+",";
+     }
+     questionData.user_answer=user_answer;
+
+    //  console.log(user_answer);
+
+
+   
+
+    }
+
+    console.log(questionData);
+    
+
+          //  database store question ------------------------------------------
+
+         var sql = `INSERT INTO question set created_at=NOW(), ? `;
+          var qnsId = await new Promise((resolve, reject) => {
+            conn.query(sql, questionData, (err, result) => {
+              if (err) throw err;
+              resolve(result.insertId);
+            });
+          });
+    
+
+           //  database store options ------------------------------------------
+
+           for (var i of optionData) {
+            o_temp = {
+              question_id: qnsId,
+              option_name: i,
+              // option_id: i.id,
+              option_type: "choice",
+            };
+
+            var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+            await new Promise((resolve, reject) => {
+              conn.query(sql, o_temp, (err, result) => {
+                if (err) throw err;
+                resolve(true);
+              });
+            });
+          }
+
+          for (var i of premiseArr) {
+            o_temp = {
+              question_id: qnsId,
+              option_name: i,
+              // option_id: i.id,
+              option_type: "matching_premise",
+            };
+
+            var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+            await new Promise((resolve, reject) => {
+              conn.query(sql, o_temp, (err, result) => {
+                if (err) throw err;
+                resolve(true);
+              });
+            });
+          }
+
+
+          for (var i of responseArr) {
+            o_temp = {
+              question_id: qnsId,
+              option_name: i,
+              // option_id: i.id,
+              option_type: "matching_response",
+            };
+
+            var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+            await new Promise((resolve, reject) => {
+              conn.query(sql, o_temp, (err, result) => {
+                if (err) throw err;
+                resolve(true);
+              });
+            });
+          }
+
+          //  end ------------------------------------------------------------------
+
+
+          // enrollment update --------------------------------------------------
+          if(ENROLL_ID != 0)
+          {
+          await new Promise((resolve, reject) => {
+            var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+              100
+            )},enrollment_status='completed',total_number=${mysql.escape(
+              total_point
+            )},score_number=${mysql.escape(
+              user_point
+            )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+            conn.query(sql, (err, result) => {
+              if (err) throw err;
+              resolve("true");
+            });
+          });
+        }
+
+          // task update --------------------------------------------------------
+          if(TASK_ID != 0)
+          {
+            
+          await new Promise((resolve, reject) => {
+            var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+              TASK_ID
+            )} AND user_id=${mysql.escape(USER_ID)}`;
+            conn.query(sql, (err, result) => {
+              if (err) throw err;
+              resolve("true");
+            });
+          });
+        }
+    
+
+  }
+
+}
+//end -----------------------------------------------------------------------
 
 
 var chkDuplicate = (arr, valu) => {
@@ -1092,7 +1489,7 @@ var chkDuplicate3 = (arr, valu) => {
   return true;
 };
 
-var getXapiData = async (totalCourse,USER_EMAIL,USER_ID) => {
+var getXapiData = async (totalCourse, USER_EMAIL, USER_ID) => {
   // setShowLoader(true)
 
   var agent = USER_EMAIL;
@@ -1330,10 +1727,10 @@ var getXapiData = async (totalCourse,USER_EMAIL,USER_ID) => {
   // console.log("xapi----data", xapiCourse);
 
   if (xapiCourse.length > 0) {
-    console.log("xapi......-data",xapiCourse);
+    console.log("xapi......-data", xapiCourse);
 
     // enrollment status updated  ------------------
-   // await EnrollmentService.enrollmentStatusUpdate(xapiCourse);
+    // await EnrollmentService.enrollmentStatusUpdate(xapiCourse);
 
     await new Promise((resolve, reject) => {
       enrollmentModel.statusUpdate(xapiCourse, (err, result) => {
@@ -1352,19 +1749,24 @@ var getXapiData = async (totalCourse,USER_EMAIL,USER_ID) => {
       if (i.passed && Date.parse(i.updateTimestamp) > Date.parse(i.timestamp)) {
         if (i.enrollment_status == "completed") {
           console.log("sub one");
-         await resultSave2({
-          enrollment_id: i.enrollment_id,
-          course_name: i.course_name,
-          course_type: i.course_type,
-          user_email: i.user_email,
-        });
+          await resultSave2({
+            enrollment_id: i.enrollment_id,
+            course_name: i.course_name,
+            course_type: i.course_type,
+            user_email: i.user_email,
+          });
         }
-      } 
+      }
     }
   }
 };
 
-var xapiCourseSubmit = async (user_id, user_role, xapi_course_name,USER_EMAIL) => {
+var xapiCourseSubmit = async (
+  user_id,
+  user_role,
+  xapi_course_name,
+  USER_EMAIL
+) => {
   // -----------------------------------------------
 
   //alert(xapi_course_name)
@@ -1412,7 +1814,7 @@ var xapiCourseSubmit = async (user_id, user_role, xapi_course_name,USER_EMAIL) =
     //console.log("course data---",xdata);
 
     // xapi
-    var status = await getXapiData(xdata,USER_EMAIL,user_id);
+    var status = await getXapiData(xdata, USER_EMAIL, user_id);
 
     if (status) return true;
     else return false;
