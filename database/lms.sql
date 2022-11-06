@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 21, 2022 at 09:59 AM
+-- Generation Time: Nov 04, 2022 at 05:59 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -176,7 +176,8 @@ INSERT INTO `courses` (`id`, `user_id`, `course_name`, `author_name`, `author_em
 (2, 62, 'new compliance', NULL, NULL, 'Pozarkviz1', '<p>pozar short</p>', '<p>pozar long</p>', '1664604141781_xls.jpeg', '1664604141782_database_crs.png', NULL, 'xapi', 'Pozarkviz1/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 2, 'Obuke za zaštitu od požara', 'active', 'active', '2022-10-01 06:02:22', NULL),
 (3, 62, 'Video excel', NULL, NULL, 'undefined', '<p>dfadfa mst a ddaga. dsfsrtr fasd fdsta ako d da ne mogu da probam dovo da&nbsp;</p>', '<p>In this course you will learn how to use Excel in business.</p><p>In 34 lections we will guide you from basic understanding to creating complex formulas and linking sheets and files (workbooks).</p><p><br></p><p><a href=\"https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf\" title=\"\">https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf</a></p><p>asdfds</p>', '1664610453982_image002.png', '1664610453982_xls.jpeg', '1664610453982_registration_form.pdf', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'Excel za zaposlene', 'active', 'active', '2022-10-01 07:47:33', '2022-10-07 12:47:30'),
 (4, 62, 'it security 1', 'ZxZXZ', 'dsfdsf@g.i', 'kurs_bezb1', '<p>short bezbednosti<br></p>', '<p>long description bezbednosti<br></p>', '1666076058874_download (5).jpeg', '1666076058874_download.jpeg', NULL, 'xapi', 'kurs_bezb1/res/index.html', 'beginner', NULL, 2, NULL, NULL, NULL, 3, 'IT Bezbednosti #1', 'active', 'active', '2022-10-03 07:32:57', '2022-10-18 06:54:18'),
-(6, 62, 'ggtrere', 'sssss', 'sd@g.in', 'undefined', '<p>sddsfjfff</p>', '<p>hhajjhsaomnath hsjj</p>', '1666076078082_online-course-vector-27123059.jpg', '1666076078082_downloads.jpeg', '1665754149872_p_obuka_reqs-v3 (4).docx', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'safdsfds', 'active', 'active', '2022-10-14 13:29:09', '2022-10-18 06:54:38');
+(6, 62, 'ggtrere', 'sssss', 'sd@g.in', 'undefined', '<p>sddsfjfff</p>', '<p>hhajjhsaomnath hsjj</p>', '1666076078082_online-course-vector-27123059.jpg', '1666076078082_downloads.jpeg', '1665754149872_p_obuka_reqs-v3 (4).docx', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'safdsfds', 'active', 'active', '2022-10-14 13:29:09', '2022-10-18 06:54:38'),
+(7, 62, 'test xapi', 'jagan', 'jagan44@gmail.com', 'test_xapi_2', '<p>ddasdsad dsa das&nbsp;</p>', '<p>asddsa dad sadsad sadsad&nbsp;</p>', '1667214067973_istockphoto-1366428092-170667a.jpg', '1667214067973_online-course-vector-27123059.jpg', NULL, 'xapi', 'test_xapi_2/res/index.html', 'beginner', NULL, 4, NULL, NULL, NULL, 0, 'text xapi', 'active', 'active', '2022-10-31 11:01:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -232,7 +233,10 @@ INSERT INTO `course_group` (`id`, `course_id`, `group_id`) VALUES
 (56, 4, 1),
 (57, 6, 3),
 (58, 6, 2),
-(59, 6, 1);
+(59, 6, 1),
+(60, 7, 3),
+(61, 7, 2),
+(62, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -256,7 +260,8 @@ INSERT INTO `course_languages` (`id`, `course_id`, `language_id`) VALUES
 (9, 5, 2),
 (21, 1, 2),
 (22, 4, 2),
-(23, 6, 2);
+(23, 6, 2),
+(24, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -341,47 +346,9 @@ CREATE TABLE `enrollments` (
 --
 
 INSERT INTO `enrollments` (`id`, `user_id`, `course_id`, `enrollment_status`, `current_chapter`, `current_lession`, `course_progress`, `total_number`, `score_number`, `user_enroll_status`, `date_at`, `created_at`, `updated_at`) VALUES
-(1, 79, 1, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-09-30', '2022-09-30 08:55:24', '2022-09-30 08:55:24'),
-(2, 81, 2, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-01', '2022-10-07 17:05:24', '2022-10-07 17:05:24'),
-(3, 81, 1, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-01', '2022-10-07 17:05:24', '2022-10-07 17:05:24'),
-(4, 81, 3, 'onprogress', 1, 2, 67, 0, 0, 'active', '2022-10-01', '2022-10-01 09:57:25', '2022-10-01 09:57:25'),
-(5, 82, 3, 'onprogress', 1, 1, 0, 0, 0, 'active', '2022-10-01', '2022-10-01 21:10:50', '2022-10-01 21:10:50'),
-(6, 83, 4, 'completed', NULL, NULL, 100, 100, 90, 'active', '2022-10-03', '2022-10-03 07:46:29', '2022-10-03 07:46:29'),
-(7, 83, 2, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-03', '2022-10-03 07:46:29', '2022-10-03 07:46:29'),
-(8, 82, 4, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-03', '2022-10-07 17:03:05', '2022-10-07 17:03:05'),
-(9, 80, 2, 'completed', NULL, NULL, 100, 100, 90, 'active', '2022-10-03', '2022-10-09 19:11:45', '2022-10-09 19:11:45'),
-(10, 80, 4, 'completed', NULL, NULL, 100, 100, 90, 'active', '2022-10-03', '2022-10-09 19:11:45', '2022-10-09 19:11:45'),
-(11, 84, 4, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-03', '2022-10-07 09:19:26', '2022-10-07 09:19:26'),
-(12, 84, 2, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-03', '2022-10-07 09:19:26', '2022-10-07 09:19:26'),
-(13, 84, 3, 'onprogress', 1, 2, 0, 0, 0, 'active', '2022-10-03', '2022-10-07 08:18:58', '2022-10-07 08:18:58'),
-(14, 80, 1, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-08', '2022-10-09 19:11:45', '2022-10-09 19:11:45'),
-(15, 87, 1, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-11', '2022-10-19 10:40:16', '2022-10-19 10:40:16'),
-(16, 88, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-11', '2022-10-12 09:55:32', '2022-10-12 09:55:32'),
-(17, 89, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-12', '2022-10-12 12:36:34', '2022-10-12 12:36:34'),
-(18, 87, 4, 'completed', NULL, NULL, 100, 100, 80, 'active', '2022-10-17', '2022-10-19 10:40:16', '2022-10-19 10:40:16'),
-(19, 87, 6, 'completed', 3, 7, 100, 0, 0, 'active', '2022-10-17', '2022-10-17 08:51:52', '2022-10-17 08:51:52'),
-(20, 90, 1, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-18', '2022-10-18 10:06:56', '2022-10-18 10:06:56'),
-(21, 91, 1, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-10-18', '2022-10-18 10:48:36', '2022-10-18 10:48:36'),
-(22, 85, 1, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-18', '2022-10-18 11:17:46', '2022-10-18 11:17:46'),
-(23, 94, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-19 10:54:25', '2022-10-19 10:54:25'),
-(24, 95, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-19 11:02:01', '2022-10-19 11:02:01'),
-(25, 95, 4, 'onprogress', NULL, NULL, 0, 100, 30, 'active', '2022-10-19', '2022-10-19 11:02:01', '2022-10-19 11:02:01'),
-(26, 96, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-19 11:17:45', '2022-10-19 11:17:45'),
-(27, 96, 4, 'failed', NULL, NULL, 0, 100, 30, 'active', '2022-10-19', '2022-10-19 11:17:45', '2022-10-19 11:17:45'),
-(28, 97, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-19 11:24:33', '2022-10-19 11:24:33'),
-(29, 98, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-19 11:48:14', '2022-10-19 11:48:14'),
-(30, 99, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-19 12:06:18', '2022-10-19 12:06:18'),
-(31, 100, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-19 11:59:51', '2022-10-19 11:59:51'),
-(32, 103, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-19', '2022-10-20 06:36:12', '2022-10-20 06:36:12'),
-(33, 103, 4, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-19', '2022-10-20 06:36:12', '2022-10-20 06:36:12'),
-(34, 104, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-20', '2022-10-20 10:46:47', '2022-10-20 10:46:47'),
-(35, 104, 4, 'completed', NULL, NULL, 100, 100, 90, 'active', '2022-10-20', '2022-10-20 10:46:47', '2022-10-20 10:46:47'),
-(36, 105, 1, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-20', '2022-10-20 11:53:48', '2022-10-20 11:53:48'),
-(37, 105, 4, 'completed', NULL, NULL, 100, 100, 90, 'active', '2022-10-20', '2022-10-20 11:53:48', '2022-10-20 11:53:48'),
-(38, 106, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-20', '2022-10-20 15:23:56', '2022-10-20 15:23:56'),
-(39, 106, 4, 'completed', NULL, NULL, 100, 100, 90, 'active', '2022-10-20', '2022-10-20 15:23:56', '2022-10-20 15:23:56'),
-(40, 107, 1, 'completed', NULL, NULL, 100, 100, 75, 'active', '2022-10-21', '2022-10-21 07:33:02', '2022-10-21 07:33:02'),
-(41, 107, 4, 'completed', NULL, NULL, 100, 100, 100, 'active', '2022-10-21', '2022-10-21 07:33:02', '2022-10-21 07:33:02');
+(1, 110, 7, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-11-03', '2022-11-03 07:18:29', '2022-11-03 07:18:29'),
+(2, 110, 1, 'pending', NULL, NULL, NULL, 0, 0, 'active', '2022-11-03', '2022-11-03 11:11:56', NULL),
+(3, 111, 1, 'pending', NULL, NULL, NULL, 0, 0, 'active', '2022-11-03', '2022-11-03 13:59:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -626,7 +593,45 @@ INSERT INTO `login` (`id`, `user_id`, `last_signin_date`, `last_signin_ip`, `cre
 (141, 104, '2022-10-20 06:41:30', '::1', '2022-10-20 06:41:30', NULL),
 (142, 105, '2022-10-20 10:51:40', '::1', '2022-10-20 10:51:40', NULL),
 (143, 106, '2022-10-20 11:55:32', '::1', '2022-10-20 11:55:32', NULL),
-(144, 107, '2022-10-21 07:27:18', '::ffff:127.0.0.1', '2022-10-21 07:27:18', NULL);
+(144, 107, '2022-10-21 07:27:18', '::ffff:127.0.0.1', '2022-10-21 07:27:18', NULL),
+(145, 63, '2022-10-28 06:53:08', '::1', '2022-10-28 06:53:08', NULL),
+(146, 108, '2022-10-28 07:03:51', '::ffff:127.0.0.1', '2022-10-28 07:03:51', NULL),
+(147, 108, '2022-10-28 07:34:28', '::ffff:127.0.0.1', '2022-10-28 07:34:28', NULL),
+(148, 63, '2022-10-28 07:38:58', '::1', '2022-10-28 07:38:58', NULL),
+(149, 63, '2022-10-28 07:39:13', '::1', '2022-10-28 07:39:13', NULL),
+(150, 63, '2022-10-28 07:39:44', '::1', '2022-10-28 07:39:44', NULL),
+(151, 63, '2022-10-28 07:41:18', '::1', '2022-10-28 07:41:18', NULL),
+(152, 63, '2022-10-28 07:51:01', '::1', '2022-10-28 07:51:01', NULL),
+(153, 63, '2022-10-28 08:00:02', '::1', '2022-10-28 08:00:02', NULL),
+(154, 108, '2022-10-28 09:17:51', '::ffff:127.0.0.1', '2022-10-28 09:17:51', NULL),
+(155, 108, '2022-10-28 09:18:27', '::ffff:127.0.0.1', '2022-10-28 09:18:27', NULL),
+(156, 108, '2022-10-28 10:41:27', '::ffff:127.0.0.1', '2022-10-28 10:41:27', NULL),
+(157, 109, '2022-10-28 11:07:41', '::ffff:127.0.0.1', '2022-10-28 11:07:41', NULL),
+(158, 63, '2022-10-28 13:25:09', '::ffff:127.0.0.1', '2022-10-28 13:25:09', NULL),
+(159, 63, '2022-10-28 14:52:54', '::ffff:127.0.0.1', '2022-10-28 14:52:54', NULL),
+(160, 109, '2022-10-28 14:53:24', '::ffff:127.0.0.1', '2022-10-28 14:53:24', NULL),
+(161, 63, '2022-10-28 15:06:47', '::ffff:127.0.0.1', '2022-10-28 15:06:47', NULL),
+(162, 110, '2022-10-28 15:07:56', '::ffff:127.0.0.1', '2022-10-28 15:07:56', NULL),
+(163, 63, '2022-10-31 06:51:44', '::1', '2022-10-31 06:51:44', NULL),
+(164, 63, '2022-10-31 10:58:59', '::1', '2022-10-31 10:58:59', NULL),
+(165, 110, '2022-10-31 11:02:40', '::1', '2022-10-31 11:02:40', NULL),
+(166, 110, '2022-11-01 06:34:58', '::1', '2022-11-01 06:34:58', NULL),
+(167, 63, '2022-11-01 06:35:19', '::1', '2022-11-01 06:35:19', NULL),
+(168, 63, '2022-11-03 07:17:26', '::1', '2022-11-03 07:17:26', NULL),
+(169, 63, '2022-11-03 07:17:36', '::1', '2022-11-03 07:17:36', NULL),
+(170, 110, '2022-11-03 07:17:59', '::1', '2022-11-03 07:17:59', NULL),
+(171, 63, '2022-11-03 07:18:47', '::1', '2022-11-03 07:18:47', NULL),
+(172, 63, '2022-11-03 07:39:21', '::1', '2022-11-03 07:39:21', NULL),
+(173, 63, '2022-11-03 09:24:55', '::1', '2022-11-03 09:24:55', NULL),
+(174, 63, '2022-11-03 09:38:36', '::1', '2022-11-03 09:38:36', NULL),
+(175, 63, '2022-11-03 10:55:01', '::1', '2022-11-03 10:55:01', NULL),
+(176, 63, '2022-11-03 10:55:23', '::1', '2022-11-03 10:55:23', NULL),
+(177, 110, '2022-11-03 11:11:48', '::1', '2022-11-03 11:11:48', NULL),
+(178, 63, '2022-11-03 12:20:11', '::1', '2022-11-03 12:20:11', NULL),
+(179, 63, '2022-11-03 13:53:39', '::1', '2022-11-03 13:53:39', NULL),
+(180, 110, '2022-11-03 13:54:04', '::1', '2022-11-03 13:54:04', NULL),
+(181, 63, '2022-11-03 13:54:57', '::1', '2022-11-03 13:54:57', NULL),
+(182, 111, '2022-11-03 13:56:02', '::1', '2022-11-03 13:56:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -666,26 +671,6 @@ CREATE TABLE `qns_ans_comment` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `qns_ans_comment`
---
-
-INSERT INTO `qns_ans_comment` (`id`, `course_id`, `user_id`, `comment`, `parent_id`, `created_at`, `updated_at`) VALUES
-(38, 1, 87, 'fsdfasdfdfdassfafdsfsfs', 0, '2022-10-14 12:20:08', NULL),
-(39, 1, 88, 'sadSDS', 38, '2022-10-14 12:24:20', NULL),
-(40, 1, 87, 'SADSD', 39, '2022-10-14 12:24:48', NULL),
-(41, 1, 88, 'dsfafadsaf', 0, '2022-10-14 12:26:11', NULL),
-(42, 1, 87, 'test question', 0, '2022-10-14 12:49:06', NULL),
-(43, 1, 88, 'test reply', 42, '2022-10-14 12:49:50', NULL),
-(44, 1, 87, 'sad', 43, '2022-10-14 13:05:16', NULL),
-(45, 1, 87, 'fggfdsgfdg', 39, '2022-10-14 13:05:43', NULL),
-(46, 1, 87, 'tyre', 39, '2022-10-14 13:12:29', NULL),
-(47, 1, 87, 'fsdgdfgdfgdf', 43, '2022-10-14 13:12:33', NULL),
-(48, 1, 87, 'vvvv', 43, '2022-10-14 13:13:21', NULL),
-(49, 1, 87, 'ds', 41, '2022-10-14 13:15:42', NULL),
-(50, 1, 87, 'sd', 41, '2022-10-14 13:16:03', NULL),
-(51, 6, 87, 'ewqewqewq', 0, '2022-10-18 06:57:00', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -721,10 +706,22 @@ CREATE TABLE `question` (
   `correct_answer` varchar(255) DEFAULT NULL,
   `total_marks` int(12) DEFAULT NULL,
   `user_marks` int(12) DEFAULT NULL,
-  `answer_status` enum('true','false') NOT NULL DEFAULT 'true',
+  `answer_status` enum('correct','incorrect') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `question`
+--
+
+INSERT INTO `question` (`id`, `enrollment_id`, `question_name`, `user_answer`, `correct_answer`, `total_marks`, `user_marks`, `answer_status`, `created_at`, `updated_at`) VALUES
+(19, 999, 'Select the correct answer option:', 'Option one', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
+(20, 999, 'Select the correct answer option:2', 'Option 1', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
+(21, 999, 'Select one or more correct answers:1', 'Option 1,Option 2,Option 3,', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
+(22, 999, 'Select one or more correct answers:2', 'Option 1,Option 2,Option 3,', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
+(23, 999, 'Match the following items with their descriptions:1', 'Item 1 Match 1,Item 2 Match 2,', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
+(24, 999, 'Match the following items with their descriptions:2', 'Item 2 Match 1,Item 1 Match 2,', NULL, 10, 0, 'incorrect', '2022-11-02 14:03:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -737,10 +734,36 @@ CREATE TABLE `question_options` (
   `question_id` int(11) DEFAULT NULL,
   `option_name` varchar(255) DEFAULT NULL,
   `option_id` varchar(255) DEFAULT NULL,
-  `option_type` enum('null','source','target','choices') NOT NULL DEFAULT 'null',
+  `option_type` enum('null','matching_premise','matching_response','choice') NOT NULL DEFAULT 'null',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `question_options`
+--
+
+INSERT INTO `question_options` (`id`, `question_id`, `option_name`, `option_id`, `option_type`, `created_at`, `updated_at`) VALUES
+(1, 19, 'Option one', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(2, 19, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(3, 19, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(4, 20, 'Option 1', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(5, 20, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(6, 20, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(7, 21, 'Option 1', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(8, 21, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(9, 21, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(10, 22, 'Option 1', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(11, 22, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(12, 22, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
+(13, 23, 'Item 1', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
+(14, 23, 'Item 2', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
+(15, 23, 'Match 1', NULL, 'matching_response', '2022-11-02 14:03:07', NULL),
+(16, 23, 'Match 2', NULL, 'matching_response', '2022-11-02 14:03:07', NULL),
+(17, 24, 'Item 1', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
+(18, 24, 'Item 2', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
+(19, 24, 'Match 1', NULL, 'matching_response', '2022-11-02 14:03:07', NULL),
+(20, 24, 'Match 2', NULL, 'matching_response', '2022-11-02 14:03:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -805,7 +828,8 @@ CREATE TABLE `task` (
 
 INSERT INTO `task` (`id`, `created_by`, `task_name`, `task_describtion`, `task_start_date`, `task_end_date`, `group_id`, `course_id`, `task_status`, `created_at`, `updated_at`) VALUES
 (1, 63, 'task 1', '<p>xsadsadasas</p>', '2022-09-14', '2022-09-29', NULL, 1, 'approve', '2022-09-30 08:41:53', NULL),
-(2, 63, 'task 2', '<p>sdfsfds</p>', '2022-10-08', '2022-10-29', NULL, 4, 'approve', '2022-10-19 11:16:23', NULL);
+(2, 63, 'task 2', '<p>sdfsfds</p>', '2022-10-08', '2022-10-29', NULL, 4, 'approve', '2022-10-19 11:16:23', NULL),
+(4, 63, 'test 2 task', '<p>&nbsp;dfdsf dsf fdsfdsfdsqdfsdfdfsd</p>', '2022-10-01', '2022-11-30', NULL, 7, 'approve', '2022-10-31 11:02:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -831,7 +855,10 @@ INSERT INTO `task_group` (`id`, `task_id`, `group_id`, `created_at`, `updated_at
 (3, 1, 1, '2022-09-30 08:41:53', NULL),
 (4, 2, 3, '2022-10-19 11:16:23', NULL),
 (5, 2, 2, '2022-10-19 11:16:23', NULL),
-(6, 2, 1, '2022-10-19 11:16:23', NULL);
+(6, 2, 1, '2022-10-19 11:16:23', NULL),
+(10, 4, 3, '2022-10-31 11:02:06', NULL),
+(11, 4, 2, '2022-10-31 11:02:06', NULL),
+(12, 4, 1, '2022-10-31 11:02:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -865,6 +892,7 @@ CREATE TABLE `users` (
   `social_link_1` varchar(155) DEFAULT NULL,
   `social_link_2` varchar(155) DEFAULT NULL,
   `is_active` int(11) DEFAULT 0,
+  `login_Status` enum('active','inactive') DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -873,10 +901,14 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role`, `user_hr_no`, `group_id`, `date`, `username`, `firstname`, `lastname`, `email`, `login_type`, `image`, `qualification_id`, `language_id`, `details`, `organization_id`, `password`, `sign_in_count`, `courses_count`, `enrollment_count`, `comment_count`, `user_lesson_count`, `organization_unit`, `social_link_1`, `social_link_2`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 1, 'HR000001', NULL, NULL, NULL, 'admin', 'admin', 'admin@gmail.com', 'local', NULL, NULL, NULL, NULL, NULL, '$2a$12$wB.OydtwAnbuj0IRg4T2h.RqqHAvv21Pupz64J1vlV4XxwaKRpFEu', 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, '2022-08-08 09:50:19', NULL),
-(62, 4, 'HR56', NULL, '2022-09-07', NULL, 'creator', '1', 'creator1@gmail.com', 'local', NULL, '2', '2', NULL, NULL, '$2a$12$IADLJtIpoZZSgZ7I4u4XQOKaDyHOOfBl0dTbMmPnAZwhzTuBZ5cz2', 0, 0, 0, 0, 0, 'ssd', '', '', 1, '2022-09-19 07:03:10', '2022-10-19 13:44:57'),
-(63, 2, 'HR8546', NULL, '2022-09-17', NULL, 'supervisor', '1', 'supervisor1@gmail.com', 'local', NULL, '1', '1', NULL, NULL, '$2a$12$WMiNye48Dv6GHpSC1B46Q.WAEuoZm56hxgJCb9HQN3yMpuY5fbohu', 0, 0, 0, 0, 0, NULL, '', '', 1, '2022-09-19 07:20:18', '2022-10-19 13:44:57');
+INSERT INTO `users` (`id`, `role`, `user_hr_no`, `group_id`, `date`, `username`, `firstname`, `lastname`, `email`, `login_type`, `image`, `qualification_id`, `language_id`, `details`, `organization_id`, `password`, `sign_in_count`, `courses_count`, `enrollment_count`, `comment_count`, `user_lesson_count`, `organization_unit`, `social_link_1`, `social_link_2`, `is_active`, `login_Status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'HR000001', NULL, NULL, NULL, 'admin', 'admin', 'admin@gmail.com', 'local', NULL, NULL, NULL, NULL, NULL, '$2a$12$wB.OydtwAnbuj0IRg4T2h.RqqHAvv21Pupz64J1vlV4XxwaKRpFEu', 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, '2022-08-08 09:50:19', NULL),
+(62, 4, 'HR56', NULL, '2022-09-07', NULL, 'creator', '1', 'creator1@gmail.com', 'local', NULL, '2', '2', NULL, NULL, '$2a$12$IADLJtIpoZZSgZ7I4u4XQOKaDyHOOfBl0dTbMmPnAZwhzTuBZ5cz2', 0, 0, 0, 0, 0, 'ssd', '', '', 1, NULL, '2022-09-19 07:03:10', '2022-10-28 07:09:32'),
+(63, 2, 'HR8546', NULL, '2022-09-17', NULL, 'supervisor', '1', 'supervisor1@gmail.com', 'local', NULL, '1', '1', NULL, NULL, '$2a$12$WMiNye48Dv6GHpSC1B46Q.WAEuoZm56hxgJCb9HQN3yMpuY5fbohu', 0, 0, 0, 0, 0, NULL, '', '', 1, 'inactive', '2022-09-19 07:20:18', '2022-11-03 13:55:56'),
+(108, 5, 'mk56', NULL, '2022-10-12', NULL, 'student', 'test166', 's166@g.in', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$34YPt6YW0hAXyy1etWQA8upnuB0oUmjCgQ8Dx.dF2t15QwEuJi0L.', 0, 0, 0, 0, 0, 'ssd3', '', '', 1, NULL, '2022-10-28 07:01:10', '2022-10-28 07:09:32'),
+(109, 5, 'hr45f', NULL, '1970-01-01', NULL, 'asdsa', 'assa', 'lgf56@g.o', 'local', NULL, '2', '1', '', NULL, '$2a$12$Je7lfrdbAYFq60V7F7BYt.kz7k8rLR7S5ybMOkC97D3l5BLTWK2h6', 0, 0, 0, 0, 0, 'null', '', '', 1, NULL, '2022-10-28 11:05:45', '2022-10-28 11:07:05'),
+(110, 5, 'sad34', NULL, '2022-09-29', NULL, 'aSS', 'ASaSA', 'fg@h.ind', 'local', '1667288260826_ZDResearch-online-certified-ethical-hacking-training-course.jpg', '2', '1', NULL, NULL, '$2a$12$OsXnopsNBA/M/9PvdTbyYu.UpxF.L58DtkoRXGQzLAldmUmfwt/ZC', 0, 0, 0, 0, 0, 'dsad', NULL, NULL, 1, 'inactive', '2022-10-28 15:07:43', '2022-11-03 13:54:41'),
+(111, 5, 'HR56sdas', NULL, '2022-11-24', NULL, 'sad', 'sadd', 'nh@f.ui4', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$r2nOBRRB93pIcBWnDlbAz.eVGgwsx6Bs/qMVoPPbWqYurWKt6w9F.', 0, 0, 0, 0, 0, 'dd32', NULL, NULL, 1, 'active', '2022-11-03 13:55:48', '2022-11-03 13:56:02');
 
 -- --------------------------------------------------------
 
@@ -1016,10 +1048,6 @@ INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
 (416, 79, 3),
 (417, 79, 2),
 (418, 79, 1),
-(419, 63, 3),
-(420, 63, 2),
-(421, 62, 3),
-(422, 62, 1),
 (423, 103, 3),
 (424, 103, 2),
 (425, 103, 1),
@@ -1034,7 +1062,23 @@ INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
 (434, 106, 1),
 (435, 107, 3),
 (436, 107, 2),
-(437, 107, 1);
+(437, 107, 1),
+(441, 108, 3),
+(442, 108, 2),
+(443, 108, 1),
+(444, 63, 3),
+(445, 63, 2),
+(446, 62, 3),
+(447, 62, 1),
+(450, 109, 1),
+(451, 109, 2),
+(452, 109, 3),
+(453, 110, 3),
+(454, 110, 2),
+(455, 110, 1),
+(456, 111, 3),
+(457, 111, 2),
+(458, 111, 1);
 
 -- --------------------------------------------------------
 
@@ -1082,7 +1126,16 @@ INSERT INTO `user_task` (`id`, `task_id`, `user_id`, `no_attempted`, `user_task_
 (23, 1, 106, 1, 'passed', '2022-10-20 11:55:46', '2022-10-20 15:23:56'),
 (24, 2, 106, 1, 'passed', '2022-10-20 12:01:45', '2022-10-20 15:23:56'),
 (25, 1, 107, 1, 'passed', '2022-10-21 07:27:42', '2022-10-21 07:33:02'),
-(26, 2, 107, 1, 'passed', '2022-10-21 07:31:09', '2022-10-21 07:33:02');
+(26, 2, 107, 1, 'passed', '2022-10-21 07:31:09', '2022-10-21 07:33:02'),
+(27, 1, 108, 6, 'passed', '2022-10-28 07:34:46', '2022-10-28 10:46:59'),
+(28, 2, 108, 2, 'attempted', '2022-10-28 10:54:05', '2022-10-28 11:01:46'),
+(29, 1, 109, 5, 'passed', '2022-10-28 11:10:13', '2022-10-28 15:04:25'),
+(30, 2, 109, 6, 'attempted', '2022-10-28 11:13:12', '2022-10-28 15:06:17'),
+(31, 1, 110, 9, 'passed', '2022-10-28 15:08:06', '2022-11-03 11:27:22'),
+(32, 4, 110, 2, 'attempted', '2022-10-31 11:03:21', '2022-11-03 07:18:26'),
+(33, 2, 110, 1, 'passed', '2022-11-01 06:53:08', '2022-11-01 06:54:20'),
+(34, 0, 111, 0, 'attempted', '2022-11-03 13:59:12', NULL),
+(35, 1, 111, 6, 'attempted', '2022-11-03 13:59:13', '2022-11-03 14:29:06');
 
 --
 -- Indexes for dumped tables
@@ -1294,25 +1347,25 @@ ALTER TABLE `chapters`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `course_comments`
 --
 ALTER TABLE `course_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `course_group`
 --
 ALTER TABLE `course_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `course_languages`
 --
 ALTER TABLE `course_languages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `course_track`
@@ -1330,7 +1383,7 @@ ALTER TABLE `course_track_details`
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -1354,7 +1407,7 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
 
 --
 -- AUTO_INCREMENT for table `maintenance`
@@ -1378,13 +1431,13 @@ ALTER TABLE `qualification`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `question_options`
 --
 ALTER TABLE `question_options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -1402,31 +1455,31 @@ ALTER TABLE `social_media`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `task_group`
 --
 ALTER TABLE `task_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `user_group`
 --
 ALTER TABLE `user_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=438;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=459;
 
 --
 -- AUTO_INCREMENT for table `user_task`
 --
 ALTER TABLE `user_task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
