@@ -121,7 +121,8 @@
                     })
                     .catch(err => console.log(err))
 
-
+ //  refresh div with out page load ------------------------
+ $('#example2').load(location.href + ' #example2');
             }
 
         </script>

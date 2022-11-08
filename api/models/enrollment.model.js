@@ -320,6 +320,7 @@ class Enrollment {
               rating_number: item.rating_number,
               comment: item.comment,
               total_number: item.total_number,
+              pass_number:item.pass_number,
               score_number: item.score_number,
               user_details: [],
               course_details: [],

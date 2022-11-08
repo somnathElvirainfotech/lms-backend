@@ -63,10 +63,10 @@
                     <td><%= data.role%></td>
                     <td>
                       <label class="switch">
-                        <% var chkstatus=data.status?'checked':''; %>
-                        <input type="checkbox" <%="chkstatus" % />
+                        <% var chkstatus=(data.status?'checked':''); %>
+                        <input type="checkbox" <%= chkstatus %>
                         onchange="statusUpdate(`<%= i %>`,` <%= data.email%> `)"
-                        id="status<%= i %>">
+                        id="status<%= i %>" >
                         <span class="slider round"></span>
                       </label>
                     </td>
@@ -163,6 +163,9 @@
 <%- include('./include/footer.ejs') %>
 
 <script type="text/javascript">
+
+ 
+
   function statusUpdate(id, email) {
     // console.log(`<%= req.session.username %>`);
     var value = document.querySelector("#status" + id).checked;
@@ -179,7 +182,10 @@
         "Content-Type": "application/json",
       },
     };
-    fetch("/user-status", option).catch((err) => console.log(err));
+   fetch("/user-status", option).catch((err) => console.log(err));
+
+  //  refresh div with out page load ------------------------
+   $('#example2').load(location.href + ' #example2');
 
     
   }

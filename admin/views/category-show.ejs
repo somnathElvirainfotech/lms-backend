@@ -1,136 +1,147 @@
 <%- include('./include/header.ejs') %>
 
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <!-- <h1 class="m-0">Dashboard</h1> -->
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Category List</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1 class="m-0">Dashboard</h1> -->
         </div>
-        <!-- /.content-header -->
-
-
-        <!-- <%- req.toastr.render() %> -->
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <a href="/category/create">
-                                    <button type="button" class="btn btn-primary">Add</button>
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Category Name</th>
-                                            <th>Parent Name</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% var i=1; %>
-                                            <% result.forEach((data)=>{ %>
-                                                <tr id="del<%= data.id %>">
-                                                    <td>
-                                                        <%= i %>
-                                                    </td>
-                                                    <td>
-                                                        <%= data.c_name.toUpperCase() %>
-                                                    </td>
-                                                    <td>
-                                                        <%= data.parent_cName!=null?data.parent_cName.toUpperCase():""
-                                                            %>
-                                                    </td>
-
-                                                    <td width="100px">
-                                                        <% if(data.c_status=='active'){ %>
-                                                            <p style="background-color: green; color: white; width: 100px; font-weight: bold;" class="text-center"   >Active</p>
-                                                      <%  } else {%>
-                                                        <p style="background-color: red; color: white; width: 100px; font-weight: bold;" class="text-center"   >In-Active</p>
-                                                     <% } %>
-                                                    </td>           
-
-                                                    <td>
-                                                        <a href="/category/edit/<%= data.id %>">
-                                                            <button class="btn btn-sm btn-success"> <span
-                                                                    class="fas fa-pen"></span></button>
-                                                        </a>
-
-
-                                                        <button type="button" onclick="deleteData(`<%= data.id%>`)"
-                                                            class="btn btn-sm btn-danger"><span
-                                                                class="fas fa-trash"></span></button>
-
-                                                    </td>
-
-
-                                                </tr>
-                                                <% i++; }) %>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Category List</li>
+          </ol>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
 
+  <!-- <%- req.toastr.render() %> -->
 
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <a href="/category/create">
+                <button type="button" class="btn btn-primary">Add</button>
+              </a>
+            </div>
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Category Name</th>
+                    <th>Parent Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% var i=1; %> <% result.forEach((data)=>{ %>
+                  <tr id="del<%= data.id %>">
+                    <td><%= i %></td>
+                    <td><%= data.c_name.toUpperCase() %></td>
+                    <td>
+                      <%=
+                      data.parent_cName!=null?data.parent_cName.toUpperCase():""
+                      %>
+                    </td>
 
+                    <td width="100px">
+                      <% if(data.c_status=='active'){ %>
+                      <p
+                        style="
+                          background-color: green;
+                          color: white;
+                          width: 100px;
+                          font-weight: bold;
+                        "
+                        class="text-center"
+                      >
+                        Active
+                      </p>
+                      <% } else {%>
+                      <p
+                        style="
+                          background-color: red;
+                          color: white;
+                          width: 100px;
+                          font-weight: bold;
+                        "
+                        class="text-center"
+                      >
+                        In-Active
+                      </p>
+                      <% } %>
+                    </td>
 
+                    <td>
+                      <a href="/category/edit/<%= data.id %>">
+                        <button class="btn btn-sm btn-success">
+                          <span class="fas fa-pen"></span>
+                        </button>
+                      </a>
 
-    <%- include('./include/footer.ejs') %>
+                      <button
+                        type="button"
+                        onclick="deleteData(`<%= data.id%>`)"
+                        class="btn btn-sm btn-danger"
+                      >
+                        <span class="fas fa-trash"></span>
+                      </button>
+                    </td>
+                  </tr>
+                  <% i++; }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
-        <script type="text/javascript">
+<%- include('./include/footer.ejs') %>
 
+<script type="text/javascript">
+  function deleteData(id) {
+    // console.log(`<%= req.session.username %>`);
 
-            function deleteData(id) {
-                // console.log(`<%= req.session.username %>`);
+    var del = document.getElementById("del" + id);
 
-                var del = document.getElementById("del" + id);
+    var option = {
+      mode: "cors",
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
+    fetch("/category/del/" + id, option)
+      .then((res) => {
+        del.style.display = "none";
+      })
+      .catch((err) => console.log(err));
 
-                var option = {
-                    mode: 'cors',
-                    method: "get",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-
-                fetch("/category/del/" + id, option)
-                    .then(res => {
-                        del.style.display = 'none';
-                    })
-                    .catch(err => console.log(err))
-
-
-            }
-
-        </script>
+    //  refresh div with out page load ------------------------
+    $("#example2").load(location.href + " #example2");
+  }
+</script>

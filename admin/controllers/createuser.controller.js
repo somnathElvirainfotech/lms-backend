@@ -1,6 +1,8 @@
 const createUserService = require('../services/createuser.service');
 const languageService = require("../services/language.service");
 const groupService = require('../services/group.service');
+
+const qualificationService = require("../services/qualification.service");
 const common = require('./common');
 
 exports.createUser = async (req, res) => {
@@ -8,6 +10,8 @@ exports.createUser = async (req, res) => {
         var msg = req.flash("msg");
         var status = req.flash("status");
         var groupData = await groupService.getAll(req);
+        var qualificationData=await qualificationService.getAll(req);
+        var languageData=await languageService.getAll(req);
         // console.log(groupData)
 
         // error msg
@@ -18,7 +22,10 @@ exports.createUser = async (req, res) => {
 
 
         res.render("create-user.ejs", {
-            username: common.Capitalize(req.session.username), msg, status, group: groupData.data,
+            username: common.Capitalize(req.session.username), msg, status, 
+            group: groupData.data,
+            qualification:qualificationData.data,
+            language:languageData.data,
             err_msg: err_msg,
             err_type: err_type
         });

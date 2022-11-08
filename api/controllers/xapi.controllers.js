@@ -1042,7 +1042,7 @@ var resultSave2 = async (rdata) => {
   }
 };
 
-// for xapi api------------------------------------------------------------------
+// for xapi api ------------------------------------------------------------------
 exports.storeResult = async (req, res) => {
   console.log("xap--------  i", req.body);
 
@@ -1163,15 +1163,15 @@ exports.storeResult = async (req, res) => {
 
           if (q == "multipleChoiceQuestion") {
 
-            await multipleChoiceQuestionQA(data['quizReport']['questions'][0].multipleChoiceQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp)
+            await multipleChoiceQuestionQA(data['quizReport']['questions'][0].multipleChoiceQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
           }
           else if (q == "multipleResponseQuestion") {
-            await multipleResponseQuestionQA(data['quizReport']['questions'][0].multipleResponseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp)
+            await multipleResponseQuestionQA(data['quizReport']['questions'][0].multipleResponseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp,req.body.ps)
           }
           else if (q == "matchingQuestion") {
-            await matchingQuestionQA(data['quizReport']['questions'][0].matchingQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp)
+            await matchingQuestionQA(data['quizReport']['questions'][0].matchingQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp,req.body.ps)
           } else if (q == "trueFalseQuestion") {
-            await multipleChoiceQuestionQA(data['quizReport']['questions'][0].trueFalseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp)
+            await multipleChoiceQuestionQA(data['quizReport']['questions'][0].trueFalseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp,req.body.ps)
           }
 
 
@@ -1469,7 +1469,7 @@ var quessStore = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_poi
 }
 
 // multipleChoiceQuestion
-var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point) => {
+var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point,pass_number) => {
   for (var i of data) {
 
     // console.log(i['$']);
@@ -1546,7 +1546,9 @@ var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_po
         100
       )},enrollment_status='completed',total_number=${mysql.escape(
         total_point
-      )},score_number=${mysql.escape(
+      )},
+      pass_number=${mysql.escape(pass_number)}
+      ,score_number=${mysql.escape(
         user_point
       )} WHERE id=${mysql.escape(ENROLL_ID)}`;
       conn.query(sql, (err, result) => {
@@ -1576,7 +1578,7 @@ var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_po
 
 
 // multipleResponseQuestion
-var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point) => {
+var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point,pass_number) => {
 
   console.log(data);
 
@@ -1663,7 +1665,9 @@ var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_
         100
       )},enrollment_status='completed',total_number=${mysql.escape(
         total_point
-      )},score_number=${mysql.escape(
+      )},
+      pass_number=${mysql.escape(pass_number)}
+      ,score_number=${mysql.escape(
         user_point
       )} WHERE id=${mysql.escape(ENROLL_ID)}`;
       conn.query(sql, (err, result) => {
@@ -1694,7 +1698,7 @@ var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_
 
 
 // matchingQuestion
-var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point) => {
+var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point,pass_number) => {
 
   console.log(data);
 
@@ -1817,7 +1821,9 @@ var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, t
         100
       )},enrollment_status='completed',total_number=${mysql.escape(
         total_point
-      )},score_number=${mysql.escape(
+      )},
+      pass_number=${mysql.escape(pass_number)}
+      ,score_number=${mysql.escape(
         user_point
       )} WHERE id=${mysql.escape(ENROLL_ID)}`;
       conn.query(sql, (err, result) => {
@@ -1845,7 +1851,6 @@ var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, t
 
 
 }
-
 
 
 

@@ -11,7 +11,7 @@ exports.create = async (req) => {
     //const postData = JSON.stringify();
     var formData = new FormData();
     formData.append("c_name", req.body.c_name)
-    formData.append("c_description", req.body.c_description);
+    // formData.append("c_description", req.body.c_description);
     formData.append("c_parent_id", req.body.c_parent_id);
     formData.append("c_status", req.body.c_status);
     // formData.append("c_image", req.files);

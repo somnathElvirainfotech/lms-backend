@@ -101,15 +101,20 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Date</th>
+                                            <th>Student ID</th>
                                             <th>Student Name</th>
                                             <th>Course Name</th>
                                             <th>Course Type</th>
+                                            <th>Course Category</th>
+                                            <tH>Enroll Status</tH>
+                                            <th>Course Total Number</th>
+                                            <th>Course Score Number</th>
                                             <th>User Progress</th>
-                                            <th>Teacher’s Name</th>
-                                            <th>Points Won</th>
+                                            <th>Total Rating</th>
+                                            <th>Total Comment</th>
                                             <th>Assignment no</th>
 
-                                            <!-- <th>Action</th> -->
+                                          
 
                                         </tr>
                                     </thead>
@@ -124,42 +129,55 @@
                                                         <%= data.enrollment_create_date %>
                                                     </td>
                                                     <td>
+                                                        <%= data.user_details[0].user_hr_no%>
+                                                    </td>
+                                                    <td>
                                                         <%= data.user_details[0].firstname?`${data.user_details[0].firstname.toUpperCase()}
                                                             ${data.user_details[0].lastname.toUpperCase()}`:'' %>
                                                     </td>
                                                     <td>
                                                         <%=  data.course_details[0].course_name ?data.course_details[0].course_name.toUpperCase():'' %>
                                                     </td>
+
                                                     <td>
-                                                        <%=  data.course_details[0].category_name?data.course_details[0].category_name.toUpperCase():'' %>
+                                                        <%=  data.course_details[0].category_name?data.course_details[0].course_type.toUpperCase():'' %>
                                                     </td>
 
                                                     <td>
-                                                        0%
+                                                        <%= data.course_details[0].category_name?data.course_details[0].category_name.toUpperCase():'' %>
                                                     </td>
+                                                     
                                                     <td>
-                                                        <%= data.assignment_details?data.assignment_details[0].user_name:''
+                                                        <%= data.enrollment_status
                                                             %>
                                                     </td>
+                                                    
                                                     <td>
-                                                        0
-                                                    </td>
-                                                    <td>
-                                                        <%= data.assignment_details?data.assignment_details.length:0 %>
+                                                        <%= data.total_number %>
                                                     </td>
 
-
+                                                    <td>
+                                                        <%= data.score_number %>
+                                                    </td>
 
                                                     <td>
+                                                       <%= data.course_progress != null?data.course_progress:0%> %
+                                                    </td>
+                                                    
+                                                    
+                                                    <td>
 
-
-
-                                                        <!-- <button onclick="deleteData(`<%= data.id%>`)"
-                                                            class="btn btn-sm btn-danger"><span
-                                                                class="fas fa-trash"></span></button> -->
+                                                        <%= data.rating_number !=null?data.rating_number:0 %>
 
                                                     </td>
 
+                                                    <td>
+                                                        <%= data.comment != null ?data.comment:0 %>
+                                                    </td>
+
+                                                    <td>
+                                                        <%= data.assignment_details != null?data.assignment_details.length:0 %>
+                                                    </td>
 
                                                 </tr>
                                                 <% i++; }) %>
