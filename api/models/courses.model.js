@@ -1,5 +1,7 @@
 const conn = require("../config/dbconfig");
 const mysql = require("mysql");
+const ratingCommnetModel = require("./ratingCommnet.model");
+const Language = require("./language.model");
 require("dotenv").config();
 
 class Courses {
@@ -878,7 +880,7 @@ class Courses {
                 var sql2 = `SELECT * FROM (SELECT * FROM lessons WHERE course_id=${id} and chapter_id=${data.chapters[chapter].id})p ORDER BY lesson_no ASC `;
                 console.log(sql2);
                 var lesson = await new Promise(function (resolve, reject) {
-                  conn.query(sql2, (err, result) => {
+                  conn.query(sql2, async (err, result) => {
                     if (err) throw err;
 
                     if (result.length > 0) {
@@ -903,7 +905,12 @@ class Courses {
                             ? i.lesson_vedio_link
                             : "",
                           duration: i.duration ? i.duration : "",
+                         
                         };
+
+
+                        
+
                         data.push(temp);
                       }
 
@@ -1098,6 +1105,8 @@ class Courses {
 
   async searchCourse(data, callback) {
     const { category_id, group_id, course_level, lang_id, search_text } = data;
+    
+    var ori_user_id=data.user_id
 
     var listCate = await new Promise((resolve, reject) => [
       this.listOfCategory(category_id, (rid) => {
@@ -1218,6 +1227,7 @@ class Courses {
             group_id: item.group_id,
             group_details: [],
             category_id: item.category_id,
+            certificate_id:item.certificate_id != null?item.certificate_id:0,
             total_enroll_no: 0,
             category_name:
               parentCatagoryName != null ? parentCatagoryName[0].c_name : null,
@@ -1257,6 +1267,144 @@ class Courses {
             });
           });
           temp.total_enroll_no = total_enroll_no;
+
+          // language --------------------------------------------
+          var language_details=await new Promise((resolve,reject)=>{
+            Language.show(item.language_id,(err,result)=>{
+              if(err)
+              resolve([])
+              else
+              resolve(result)
+            })
+          })
+
+          temp.language_details=language_details;
+
+
+          // enrollment chk --------------------------------------------------------------------------------
+          var sql=`SELECT * FROM enrollments WHERE user_id=${mysql.escape(ori_user_id)} AND course_id=${mysql.escape(item.id)}`;
+
+          console.log(sql)
+          var enroll_details=await new Promise((resolve,reject)=>{
+            conn.query(sql,(err,result)=>{
+              if(err) throw err;
+
+              if(result.length>0)
+              resolve(result)
+              else
+              resolve([])
+
+            })
+          })
+
+          temp.enrollment_details=enroll_details
+
+
+          // rating -----------------------------------------------------------------
+          var rating_details=[]
+          var sql=`SELECT COUNT(id) as total_rating FROM course_comments WHERE course_id=${mysql.escape(item.id)} AND rating_number=5`;
+          var total_5=await new Promise((resolve,reject)=>{
+            conn.query(sql,(err,result)=>{
+              if(err) throw err;
+              if(result.length>0)
+              resolve(result[0].total_rating)
+              else
+              resolve(0)
+            })
+          })
+
+          var sql=`SELECT COUNT(id) as total_rating FROM course_comments WHERE course_id=${mysql.escape(item.id)} AND rating_number=4`;
+          var total_4=await new Promise((resolve,reject)=>{
+            conn.query(sql,(err,result)=>{
+              if(err) throw err;
+              if(result.length>0)
+              resolve(result[0].total_rating)
+              else
+              resolve(0)
+            })
+          })
+
+          var sql=`SELECT COUNT(id) as total_rating FROM course_comments WHERE course_id=${mysql.escape(item.id)} AND rating_number=3`;
+          var total_3=await new Promise((resolve,reject)=>{
+            conn.query(sql,(err,result)=>{
+              if(err) throw err;
+              if(result.length>0)
+              resolve(result[0].total_rating)
+              else
+              resolve(0)
+            })
+          })
+
+          var sql=`SELECT COUNT(id) as total_rating FROM course_comments WHERE course_id=${mysql.escape(item.id)} AND rating_number=2`;
+          var total_2=await new Promise((resolve,reject)=>{
+            conn.query(sql,(err,result)=>{
+              if(err) throw err;
+              if(result.length>0)
+              resolve(result[0].total_rating)
+              else
+              resolve(0)
+            })
+          })
+
+          var sql=`SELECT COUNT(id) as total_rating FROM course_comments WHERE course_id=${mysql.escape(item.id)} AND rating_number=1`;
+          var total_1=await new Promise((resolve,reject)=>{
+            conn.query(sql,(err,result)=>{
+              if(err) throw err;
+              if(result.length>0)
+              resolve(result[0].total_rating)
+              else
+              resolve(0)
+            })
+          })
+
+          if(total_5 != 0 || total_4 != 0  || total_3 != 0 || total_2 != 0 || total_1 != 0 )
+          {
+          if(total_5 > total_4 && total_5>total_3 && total_5>total_2 && total_5>total_1)
+          {
+            rating_details.push({rating_number:5,total_rating:total_5})
+          }
+          else if( total_4 > total_5 && total_4>total_3 && total_4>total_2 && total_4>total_1)
+          {
+            rating_details.push({rating_number:4,total_rating:total_4})
+          }
+          else if(  total_3 > total_4 && total_3>total_5 && total_3>total_2 && total_3>total_1)
+          {
+            rating_details.push({rating_number:3,total_rating:total_3})
+          }
+          else if(total_2 > total_4 && total_2>total_3 && total_2>total_5 && total_2>total_1)
+          {
+            rating_details.push({rating_number:2,total_rating:total_2})
+          }
+          else if(  total_1 > total_4 && total_1>total_3 && total_1>total_2 && total_1>total_5)
+          {
+            rating_details.push({rating_number:1,total_rating:total_1})
+          }
+          else if(total_5 == total_4 && total_5 == total_3 && total_5 == total_2 && total_5 == total_1)
+          {
+            rating_details.push({rating_number:5,total_rating:total_5})
+          }
+          else if( total_4 == total_3 && total_4 == total_2 && total_4 == total_1)
+          {
+            rating_details.push({rating_number:4,total_rating:total_4})
+          }
+          else if( total_3 == total_2 && total_3 == total_1)
+          {
+            rating_details.push({rating_number:3,total_rating:total_3})
+          }
+          else if( total_2 == total_1)
+          {
+            rating_details.push({rating_number:2,total_rating:total_2})
+          }
+          else{
+            rating_details.push({rating_number:1,total_rating:total_1})
+          }
+          
+        }
+          else{
+            rating_details.push({rating_number:0,total_rating:0})
+          }
+
+          temp.rating_details=rating_details
 
           data.push(temp);
         }

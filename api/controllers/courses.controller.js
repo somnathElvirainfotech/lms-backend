@@ -584,6 +584,7 @@ exports.searchCourse = (req, res) => {
     course_level: course_level,
     lang_id: lang_id,
     search_text: search_text,
+    user_id:req.body.user_id?req.body.user_id:'',
   };
 
   courseModule.searchCourse(data, (err, result) => {

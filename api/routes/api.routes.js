@@ -203,6 +203,7 @@ router.post(apiRoutes.activitySearch, activityController.Search);
 router.post(apiRoutes.regularCoureseTrack, checkUserAuth, courseTrackController.regularCourseTrack);
 router.post(apiRoutes.getTrackingLession, checkUserAuth, courseTrackController.getTrackingDetails);
 router.post(apiRoutes.getCurrentLesson, checkUserAuth, courseTrackController.getCurrentLession);
+router.post('/last-lesson-update', checkUserAuth, courseTrackController.updateCurrentLesson);
 
 
 

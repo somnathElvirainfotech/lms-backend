@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 04, 2022 at 05:59 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Host: localhost:3306
+-- Generation Time: Nov 11, 2022 at 03:35 PM
+-- Server version: 10.3.37-MariaDB
+-- PHP Version: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lms`
+-- Database: `eiplorg_lms`
 --
 
 -- --------------------------------------------------------
@@ -38,7 +39,7 @@ CREATE TABLE `assignments` (
   `assigment_duration` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +56,7 @@ CREATE TABLE `category` (
   `c_status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `category`
@@ -78,7 +79,7 @@ CREATE TABLE `certificate_list` (
   `certificate_name` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `certificate_list`
@@ -100,7 +101,7 @@ CREATE TABLE `certificate_sign_img` (
   `signature_name` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `certificate_sign_img`
@@ -122,7 +123,7 @@ CREATE TABLE `chapters` (
   `chapter_name` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `chapters`
@@ -165,19 +166,20 @@ CREATE TABLE `courses` (
   `approved_status` enum('active','inactive') NOT NULL DEFAULT 'inactive',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `courses`
 --
 
 INSERT INTO `courses` (`id`, `user_id`, `course_name`, `author_name`, `author_email`, `xapi_file_name`, `short_description`, `long_description`, `image`, `avatar_image`, `attachment_file`, `course_type`, `xapi_attachment_file`, `course_level`, `group_id`, `category_id`, `sub_category_id`, `course_tag`, `rating`, `certificate_id`, `course_certificate_name`, `published_status`, `approved_status`, `created_at`, `updated_at`) VALUES
-(1, 62, 'python ', 'fsddfs', 'dsfdsf@g.i', 'xapi_practice3', '<p>ars old. Richard McClintock, a Latin professor at Hampden-Sy</p>', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero,</p>', '1666076017756_learn-ethical-hacking-course-certification.jpg', '1666076017757_learn-ethical-hacking-course-certification.jpg', NULL, 'xapi', 'xapi_practice3/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 2, 'python ml', 'active', 'active', '2022-09-30 08:41:15', '2022-10-18 06:53:37'),
-(2, 62, 'new compliance', NULL, NULL, 'Pozarkviz1', '<p>pozar short</p>', '<p>pozar long</p>', '1664604141781_xls.jpeg', '1664604141782_database_crs.png', NULL, 'xapi', 'Pozarkviz1/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 2, 'Obuke za zaštitu od požara', 'active', 'active', '2022-10-01 06:02:22', NULL),
-(3, 62, 'Video excel', NULL, NULL, 'undefined', '<p>dfadfa mst a ddaga. dsfsrtr fasd fdsta ako d da ne mogu da probam dovo da&nbsp;</p>', '<p>In this course you will learn how to use Excel in business.</p><p>In 34 lections we will guide you from basic understanding to creating complex formulas and linking sheets and files (workbooks).</p><p><br></p><p><a href=\"https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf\" title=\"\">https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf</a></p><p>asdfds</p>', '1664610453982_image002.png', '1664610453982_xls.jpeg', '1664610453982_registration_form.pdf', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'Excel za zaposlene', 'active', 'active', '2022-10-01 07:47:33', '2022-10-07 12:47:30'),
-(4, 62, 'it security 1', 'ZxZXZ', 'dsfdsf@g.i', 'kurs_bezb1', '<p>short bezbednosti<br></p>', '<p>long description bezbednosti<br></p>', '1666076058874_download (5).jpeg', '1666076058874_download.jpeg', NULL, 'xapi', 'kurs_bezb1/res/index.html', 'beginner', NULL, 2, NULL, NULL, NULL, 3, 'IT Bezbednosti #1', 'active', 'active', '2022-10-03 07:32:57', '2022-10-18 06:54:18'),
-(6, 62, 'ggtrere', 'sssss', 'sd@g.in', 'undefined', '<p>sddsfjfff</p>', '<p>hhajjhsaomnath hsjj</p>', '1666076078082_online-course-vector-27123059.jpg', '1666076078082_downloads.jpeg', '1665754149872_p_obuka_reqs-v3 (4).docx', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'safdsfds', 'active', 'active', '2022-10-14 13:29:09', '2022-10-18 06:54:38'),
-(7, 62, 'test xapi', 'jagan', 'jagan44@gmail.com', 'test_xapi_2', '<p>ddasdsad dsa das&nbsp;</p>', '<p>asddsa dad sadsad sadsad&nbsp;</p>', '1667214067973_istockphoto-1366428092-170667a.jpg', '1667214067973_online-course-vector-27123059.jpg', NULL, 'xapi', 'test_xapi_2/res/index.html', 'beginner', NULL, 4, NULL, NULL, NULL, 0, 'text xapi', 'active', 'active', '2022-10-31 11:01:08', NULL);
+(3, 62, 'Video excel', 'author name', 'author@author.com', 'undefined', '<p>dfadfa mst a ddaga. dsfsrtr fasd fdsta ako d da ne mogu da probam dovo da&nbsp;</p>', '<p>In this course you will learn how to use Excel in business.</p><p>In 34 lections we will guide you from basic understanding to creating complex formulas and linking sheets and files (workbooks).</p><p><br></p><p><a href=\"https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf\" title=\"\">https://lmsbackend.elvirainfotech.org/images/1664610453982_registration_form.pdf</a></p><p>asdfds</p>', '1664610453982_image002.png', '1664610453982_xls.jpeg', '1664610453982_registration_form.pdf', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 0, 'Excel za zaposlene', 'active', 'active', '2022-10-01 07:47:33', '2022-11-11 12:54:10'),
+(6, 62, 'ggtrere', 'sssss', 'sd@g.in', 'undefined', '<p>sddsfjfff</p>', '<p>hhajjhsaomnath hsjj</p>', '1666344580306_hqdefault.jpg', '1666344580307_downloads.jpeg', '1665754149872_p_obuka_reqs-v3 (4).docx', 'regular', NULL, 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'safdsfds', 'active', 'active', '2022-10-14 13:29:09', '2022-11-08 14:25:08'),
+(8, 62, 'firefighter course', 'author_ime', 'author@author.com', 'fire_elvira', '<p>pozar short</p>', '<p>pozar long</p>', '1667592734961_xls.jpeg', '1667592734963_Apple Brompton Road Mac.png', '1667594617526_fire_elvira.zip', 'xapi', 'fire_elvira/res/index.html', 'beginner', NULL, 4, NULL, NULL, NULL, 1, 'zaštite od požara', 'active', 'active', '2022-11-04 20:12:14', '2022-11-08 13:46:01'),
+(9, 62, 'IT security course for employees', 'author name', 'author@author.com', 'kurs_bezb1', '<p>it bezbedost za zaposlene<br></p>', '<p>long it bezbednost<br></p>', '1667598227090_Apple Brompton Road Mac.png', '1667598227090_database_crs.png', NULL, 'xapi', 'kurs_bezb1/res/index.html', 'beginner', NULL, 4, NULL, NULL, NULL, 1, 'IT Bezbednosti 1', 'active', 'active', '2022-11-04 21:43:48', NULL),
+(10, 62, 'itsec2', 'author@author.com', 'author@author.com', 'kurs_bezb2', '<p>22 ffgfg gf<br></p>', '<p>22<br></p>', '1667738441088_2copy.jpg', '1667738441089_rezerva.jpeg', NULL, 'xapi', 'kurs_bezb2/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'it bezbednosti2', 'active', 'active', '2022-11-06 12:40:42', '2022-11-11 12:57:20'),
+(11, 62, 'all question types with LRS', 'aand', 'author@author.com', 'xapi_practice_new', '<p>xapi with all question types and LRS<br></p>', '<p>xapi with all question types and LRS</p>', '1667940195302_2copy.jpg', '1667940195302_rezerva.jpeg', NULL, 'xapi', 'xapi_practice_new_lrs/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 1, 'xapi', 'active', 'active', '2022-11-08 20:43:15', NULL),
+(12, 62, 'xapi all question types NOLRS', 'aand', 'author@author.com', 'xapi_practice_nolrs', '<p>Nolrs all question types</p>', '<p>noLrs with all question types<br></p>', '1667940375883_2copy.jpg', '1667940375883_Apple Brompton Road Mac.png', NULL, 'xapi', 'xapi_practice_nolrs/res/index.html', 'beginner', NULL, 1, NULL, NULL, NULL, 2, 'nolrs', 'active', 'active', '2022-11-08 20:46:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -195,14 +197,15 @@ CREATE TABLE `course_comments` (
   `comment` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_comments`
 --
 
 INSERT INTO `course_comments` (`id`, `date_at`, `user_id`, `course_id`, `task_id`, `rating_number`, `comment`, `created_at`, `updated_at`) VALUES
-(1, '2022-10-01', 81, 3, NULL, 3, 'onako', '2022-10-01 09:52:19', NULL);
+(7, '2022-11-11', 116, 10, NULL, 1, 'dfsdsf', '2022-11-11 11:30:45', NULL),
+(8, '2022-11-11', 116, 3, NULL, 3, 'good', '2022-11-11 12:03:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -214,7 +217,7 @@ CREATE TABLE `course_group` (
   `id` int(11) NOT NULL,
   `course_id` int(11) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_group`
@@ -224,19 +227,36 @@ INSERT INTO `course_group` (`id`, `course_id`, `group_id`) VALUES
 (4, 2, 3),
 (5, 2, 2),
 (6, 2, 1),
-(14, 3, 2),
-(51, 1, 3),
-(52, 1, 2),
-(53, 1, 1),
-(54, 4, 3),
-(55, 4, 2),
-(56, 4, 1),
-(57, 6, 3),
-(58, 6, 2),
-(59, 6, 1),
-(60, 7, 3),
-(61, 7, 2),
-(62, 7, 1);
+(60, 1, 3),
+(61, 1, 2),
+(62, 1, 1),
+(63, 4, 3),
+(64, 4, 2),
+(65, 4, 1),
+(75, 7, 3),
+(76, 7, 2),
+(77, 7, 1),
+(94, 9, 5),
+(95, 9, 3),
+(96, 9, 2),
+(97, 9, 1),
+(106, 8, 5),
+(107, 8, 2),
+(108, 8, 1),
+(112, 6, 2),
+(113, 11, 5),
+(114, 11, 3),
+(115, 11, 2),
+(116, 11, 1),
+(117, 12, 5),
+(118, 12, 3),
+(119, 12, 2),
+(120, 12, 1),
+(121, 3, 3),
+(122, 10, 5),
+(123, 10, 3),
+(124, 10, 2),
+(125, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -248,7 +268,7 @@ CREATE TABLE `course_languages` (
   `id` int(11) NOT NULL,
   `course_id` int(12) DEFAULT NULL,
   `language_id` int(12) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_languages`
@@ -256,12 +276,17 @@ CREATE TABLE `course_languages` (
 
 INSERT INTO `course_languages` (`id`, `course_id`, `language_id`) VALUES
 (2, 2, 2),
-(8, 3, 2),
 (9, 5, 2),
-(21, 1, 2),
-(22, 4, 2),
-(23, 6, 2),
-(24, 7, 1);
+(24, 1, 2),
+(25, 4, 2),
+(29, 7, 1),
+(34, 9, 2),
+(40, 8, 3),
+(42, 6, 2),
+(43, 11, 3),
+(44, 12, 3),
+(45, 3, 2),
+(46, 10, 3);
 
 -- --------------------------------------------------------
 
@@ -275,7 +300,7 @@ CREATE TABLE `course_track` (
   `course_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_track`
@@ -285,7 +310,14 @@ INSERT INTO `course_track` (`id`, `user_id`, `course_id`, `created_at`, `updated
 (1, 81, 3, '2022-10-01 08:01:25', '2022-10-01 09:57:25'),
 (2, 82, 3, '2022-10-01 21:08:49', '2022-10-01 21:10:50'),
 (3, 84, 3, '2022-10-03 13:22:41', '2022-10-07 08:18:58'),
-(4, 87, 6, '2022-10-17 08:50:28', '2022-10-17 08:51:52');
+(4, 87, 6, '2022-10-17 08:50:28', '2022-10-17 08:51:52'),
+(5, 109, 3, '2022-10-22 21:31:15', '2022-10-22 21:41:05'),
+(6, 109, 6, '2022-10-24 07:51:41', '2022-10-24 07:55:43'),
+(7, 119, 3, '2022-10-28 06:43:56', '2022-10-28 06:49:23'),
+(8, 119, 3, '2022-10-28 06:43:56', NULL),
+(9, 111, 6, '2022-11-04 20:47:47', '2022-11-04 20:47:56'),
+(10, 116, 3, '2022-11-10 06:23:08', '2022-11-11 08:35:26'),
+(11, 132, 3, '2022-11-11 04:59:12', '2022-11-11 06:19:53');
 
 -- --------------------------------------------------------
 
@@ -303,7 +335,7 @@ CREATE TABLE `course_track_details` (
   `status` enum('pending','onprogress','completed') NOT NULL DEFAULT 'onprogress',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_track_details`
@@ -317,7 +349,26 @@ INSERT INTO `course_track_details` (`id`, `course_track_id`, `chapter_id`, `less
 (5, 3, 2, 4, 11, '6.92', 'onprogress', '2022-10-03 13:22:41', NULL),
 (6, 3, 1, 1, 2, '1.86', 'onprogress', '2022-10-07 08:16:39', '2022-10-07 08:17:48'),
 (7, 3, 1, 2, 25, '8.76', 'onprogress', '2022-10-07 08:18:58', NULL),
-(8, 4, 3, 7, 100, '8.13', 'completed', '2022-10-17 08:50:28', '2022-10-17 08:51:52');
+(8, 4, 3, 7, 100, '8.13', 'completed', '2022-10-17 08:50:28', '2022-10-17 08:51:52'),
+(9, 5, 1, 1, 100, '90.00', 'completed', '2022-10-22 21:31:15', '2022-10-22 21:31:15'),
+(10, 5, 1, 2, 100, '35.00', 'completed', '2022-10-22 21:31:55', '2022-10-22 21:32:02'),
+(11, 5, 2, 3, 60, '2241.26', 'onprogress', '2022-10-22 21:33:35', NULL),
+(12, 5, 2, 4, 89, '54.09', 'onprogress', '2022-10-22 21:40:36', '2022-10-22 21:40:42'),
+(13, 5, 2, 5, 7, '5.90', 'onprogress', '2022-10-22 21:41:05', NULL),
+(14, 6, 3, 7, 100, '7.30', 'completed', '2022-10-24 07:51:41', '2022-10-24 07:55:43'),
+(15, 7, 1, 1, 100, '90.00', 'completed', '2022-10-28 06:43:56', '2022-10-28 06:47:57'),
+(16, 8, 1, 1, 100, '90.00', 'completed', '2022-10-28 06:43:56', NULL),
+(17, 7, 1, 2, 100, '35.00', 'completed', '2022-10-28 06:45:33', '2022-10-28 06:47:33'),
+(18, 7, 2, 3, 100, '3739.51', 'completed', '2022-10-28 06:49:23', '2022-10-28 06:49:23'),
+(19, 9, 3, 7, 100, '8.13', 'completed', '2022-11-04 20:47:47', '2022-11-04 20:47:56'),
+(20, 10, 1, 1, 100, '90.00', 'completed', '2022-11-10 06:23:08', '2022-11-11 06:48:02'),
+(21, 10, 1, 2, 100, '35.00', 'completed', '2022-11-10 06:23:29', '2022-11-11 06:47:40'),
+(22, 10, 2, 5, 100, '90.00', 'completed', '2022-11-10 11:43:26', '2022-11-11 08:31:26'),
+(23, 10, 2, 3, 100, '3740.00', 'completed', '2022-11-11 01:15:27', '2022-11-11 08:33:11'),
+(24, 10, 2, 4, 100, '61.00', 'completed', '2022-11-11 02:24:13', '2022-11-11 08:31:41'),
+(25, 11, 1, 1, 9, '8.39', 'onprogress', '2022-11-11 04:59:12', '2022-11-11 06:19:54'),
+(26, 11, 2, 5, 6, '5.16', 'onprogress', '2022-11-11 05:00:08', '2022-11-11 05:02:10'),
+(27, 10, 2, 6, 100, '1743.59', 'completed', '2022-11-11 08:35:26', '2022-11-11 08:35:26');
 
 -- --------------------------------------------------------
 
@@ -332,23 +383,46 @@ CREATE TABLE `enrollments` (
   `enrollment_status` enum('pending','onprogress','completed','failed') NOT NULL DEFAULT 'pending',
   `current_chapter` int(12) DEFAULT NULL,
   `current_lession` int(12) DEFAULT NULL,
-  `course_progress` int(11) DEFAULT NULL,
+  `course_progress` int(11) DEFAULT 0,
   `total_number` int(11) DEFAULT 0,
+  `pass_number` int(11) DEFAULT 0,
   `score_number` int(11) DEFAULT 0,
   `user_enroll_status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `date_at` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `enrollments`
 --
 
-INSERT INTO `enrollments` (`id`, `user_id`, `course_id`, `enrollment_status`, `current_chapter`, `current_lession`, `course_progress`, `total_number`, `score_number`, `user_enroll_status`, `date_at`, `created_at`, `updated_at`) VALUES
-(1, 110, 7, 'onprogress', NULL, NULL, 0, 0, 0, 'active', '2022-11-03', '2022-11-03 07:18:29', '2022-11-03 07:18:29'),
-(2, 110, 1, 'pending', NULL, NULL, NULL, 0, 0, 'active', '2022-11-03', '2022-11-03 11:11:56', NULL),
-(3, 111, 1, 'pending', NULL, NULL, NULL, 0, 0, 'active', '2022-11-03', '2022-11-03 13:59:12', NULL);
+INSERT INTO `enrollments` (`id`, `user_id`, `course_id`, `enrollment_status`, `current_chapter`, `current_lession`, `course_progress`, `total_number`, `pass_number`, `score_number`, `user_enroll_status`, `date_at`, `created_at`, `updated_at`) VALUES
+(92, 111, 8, 'pending', NULL, NULL, 0, 0, 0, 0, 'active', '2022-11-04', '2022-11-04 20:13:26', NULL),
+(93, 111, 6, 'completed', 3, 7, 100, 0, 0, 0, 'active', '2022-11-04', '2022-11-04 20:47:56', '2022-11-04 20:47:56'),
+(94, 113, 8, 'completed', NULL, NULL, 100, 100, 0, 100, 'active', '2022-11-04', '2022-11-04 20:51:13', '2022-11-04 20:51:13'),
+(95, 113, 3, 'pending', NULL, NULL, 0, 0, 0, 0, 'active', '2022-11-04', '2022-11-04 21:05:36', NULL),
+(96, 113, 9, 'completed', NULL, NULL, 100, 100, 0, 100, 'active', '2022-11-04', '2022-11-04 21:46:18', '2022-11-04 21:46:18'),
+(97, 110, 9, 'pending', NULL, NULL, 0, 0, 0, 0, 'active', '2022-11-06', '2022-11-06 12:02:15', NULL),
+(98, 110, 8, 'pending', NULL, NULL, 0, 0, 0, 0, 'active', '2022-11-06', '2022-11-06 12:04:59', NULL),
+(99, 111, 10, 'pending', NULL, NULL, 0, 0, 0, 0, 'active', '2022-11-06', '2022-11-06 12:42:23', NULL),
+(100, 113, 10, 'completed', NULL, NULL, 100, 100, 0, 90, 'active', '2022-11-06', '2022-11-06 12:48:23', '2022-11-06 12:48:23'),
+(101, 121, 10, 'completed', NULL, NULL, 100, 100, 0, 80, 'active', '2022-11-06', '2022-11-06 16:43:45', '2022-11-06 16:43:45'),
+(102, 121, 9, 'completed', NULL, NULL, 100, 100, 0, 90, 'active', '2022-11-06', '2022-11-06 16:45:56', '2022-11-06 16:45:56'),
+(103, 121, 8, 'completed', NULL, NULL, 100, 100, 0, 90, 'active', '2022-11-06', '2022-11-06 16:48:01', '2022-11-06 16:48:01'),
+(104, 128, 8, 'completed', NULL, NULL, 100, 100, 0, 80, 'active', '2022-11-07', '2022-11-07 06:54:53', '2022-11-07 06:54:53'),
+(105, 128, 9, 'completed', NULL, NULL, 100, 100, 0, 90, 'active', '2022-11-07', '2022-11-07 07:10:18', '2022-11-07 07:10:18'),
+(106, 128, 10, 'completed', NULL, NULL, 100, 100, 0, 80, 'active', '2022-11-07', '2022-11-07 07:42:29', '2022-11-07 07:42:29'),
+(107, 129, 3, 'pending', NULL, NULL, 0, 0, 0, 0, 'active', '2022-11-07', '2022-11-07 11:08:40', NULL),
+(108, 130, 9, 'completed', NULL, NULL, 100, 100, 80, 100, 'active', '2022-11-07', '2022-11-07 14:48:17', '2022-11-07 14:48:17'),
+(109, 116, 9, 'completed', NULL, NULL, 100, 100, 80, 100, 'active', '2022-11-08', '2022-11-08 13:32:11', '2022-11-08 13:32:11'),
+(110, 121, 12, 'completed', NULL, NULL, 100, 130, 96, 130, 'active', '2022-11-08', '2022-11-08 20:48:07', '2022-11-08 20:48:07'),
+(111, 121, 11, 'completed', NULL, NULL, 100, 130, 96, 130, 'active', '2022-11-08', '2022-11-08 20:52:31', '2022-11-08 20:52:31'),
+(112, 116, 12, 'completed', NULL, NULL, 100, 130, 96, 110, 'active', '2022-11-09', '2022-11-09 15:44:43', '2022-11-09 15:44:43'),
+(113, 116, 3, 'completed', 2, 6, 100, 0, 0, 0, 'active', '2022-11-10', '2022-11-11 08:35:26', '2022-11-11 08:35:26'),
+(114, 131, 3, 'pending', NULL, NULL, 0, 0, 0, 0, 'active', '2022-11-11', '2022-11-11 03:44:25', NULL),
+(116, 132, 3, 'onprogress', 1, 1, 0, 0, 0, 0, 'active', '2022-11-11', '2022-11-11 06:19:54', '2022-11-11 06:19:54'),
+(117, 116, 10, 'failed', NULL, NULL, 30, 100, 0, 30, 'active', '2022-11-11', '2022-11-11 08:28:57', '2022-11-11 08:28:57');
 
 -- --------------------------------------------------------
 
@@ -362,7 +436,7 @@ CREATE TABLE `groups` (
   `g_status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `groups`
@@ -371,7 +445,8 @@ CREATE TABLE `groups` (
 INSERT INTO `groups` (`id`, `g_name`, `g_status`, `created_at`, `updated_at`) VALUES
 (1, 'Marketing', 'active', '2022-09-19 06:37:18', NULL),
 (2, 'Student', 'active', '2022-09-19 06:37:22', NULL),
-(3, 'Accounting', 'active', '2022-09-19 06:37:25', NULL);
+(3, 'Accounting', 'active', '2022-09-19 06:37:25', NULL),
+(5, 'mynewgroup', 'active', '2022-10-24 08:39:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -384,7 +459,7 @@ CREATE TABLE `languages` (
   `name` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `languages`
@@ -392,8 +467,8 @@ CREATE TABLE `languages` (
 
 INSERT INTO `languages` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'English', '2022-10-18 13:49:48', NULL),
-(2, 'Serbian Latin', '2022-10-18 13:50:28', NULL),
-(3, 'Serbian Cyrilic', '2022-10-18 13:52:22', NULL);
+(2, 'Serbian Cyrilic\r\n', '2022-10-18 13:50:28', NULL),
+(3, 'Serbian Latin', '2022-10-18 13:52:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -415,7 +490,7 @@ CREATE TABLE `lessons` (
   `lesson_details` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `lessons`
@@ -428,7 +503,7 @@ INSERT INTO `lessons` (`id`, `course_id`, `chapter_id`, `lesson_name`, `lesson_n
 (4, 3, 2, 'lesson4', 5, NULL, 'https://vimeo.com/413483813', 'link', '1.01', NULL, '<p>lesson 4 description</p>', '2022-10-03 12:52:24', NULL),
 (5, 3, 2, 'lesson5 as 4', 4, NULL, 'https://vimeo.com/639845104', 'link', '1.30', NULL, '<p><br></p>', '2022-10-03 12:55:16', NULL),
 (6, 3, 2, '666666', 6, NULL, 'https://vimeo.com/545491292', 'link', '29.08', NULL, '<p>w6</p>', '2022-10-03 13:00:42', '2022-10-03 13:02:46'),
-(7, 6, 3, 'lesson', 1, '1665996590207_277805125_499317378356506_4349196775249074300_n.mp4', NULL, 'video', NULL, '1665754535464_p_obuka_reqs-v3 (5).docx', '<p>ggff</p>', '2022-10-14 13:35:36', '2022-10-17 08:49:50');
+(7, 6, 3, 'lesson', 1, '1666597867749_277805125_499317378356506_4349196775249074300_n.mp4', NULL, 'video', '8', '1665754535464_p_obuka_reqs-v3 (5).docx', '<p>ggff</p>', '2022-10-14 13:35:36', '2022-10-24 07:51:08');
 
 -- --------------------------------------------------------
 
@@ -443,7 +518,7 @@ CREATE TABLE `login` (
   `last_signin_ip` varchar(155) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `login`
@@ -594,44 +669,246 @@ INSERT INTO `login` (`id`, `user_id`, `last_signin_date`, `last_signin_ip`, `cre
 (142, 105, '2022-10-20 10:51:40', '::1', '2022-10-20 10:51:40', NULL),
 (143, 106, '2022-10-20 11:55:32', '::1', '2022-10-20 11:55:32', NULL),
 (144, 107, '2022-10-21 07:27:18', '::ffff:127.0.0.1', '2022-10-21 07:27:18', NULL),
-(145, 63, '2022-10-28 06:53:08', '::1', '2022-10-28 06:53:08', NULL),
-(146, 108, '2022-10-28 07:03:51', '::ffff:127.0.0.1', '2022-10-28 07:03:51', NULL),
-(147, 108, '2022-10-28 07:34:28', '::ffff:127.0.0.1', '2022-10-28 07:34:28', NULL),
-(148, 63, '2022-10-28 07:38:58', '::1', '2022-10-28 07:38:58', NULL),
-(149, 63, '2022-10-28 07:39:13', '::1', '2022-10-28 07:39:13', NULL),
-(150, 63, '2022-10-28 07:39:44', '::1', '2022-10-28 07:39:44', NULL),
-(151, 63, '2022-10-28 07:41:18', '::1', '2022-10-28 07:41:18', NULL),
-(152, 63, '2022-10-28 07:51:01', '::1', '2022-10-28 07:51:01', NULL),
-(153, 63, '2022-10-28 08:00:02', '::1', '2022-10-28 08:00:02', NULL),
-(154, 108, '2022-10-28 09:17:51', '::ffff:127.0.0.1', '2022-10-28 09:17:51', NULL),
-(155, 108, '2022-10-28 09:18:27', '::ffff:127.0.0.1', '2022-10-28 09:18:27', NULL),
-(156, 108, '2022-10-28 10:41:27', '::ffff:127.0.0.1', '2022-10-28 10:41:27', NULL),
-(157, 109, '2022-10-28 11:07:41', '::ffff:127.0.0.1', '2022-10-28 11:07:41', NULL),
-(158, 63, '2022-10-28 13:25:09', '::ffff:127.0.0.1', '2022-10-28 13:25:09', NULL),
-(159, 63, '2022-10-28 14:52:54', '::ffff:127.0.0.1', '2022-10-28 14:52:54', NULL),
-(160, 109, '2022-10-28 14:53:24', '::ffff:127.0.0.1', '2022-10-28 14:53:24', NULL),
-(161, 63, '2022-10-28 15:06:47', '::ffff:127.0.0.1', '2022-10-28 15:06:47', NULL),
-(162, 110, '2022-10-28 15:07:56', '::ffff:127.0.0.1', '2022-10-28 15:07:56', NULL),
-(163, 63, '2022-10-31 06:51:44', '::1', '2022-10-31 06:51:44', NULL),
-(164, 63, '2022-10-31 10:58:59', '::1', '2022-10-31 10:58:59', NULL),
-(165, 110, '2022-10-31 11:02:40', '::1', '2022-10-31 11:02:40', NULL),
-(166, 110, '2022-11-01 06:34:58', '::1', '2022-11-01 06:34:58', NULL),
-(167, 63, '2022-11-01 06:35:19', '::1', '2022-11-01 06:35:19', NULL),
-(168, 63, '2022-11-03 07:17:26', '::1', '2022-11-03 07:17:26', NULL),
-(169, 63, '2022-11-03 07:17:36', '::1', '2022-11-03 07:17:36', NULL),
-(170, 110, '2022-11-03 07:17:59', '::1', '2022-11-03 07:17:59', NULL),
-(171, 63, '2022-11-03 07:18:47', '::1', '2022-11-03 07:18:47', NULL),
-(172, 63, '2022-11-03 07:39:21', '::1', '2022-11-03 07:39:21', NULL),
-(173, 63, '2022-11-03 09:24:55', '::1', '2022-11-03 09:24:55', NULL),
-(174, 63, '2022-11-03 09:38:36', '::1', '2022-11-03 09:38:36', NULL),
-(175, 63, '2022-11-03 10:55:01', '::1', '2022-11-03 10:55:01', NULL),
-(176, 63, '2022-11-03 10:55:23', '::1', '2022-11-03 10:55:23', NULL),
-(177, 110, '2022-11-03 11:11:48', '::1', '2022-11-03 11:11:48', NULL),
-(178, 63, '2022-11-03 12:20:11', '::1', '2022-11-03 12:20:11', NULL),
-(179, 63, '2022-11-03 13:53:39', '::1', '2022-11-03 13:53:39', NULL),
-(180, 110, '2022-11-03 13:54:04', '::1', '2022-11-03 13:54:04', NULL),
-(181, 63, '2022-11-03 13:54:57', '::1', '2022-11-03 13:54:57', NULL),
-(182, 111, '2022-11-03 13:56:02', '::1', '2022-11-03 13:56:02', NULL);
+(145, 1, '2022-10-21 08:10:24', '::ffff:127.0.0.1', '2022-10-21 08:10:24', NULL),
+(146, 63, '2022-10-21 09:27:57', '122.163.67.187', '2022-10-21 09:27:57', NULL),
+(147, 108, '2022-10-21 09:32:25', '122.163.67.187', '2022-10-21 09:32:25', NULL),
+(148, 108, '2022-10-21 11:28:04', '122.163.67.187', '2022-10-21 11:28:04', NULL),
+(149, 108, '2022-10-21 11:43:49', '122.163.67.187', '2022-10-21 11:43:49', NULL),
+(150, 108, '2022-10-21 12:08:30', '122.163.67.187', '2022-10-21 12:08:30', NULL),
+(151, 108, '2022-10-21 12:37:03', '122.163.67.187', '2022-10-21 12:37:03', NULL),
+(152, 108, '2022-10-21 12:54:28', '122.163.67.187', '2022-10-21 12:54:28', NULL),
+(153, 108, '2022-10-21 14:37:45', '122.163.67.187', '2022-10-21 14:37:45', NULL),
+(154, 63, '2022-10-21 14:53:47', '77.105.27.158', '2022-10-21 14:53:47', NULL),
+(155, 63, '2022-10-21 21:54:30', '47.11.197.248', '2022-10-21 21:54:30', NULL),
+(156, 108, '2022-10-21 21:57:33', '47.11.197.248', '2022-10-21 21:57:33', NULL),
+(157, 108, '2022-10-21 22:09:30', '47.11.197.248', '2022-10-21 22:09:30', NULL),
+(158, 63, '2022-10-22 17:16:11', '77.105.27.158', '2022-10-22 17:16:11', NULL),
+(159, 110, '2022-10-22 17:17:49', '77.105.27.158', '2022-10-22 17:17:49', NULL),
+(160, 63, '2022-10-22 17:18:54', '77.105.27.158', '2022-10-22 17:18:54', NULL),
+(161, 111, '2022-10-22 17:49:07', '77.105.27.158', '2022-10-22 17:49:07', NULL),
+(162, 111, '2022-10-22 18:37:12', '77.105.27.158', '2022-10-22 18:37:12', NULL),
+(163, 110, '2022-10-22 18:40:43', '77.105.27.158', '2022-10-22 18:40:43', NULL),
+(164, 111, '2022-10-22 19:58:57', '77.105.27.158', '2022-10-22 19:58:57', NULL),
+(165, 110, '2022-10-22 20:07:47', '77.105.27.158', '2022-10-22 20:07:47', NULL),
+(166, 109, '2022-10-22 20:11:46', '77.105.27.158', '2022-10-22 20:11:46', NULL),
+(167, 109, '2022-10-22 20:17:49', '77.105.27.158', '2022-10-22 20:17:49', NULL),
+(168, 112, '2022-10-23 07:32:41', '77.105.27.158', '2022-10-23 07:32:41', NULL),
+(169, 113, '2022-10-23 08:26:29', '77.105.27.158', '2022-10-23 08:26:29', NULL),
+(170, 113, '2022-10-23 08:27:20', '77.105.27.158', '2022-10-23 08:27:20', NULL),
+(171, 112, '2022-10-23 09:10:07', '77.105.27.158', '2022-10-23 09:10:07', NULL),
+(172, 114, '2022-10-23 09:20:16', '77.105.27.158', '2022-10-23 09:20:16', NULL),
+(173, 63, '2022-10-23 09:28:17', '77.105.27.158', '2022-10-23 09:28:17', NULL),
+(174, 114, '2022-10-23 09:35:41', '77.105.27.158', '2022-10-23 09:35:41', NULL),
+(175, 63, '2022-10-23 10:52:44', '77.105.27.158', '2022-10-23 10:52:44', NULL),
+(176, 110, '2022-10-23 10:53:13', '77.105.27.158', '2022-10-23 10:53:13', NULL),
+(177, 112, '2022-10-23 14:00:59', '77.105.27.158', '2022-10-23 14:00:59', NULL),
+(178, 63, '2022-10-24 03:01:37', '47.11.205.62', '2022-10-24 03:01:37', NULL),
+(179, 109, '2022-10-24 03:52:38', '47.11.205.62', '2022-10-24 03:52:38', NULL),
+(180, 115, '2022-10-24 03:58:41', '47.11.205.62', '2022-10-24 03:58:41', NULL),
+(181, 109, '2022-10-24 04:23:31', '47.11.205.62', '2022-10-24 04:23:31', NULL),
+(182, 63, '2022-10-24 07:34:03', '77.105.27.158', '2022-10-24 07:34:03', NULL),
+(183, 63, '2022-10-24 09:22:37', '77.105.27.158', '2022-10-24 09:22:37', NULL),
+(184, 111, '2022-10-24 10:50:37', '77.105.27.158', '2022-10-24 10:50:37', NULL),
+(185, 63, '2022-10-25 06:17:21', '122.163.67.187', '2022-10-25 06:17:21', NULL),
+(186, 109, '2022-10-25 06:18:50', '122.163.67.187', '2022-10-25 06:18:50', NULL),
+(187, 116, '2022-10-25 06:51:02', '122.163.67.187', '2022-10-25 06:51:02', NULL),
+(188, 63, '2022-10-25 06:51:22', '122.163.67.187', '2022-10-25 06:51:22', NULL),
+(189, 62, '2022-10-25 11:13:58', '122.163.67.187', '2022-10-25 11:13:58', NULL),
+(190, 63, '2022-10-25 18:22:40', '77.105.27.158', '2022-10-25 18:22:40', NULL),
+(191, 113, '2022-10-25 18:23:04', '77.105.27.158', '2022-10-25 18:23:04', NULL),
+(192, 63, '2022-10-25 18:23:23', '77.105.27.158', '2022-10-25 18:23:23', NULL),
+(193, 63, '2022-10-27 08:28:05', '47.11.210.89', '2022-10-27 08:28:05', NULL),
+(194, 118, '2022-10-27 08:29:27', '47.11.210.89', '2022-10-27 08:29:27', NULL),
+(195, 63, '2022-10-27 08:43:47', '47.11.210.89', '2022-10-27 08:43:47', NULL),
+(196, 118, '2022-10-27 08:44:53', '47.11.210.89', '2022-10-27 08:44:53', NULL),
+(197, 118, '2022-10-27 08:55:53', '47.11.210.89', '2022-10-27 08:55:53', NULL),
+(198, 63, '2022-10-27 09:02:52', '47.11.210.89', '2022-10-27 09:02:52', NULL),
+(199, 111, '2022-10-27 10:32:05', '77.105.27.158', '2022-10-27 10:32:05', NULL),
+(200, 63, '2022-10-27 10:36:02', '47.11.210.89', '2022-10-27 10:36:02', NULL),
+(201, 63, '2022-10-27 11:06:14', '47.11.210.89', '2022-10-27 11:06:14', NULL),
+(202, 118, '2022-10-27 11:42:23', '47.11.210.89', '2022-10-27 11:42:23', NULL),
+(203, 63, '2022-10-27 11:50:18', '47.11.210.89', '2022-10-27 11:50:18', NULL),
+(204, 63, '2022-10-27 12:15:04', '47.11.210.89', '2022-10-27 12:15:04', NULL),
+(205, 119, '2022-10-27 12:16:38', '47.11.210.89', '2022-10-27 12:16:38', NULL),
+(206, 63, '2022-10-27 12:28:03', '47.11.210.89', '2022-10-27 12:28:03', NULL),
+(207, 119, '2022-10-27 12:28:31', '47.11.210.89', '2022-10-27 12:28:31', NULL),
+(208, 63, '2022-10-27 18:40:35', '77.105.27.158', '2022-10-27 18:40:35', NULL),
+(209, 63, '2022-10-28 06:27:27', '171.79.6.75', '2022-10-28 06:27:27', NULL),
+(210, 119, '2022-10-28 06:29:33', '171.79.6.75', '2022-10-28 06:29:33', NULL),
+(211, 63, '2022-10-28 06:32:38', '171.79.6.75', '2022-10-28 06:32:38', NULL),
+(212, 63, '2022-10-28 06:35:14', '171.79.6.75', '2022-10-28 06:35:14', NULL),
+(213, 63, '2022-10-28 06:35:46', '171.79.6.75', '2022-10-28 06:35:46', NULL),
+(214, 119, '2022-10-28 06:36:10', '171.79.6.75', '2022-10-28 06:36:10', NULL),
+(215, 63, '2022-10-28 06:38:32', '171.79.6.75', '2022-10-28 06:38:32', NULL),
+(216, 119, '2022-10-28 06:39:52', '171.79.6.75', '2022-10-28 06:39:52', NULL),
+(217, 113, '2022-10-28 11:32:41', '77.105.27.158', '2022-10-28 11:32:41', NULL),
+(218, 63, '2022-10-28 11:38:26', '171.79.6.75', '2022-10-28 11:38:26', NULL),
+(219, 63, '2022-10-28 13:02:08', '171.79.6.75', '2022-10-28 13:02:08', NULL),
+(220, 63, '2022-10-28 15:13:35', '171.79.6.75', '2022-10-28 15:13:35', NULL),
+(221, 120, '2022-10-28 15:14:32', '171.79.6.75', '2022-10-28 15:14:32', NULL),
+(222, 63, '2022-10-28 20:03:15', '77.105.27.158', '2022-10-28 20:03:15', NULL),
+(223, 113, '2022-10-28 20:05:25', '77.105.27.158', '2022-10-28 20:05:25', NULL),
+(224, 63, '2022-10-28 20:10:15', '77.105.27.158', '2022-10-28 20:10:15', NULL),
+(225, 63, '2022-10-28 20:55:58', '77.105.27.158', '2022-10-28 20:55:58', NULL),
+(226, 63, '2022-10-28 21:06:17', '77.105.27.158', '2022-10-28 21:06:17', NULL),
+(227, 113, '2022-10-28 22:19:30', '77.105.27.158', '2022-10-28 22:19:30', NULL),
+(228, 63, '2022-10-28 22:23:16', '77.105.27.158', '2022-10-28 22:23:16', NULL),
+(229, 121, '2022-10-28 22:23:48', '77.105.27.158', '2022-10-28 22:23:48', NULL),
+(230, 63, '2022-10-28 22:26:43', '91.148.228.88', '2022-10-28 22:26:43', NULL),
+(231, 63, '2022-10-30 22:12:53', '77.105.27.158', '2022-10-30 22:12:53', NULL),
+(232, 121, '2022-10-30 22:18:05', '77.105.27.158', '2022-10-30 22:18:05', NULL),
+(233, 63, '2022-10-30 22:19:11', '77.105.27.158', '2022-10-30 22:19:11', NULL),
+(234, 121, '2022-10-30 22:21:03', '77.105.27.158', '2022-10-30 22:21:03', NULL),
+(235, 63, '2022-10-30 22:22:31', '77.105.27.158', '2022-10-30 22:22:31', NULL),
+(236, 122, '2022-10-30 22:23:52', '77.105.27.158', '2022-10-30 22:23:52', NULL),
+(237, 63, '2022-10-30 22:26:30', '77.105.27.158', '2022-10-30 22:26:30', NULL),
+(238, 122, '2022-10-30 22:26:54', '77.105.27.158', '2022-10-30 22:26:54', NULL),
+(239, 63, '2022-10-31 06:21:01', '171.79.6.75', '2022-10-31 06:21:01', NULL),
+(240, 63, '2022-10-31 06:37:08', '171.79.6.75', '2022-10-31 06:37:08', NULL),
+(241, 63, '2022-10-31 09:19:03', '171.79.6.75', '2022-10-31 09:19:03', NULL),
+(242, 123, '2022-10-31 09:24:55', '171.79.6.75', '2022-10-31 09:24:55', NULL),
+(243, 63, '2022-10-31 10:00:52', '171.79.6.75', '2022-10-31 10:00:52', NULL),
+(244, 63, '2022-11-01 13:12:21', '171.79.6.75', '2022-11-01 13:12:21', NULL),
+(245, 122, '2022-11-01 13:12:48', '171.79.6.75', '2022-11-01 13:12:48', NULL),
+(246, 63, '2022-11-01 13:13:54', '171.79.6.75', '2022-11-01 13:13:54', NULL),
+(247, 124, '2022-11-01 13:17:55', '171.79.6.75', '2022-11-01 13:17:55', NULL),
+(248, 63, '2022-11-01 13:34:57', '171.79.6.75', '2022-11-01 13:34:57', NULL),
+(249, 124, '2022-11-01 13:35:55', '171.79.6.75', '2022-11-01 13:35:55', NULL),
+(250, 124, '2022-11-01 14:31:02', '171.79.6.75', '2022-11-01 14:31:02', NULL),
+(251, 63, '2022-11-01 14:40:08', '171.79.6.75', '2022-11-01 14:40:08', NULL),
+(252, 125, '2022-11-01 14:41:12', '171.79.6.75', '2022-11-01 14:41:12', NULL),
+(253, 63, '2022-11-01 15:08:29', '171.79.6.75', '2022-11-01 15:08:29', NULL),
+(254, 126, '2022-11-01 15:09:35', '171.79.6.75', '2022-11-01 15:09:35', NULL),
+(255, 63, '2022-11-01 15:22:15', '171.79.6.75', '2022-11-01 15:22:15', NULL),
+(256, 63, '2022-11-01 15:35:54', '171.79.6.75', '2022-11-01 15:35:54', NULL),
+(257, 127, '2022-11-01 15:41:20', '171.79.6.75', '2022-11-01 15:41:20', NULL),
+(258, 63, '2022-11-03 07:12:35', '171.79.6.75', '2022-11-03 07:12:35', NULL),
+(259, 63, '2022-11-03 07:13:15', '171.79.6.75', '2022-11-03 07:13:15', NULL),
+(260, 127, '2022-11-03 07:13:34', '171.79.6.75', '2022-11-03 07:13:34', NULL),
+(261, 63, '2022-11-03 07:25:26', '171.79.6.75', '2022-11-03 07:25:26', NULL),
+(262, 126, '2022-11-03 07:27:11', '171.79.6.75', '2022-11-03 07:27:11', NULL),
+(263, 63, '2022-11-03 07:52:39', '171.79.6.75', '2022-11-03 07:52:39', NULL),
+(264, 111, '2022-11-04 09:18:38', '109.111.239.70', '2022-11-04 09:18:38', NULL),
+(265, 63, '2022-11-04 14:52:54', '109.111.239.70', '2022-11-04 14:52:54', NULL),
+(266, 63, '2022-11-04 14:55:38', '47.11.198.228', '2022-11-04 14:55:38', NULL),
+(267, 63, '2022-11-04 15:13:54', '47.11.198.228', '2022-11-04 15:13:54', NULL),
+(268, 63, '2022-11-04 15:22:38', '47.11.198.228', '2022-11-04 15:22:38', NULL),
+(269, 63, '2022-11-04 15:36:40', '47.11.198.228', '2022-11-04 15:36:40', NULL),
+(270, 63, '2022-11-04 15:38:59', '47.11.198.228', '2022-11-04 15:38:59', NULL),
+(271, 63, '2022-11-04 15:44:23', '47.11.198.228', '2022-11-04 15:44:23', NULL),
+(272, 63, '2022-11-04 19:49:50', '77.105.27.158', '2022-11-04 19:49:50', NULL),
+(273, 111, '2022-11-04 20:12:30', '77.105.27.158', '2022-11-04 20:12:30', NULL),
+(274, 63, '2022-11-04 20:12:54', '77.105.27.158', '2022-11-04 20:12:54', NULL),
+(275, 111, '2022-11-04 20:13:17', '77.105.27.158', '2022-11-04 20:13:17', NULL),
+(276, 63, '2022-11-04 20:15:55', '77.105.27.158', '2022-11-04 20:15:55', NULL),
+(277, 113, '2022-11-04 20:49:22', '77.105.27.158', '2022-11-04 20:49:22', NULL),
+(278, 113, '2022-11-04 22:04:57', '77.105.27.158', '2022-11-04 22:04:57', NULL),
+(279, 121, '2022-11-04 22:17:22', '77.105.27.158', '2022-11-04 22:17:22', NULL),
+(280, 110, '2022-11-06 12:02:03', '77.105.27.158', '2022-11-06 12:02:03', NULL),
+(281, 111, '2022-11-06 12:08:02', '77.105.27.158', '2022-11-06 12:08:02', NULL),
+(282, 113, '2022-11-06 12:46:39', '77.105.27.158', '2022-11-06 12:46:39', NULL),
+(283, 121, '2022-11-06 16:42:35', '77.105.27.158', '2022-11-06 16:42:35', NULL),
+(284, 63, '2022-11-07 06:36:32', '122.182.138.242', '2022-11-07 06:36:32', NULL),
+(285, 128, '2022-11-07 06:46:26', '122.182.138.242', '2022-11-07 06:46:26', NULL),
+(286, 63, '2022-11-07 06:49:39', '122.182.138.242', '2022-11-07 06:49:39', NULL),
+(287, 128, '2022-11-07 06:51:21', '122.182.138.242', '2022-11-07 06:51:21', NULL),
+(288, 63, '2022-11-07 06:55:29', '122.182.138.242', '2022-11-07 06:55:29', NULL),
+(289, 128, '2022-11-07 07:01:24', '122.182.138.242', '2022-11-07 07:01:24', NULL),
+(290, 128, '2022-11-07 07:36:48', '122.182.138.242', '2022-11-07 07:36:48', NULL),
+(291, 63, '2022-11-07 07:37:07', '122.182.138.242', '2022-11-07 07:37:07', NULL),
+(292, 128, '2022-11-07 07:38:01', '122.182.138.242', '2022-11-07 07:38:01', NULL),
+(293, 63, '2022-11-07 07:43:46', '122.182.138.242', '2022-11-07 07:43:46', NULL),
+(294, 128, '2022-11-07 07:47:01', '122.182.138.242', '2022-11-07 07:47:01', NULL),
+(295, 63, '2022-11-07 09:52:15', '122.182.138.242', '2022-11-07 09:52:15', NULL),
+(296, 129, '2022-11-07 10:16:54', '122.182.138.242', '2022-11-07 10:16:54', NULL),
+(297, 63, '2022-11-07 10:44:32', '122.182.138.242', '2022-11-07 10:44:32', NULL),
+(298, 129, '2022-11-07 10:47:27', '122.182.138.242', '2022-11-07 10:47:27', NULL),
+(299, 63, '2022-11-07 10:48:30', '122.182.138.242', '2022-11-07 10:48:30', NULL),
+(300, 63, '2022-11-07 11:26:04', '122.182.138.242', '2022-11-07 11:26:04', NULL),
+(301, 129, '2022-11-07 11:27:25', '122.182.138.242', '2022-11-07 11:27:25', NULL),
+(302, 1, '2022-11-07 11:48:29', '::ffff:127.0.0.1', '2022-11-07 11:48:29', NULL),
+(303, 129, '2022-11-07 12:35:41', '122.182.138.242', '2022-11-07 12:35:41', NULL),
+(304, 129, '2022-11-07 12:43:54', '122.182.138.242', '2022-11-07 12:43:54', NULL),
+(305, 63, '2022-11-07 12:47:01', '122.182.138.242', '2022-11-07 12:47:01', NULL),
+(306, 63, '2022-11-07 14:30:48', '122.182.138.242', '2022-11-07 14:30:48', NULL),
+(307, 130, '2022-11-07 14:32:20', '122.182.138.242', '2022-11-07 14:32:20', NULL),
+(308, 63, '2022-11-07 14:44:12', '122.182.138.242', '2022-11-07 14:44:12', NULL),
+(309, 130, '2022-11-07 14:44:47', '122.182.138.242', '2022-11-07 14:44:47', NULL),
+(310, 1, '2022-11-07 15:15:35', '::ffff:127.0.0.1', '2022-11-07 15:15:35', NULL),
+(311, 63, '2022-11-08 06:29:01', '122.182.138.242', '2022-11-08 06:29:01', NULL),
+(312, 130, '2022-11-08 07:10:08', '122.182.138.242', '2022-11-08 07:10:08', NULL),
+(313, 130, '2022-11-08 07:29:44', '122.182.138.242', '2022-11-08 07:29:44', NULL),
+(314, 63, '2022-11-08 08:13:41', '122.182.138.242', '2022-11-08 08:13:41', NULL),
+(315, 63, '2022-11-08 11:29:36', '122.182.138.242', '2022-11-08 11:29:36', NULL),
+(316, 63, '2022-11-08 11:30:42', '122.182.138.242', '2022-11-08 11:30:42', NULL),
+(317, 130, '2022-11-08 11:31:50', '122.182.138.242', '2022-11-08 11:31:50', NULL),
+(318, 116, '2022-11-08 12:55:43', '122.182.138.242', '2022-11-08 12:55:43', NULL),
+(319, 63, '2022-11-08 13:01:22', '122.182.138.242', '2022-11-08 13:01:22', NULL),
+(320, 116, '2022-11-08 13:03:00', '122.182.138.242', '2022-11-08 13:03:00', NULL),
+(321, 116, '2022-11-08 13:25:57', '122.182.138.242', '2022-11-08 13:25:57', NULL),
+(322, 116, '2022-11-08 13:30:16', '122.182.138.242', '2022-11-08 13:30:16', NULL),
+(323, 63, '2022-11-08 13:32:32', '122.182.138.242', '2022-11-08 13:32:32', NULL),
+(324, 116, '2022-11-08 13:39:12', '122.182.138.242', '2022-11-08 13:39:12', NULL),
+(325, 116, '2022-11-08 13:42:42', '122.182.138.242', '2022-11-08 13:42:42', NULL),
+(326, 63, '2022-11-08 13:42:50', '122.182.138.242', '2022-11-08 13:42:50', NULL),
+(327, 116, '2022-11-08 13:46:28', '122.182.138.242', '2022-11-08 13:46:28', NULL),
+(328, 63, '2022-11-08 13:46:57', '122.182.138.242', '2022-11-08 13:46:57', NULL),
+(329, 116, '2022-11-08 13:47:48', '122.182.138.242', '2022-11-08 13:47:48', NULL),
+(330, 63, '2022-11-08 13:52:01', '122.182.138.242', '2022-11-08 13:52:01', NULL),
+(331, 116, '2022-11-08 13:53:04', '122.182.138.242', '2022-11-08 13:53:04', NULL),
+(332, 116, '2022-11-08 13:57:09', '122.182.138.242', '2022-11-08 13:57:09', NULL),
+(333, 63, '2022-11-08 13:57:36', '122.182.138.242', '2022-11-08 13:57:36', NULL),
+(334, 116, '2022-11-08 13:59:35', '122.182.138.242', '2022-11-08 13:59:35', NULL),
+(335, 63, '2022-11-08 14:20:05', '122.182.138.242', '2022-11-08 14:20:05', NULL),
+(336, 116, '2022-11-08 14:20:55', '122.182.138.242', '2022-11-08 14:20:55', NULL),
+(337, 116, '2022-11-08 14:23:22', '122.182.138.242', '2022-11-08 14:23:22', NULL),
+(338, 63, '2022-11-08 14:24:18', '122.182.138.242', '2022-11-08 14:24:18', NULL),
+(339, 116, '2022-11-08 14:25:30', '122.182.138.242', '2022-11-08 14:25:30', NULL),
+(340, 116, '2022-11-08 14:31:16', '122.182.138.242', '2022-11-08 14:31:16', NULL),
+(341, 63, '2022-11-08 14:33:15', '122.182.138.242', '2022-11-08 14:33:15', NULL),
+(342, 116, '2022-11-08 14:33:54', '122.182.138.242', '2022-11-08 14:33:54', NULL),
+(343, 116, '2022-11-08 14:37:16', '122.182.138.242', '2022-11-08 14:37:16', NULL),
+(344, 63, '2022-11-08 15:02:27', '122.182.138.242', '2022-11-08 15:02:27', NULL),
+(345, 116, '2022-11-08 15:03:26', '122.182.138.242', '2022-11-08 15:03:26', NULL),
+(346, 63, '2022-11-08 15:05:15', '122.182.138.242', '2022-11-08 15:05:15', NULL),
+(347, 116, '2022-11-08 15:06:12', '122.182.138.242', '2022-11-08 15:06:12', NULL),
+(348, 116, '2022-11-08 15:21:39', '122.182.138.242', '2022-11-08 15:21:39', NULL),
+(349, 63, '2022-11-08 15:23:27', '122.182.138.242', '2022-11-08 15:23:27', NULL),
+(350, 116, '2022-11-08 15:24:12', '122.182.138.242', '2022-11-08 15:24:12', NULL),
+(351, 116, '2022-11-08 15:33:24', '122.182.138.242', '2022-11-08 15:33:24', NULL),
+(352, 116, '2022-11-08 15:36:15', '122.182.138.242', '2022-11-08 15:36:15', NULL),
+(353, 116, '2022-11-08 15:43:43', '122.182.138.242', '2022-11-08 15:43:43', NULL),
+(354, 116, '2022-11-08 20:01:45', '47.11.4.31', '2022-11-08 20:01:45', NULL),
+(355, 63, '2022-11-09 05:30:16', '47.11.42.96', '2022-11-09 05:30:16', NULL),
+(356, 116, '2022-11-09 05:53:27', '47.11.42.96', '2022-11-09 05:53:27', NULL),
+(357, 63, '2022-11-09 06:03:34', '47.11.42.96', '2022-11-09 06:03:34', NULL),
+(358, 116, '2022-11-09 06:15:07', '47.11.42.96', '2022-11-09 06:15:07', NULL),
+(359, 116, '2022-11-09 08:03:57', '47.11.42.96', '2022-11-09 08:03:57', NULL),
+(360, 63, '2022-11-09 15:24:44', '47.11.42.96', '2022-11-09 15:24:44', NULL),
+(361, 116, '2022-11-09 15:25:32', '47.11.42.96', '2022-11-09 15:25:32', NULL),
+(362, 63, '2022-11-09 16:05:59', '47.11.42.96', '2022-11-09 16:05:59', NULL),
+(363, 63, '2022-11-10 04:27:07', '47.11.36.229', '2022-11-10 04:27:07', NULL),
+(364, 63, '2022-11-10 04:34:43', '47.11.36.229', '2022-11-10 04:34:43', NULL),
+(365, 116, '2022-11-10 06:38:18', '47.11.36.229', '2022-11-10 06:38:18', NULL),
+(366, 116, '2022-11-10 12:01:52', '47.11.36.229', '2022-11-10 12:01:52', NULL),
+(367, 116, '2022-11-11 01:01:35', '47.11.55.239', '2022-11-11 01:01:35', NULL),
+(368, 116, '2022-11-11 03:31:53', '47.11.55.239', '2022-11-11 03:31:53', NULL),
+(369, 63, '2022-11-11 03:42:46', '47.11.55.239', '2022-11-11 03:42:46', NULL),
+(370, 131, '2022-11-11 03:44:04', '47.11.55.239', '2022-11-11 03:44:04', NULL),
+(371, 116, '2022-11-11 03:52:24', '47.11.55.239', '2022-11-11 03:52:24', NULL),
+(372, 63, '2022-11-11 04:48:38', '47.11.55.239', '2022-11-11 04:48:38', NULL),
+(373, 132, '2022-11-11 04:49:49', '47.11.55.239', '2022-11-11 04:49:49', NULL),
+(374, 116, '2022-11-11 06:22:54', '47.11.55.239', '2022-11-11 06:22:54', NULL),
+(375, 63, '2022-11-11 06:45:53', '47.11.55.239', '2022-11-11 06:45:53', NULL),
+(376, 116, '2022-11-11 06:47:03', '47.11.55.239', '2022-11-11 06:47:03', NULL),
+(377, 63, '2022-11-11 06:48:47', '47.11.55.239', '2022-11-11 06:48:47', NULL),
+(378, 116, '2022-11-11 06:51:11', '47.11.55.239', '2022-11-11 06:51:11', NULL),
+(379, 63, '2022-11-11 07:43:40', '47.11.55.239', '2022-11-11 07:43:40', NULL),
+(380, 116, '2022-11-11 07:44:08', '47.11.55.239', '2022-11-11 07:44:08', NULL),
+(381, 63, '2022-11-11 12:40:20', '47.11.55.239', '2022-11-11 12:40:20', NULL),
+(382, 116, '2022-11-11 13:09:49', '47.11.55.239', '2022-11-11 13:09:49', NULL),
+(383, 116, '2022-11-11 15:10:21', '47.11.55.239', '2022-11-11 15:10:21', NULL),
+(384, 116, '2022-11-11 15:33:52', '47.11.55.239', '2022-11-11 15:33:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -646,14 +923,14 @@ CREATE TABLE `maintenance` (
   `date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `maintenance`
 --
 
 INSERT INTO `maintenance` (`id`, `maintenance_text`, `status`, `date`, `created_at`, `updated_at`) VALUES
-(1, 'sasadasds', 'deactive', '2022-09-15 12:50:00', '2022-09-26 09:50:33', NULL);
+(1, 'sasadasds', 'deactive', '2022-09-15 12:50:00', '2022-09-26 09:50:33', '2022-11-07 12:36:27');
 
 -- --------------------------------------------------------
 
@@ -669,7 +946,7 @@ CREATE TABLE `qns_ans_comment` (
   `parent_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -682,7 +959,7 @@ CREATE TABLE `qualification` (
   `name` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `qualification`
@@ -702,6 +979,7 @@ CREATE TABLE `question` (
   `id` int(11) NOT NULL,
   `enrollment_id` int(11) DEFAULT NULL,
   `question_name` varchar(255) DEFAULT NULL,
+  `question_name_2` varchar(255) DEFAULT NULL,
   `user_answer` varchar(255) DEFAULT NULL,
   `correct_answer` varchar(255) DEFAULT NULL,
   `total_marks` int(12) DEFAULT NULL,
@@ -709,19 +987,146 @@ CREATE TABLE `question` (
   `answer_status` enum('correct','incorrect') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `question`
 --
 
-INSERT INTO `question` (`id`, `enrollment_id`, `question_name`, `user_answer`, `correct_answer`, `total_marks`, `user_marks`, `answer_status`, `created_at`, `updated_at`) VALUES
-(19, 999, 'Select the correct answer option:', 'Option one', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
-(20, 999, 'Select the correct answer option:2', 'Option 1', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
-(21, 999, 'Select one or more correct answers:1', 'Option 1,Option 2,Option 3,', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
-(22, 999, 'Select one or more correct answers:2', 'Option 1,Option 2,Option 3,', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
-(23, 999, 'Match the following items with their descriptions:1', 'Item 1 Match 1,Item 2 Match 2,', NULL, 10, 10, 'correct', '2022-11-02 14:03:07', NULL),
-(24, 999, 'Match the following items with their descriptions:2', 'Item 2 Match 1,Item 1 Match 2,', NULL, 10, 0, 'incorrect', '2022-11-02 14:03:07', NULL);
+INSERT INTO `question` (`id`, `enrollment_id`, `question_name`, `question_name_2`, `user_answer`, `correct_answer`, `total_marks`, `user_marks`, `answer_status`, `created_at`, `updated_at`) VALUES
+(1, 94, 'Prema članu 23. Zakona postoji kategorija objekata prema ugroženosti od požara. Koji su to objekti?', NULL, 'Sa visokim, povećanim i izvesnim rizikom CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(2, 94, 'Kada se najkasnije organizuje obuka za zaposlene?', NULL, 'Nakon 30 dana od stupanja na rad CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(3, 94, 'Aparat za gašenje požara na prah koristi se za:', NULL, 'Mekani nameštaj, drveni nameštaj, plastiku, papir i isključene računare CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(4, 94, 'Aparat za gašenje požara vodom – zidni hidrant ne koristi se za:', NULL, 'Uključenu električnu opremu i zapaljive tečnosti CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(5, 94, 'Požar prema mestu nastanka klasifikujemo na unutrašnje i spoljašnje.', NULL, 'Tačno CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(6, 94, 'Prilikom napuštanja zgrade tokom požara smete da koristite lift.', NULL, 'Tačno CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(7, 94, 'Da li smete da pristupite gašenju požara ukoliko je vatra mala i bez crnog dima?', NULL, 'Da CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(8, 94, 'Prilikom evakuacije trčite što brže kako biste napustili zgradu.', NULL, 'Netačno CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(9, 94, 'Koji su razlozi nastanka požara na radnom mestu?', NULL, 'Korišćenje oštećenih kablova  CORRECT,Korišćenje cigareta, dima,…  CORRECT,Čuvanje zapaljivih materija  CORRECT,Zatrpavanje radnog stola papirima  CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(10, 94, 'Aparat za gašenje požara ugljen dioksidom (CO2) koristi se za', NULL, 'Papir CORRECT,Računare CORRECT,Požar pod naponom od 10.000 Volti CORRECT', NULL, 10, 10, 'correct', '2022-11-04 20:51:13', NULL),
+(11, 96, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(12, 96, 'Који нежељени софтвер је најмање штетан?', NULL, 'Рекламни (Adware)', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(13, 96, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(14, 96, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(15, 96, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Новца', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(16, 96, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(17, 96, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(18, 96, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(19, 96, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Рачунара,Телефона,Сервера,Података', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(20, 96, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Интегритет,Расположивост', NULL, 10, 10, 'correct', '2022-11-04 21:46:18', NULL),
+(21, 100, 'Који нежељени софтвер је најмање штетан?', NULL, 'Шпијунски (Spyware)', NULL, 10, 0, 'incorrect', '2022-11-06 12:48:23', NULL),
+(22, 100, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(23, 100, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(24, 100, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(25, 100, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(26, 100, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(27, 100, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Новца', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(28, 100, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(29, 100, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Интегритет,Расположивост', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(30, 100, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Рачунара,Телефона,Сервера,Података', NULL, 10, 10, 'correct', '2022-11-06 12:48:23', NULL),
+(31, 101, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(32, 101, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(33, 101, 'Који нежељени софтвер је најмање штетан?', NULL, 'Рекламни (Adware)', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(34, 101, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(35, 101, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Славе', NULL, 10, 0, 'incorrect', '2022-11-06 16:43:45', NULL),
+(36, 101, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(37, 101, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(38, 101, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(39, 101, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Рачунара,Телефона,Сервера,Података', NULL, 10, 10, 'correct', '2022-11-06 16:43:45', NULL),
+(40, 101, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Расположивост,Усаглашеност са Законом', NULL, 10, 0, 'incorrect', '2022-11-06 16:43:45', NULL),
+(41, 102, 'Који нежељени софтвер је најмање штетан?', NULL, 'Рекламни (Adware)', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(42, 102, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(43, 102, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(44, 102, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(45, 102, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(46, 102, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(47, 102, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Новца', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(48, 102, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(49, 102, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Интегритет,Расположивост', NULL, 10, 10, 'correct', '2022-11-06 16:45:55', NULL),
+(50, 102, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Телефона,Сервера', NULL, 10, 0, 'incorrect', '2022-11-06 16:45:56', NULL),
+(51, 103, 'Prema članu 23. Zakona postoji kategorija objekata prema ugroženosti od požara. Koji su to objekti?', NULL, 'Sa visokim, povećanim i izvesnim rizikom CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(52, 103, 'Kada se najkasnije organizuje obuka za zaposlene?', NULL, 'Nakon 30 dana od stupanja na rad CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(53, 103, 'Aparat za gašenje požara na prah koristi se za:', NULL, 'Mekani nameštaj, drveni nameštaj, plastiku, papir i isključene računare CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(54, 103, 'Aparat za gašenje požara vodom – zidni hidrant ne koristi se za:', NULL, 'Uključenu električnu opremu i zapaljive tečnosti CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(55, 103, 'Požar prema mestu nastanka klasifikujemo na unutrašnje i spoljašnje.', NULL, 'Tačno CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(56, 103, 'Prilikom napuštanja zgrade tokom požara smete da koristite lift.', NULL, 'Tačno CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(57, 103, 'Da li smete da pristupite gašenju požara ukoliko je vatra mala i bez crnog dima?', NULL, 'Da CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(58, 103, 'Prilikom evakuacije trčite što brže kako biste napustili zgradu.', NULL, 'Netačno CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(59, 103, 'Koji su razlozi nastanka požara na radnom mestu?', NULL, 'Korišćenje oštećenih kablova  CORRECT,Korišćenje cigareta, dima,…  CORRECT,Čuvanje zapaljivih materija  CORRECT,Zatrpavanje radnog stola papirima  CORRECT', NULL, 10, 10, 'correct', '2022-11-06 16:48:01', NULL),
+(60, 103, 'Aparat za gašenje požara ugljen dioksidom (CO2) koristi se za', NULL, 'Požar pod naponom od 10.000 Volti CORRECT', NULL, 10, 0, 'incorrect', '2022-11-06 16:48:01', NULL),
+(61, 104, 'Prema članu 23. Zakona postoji kategorija objekata prema ugroženosti od požara. Koji su to objekti?', NULL, 'Sa visokim, povećanim i izvesnim rizikom CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(62, 104, 'Kada se najkasnije organizuje obuka za zaposlene?', NULL, 'Nakon 30 dana od stupanja na rad CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(63, 104, 'Aparat za gašenje požara na prah koristi se za:', NULL, 'Mekani nameštaj, drveni nameštaj, plastiku, papir i isključene računare CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(64, 104, 'Aparat za gašenje požara vodom – zidni hidrant ne koristi se za:', NULL, 'Mekani nameštaj i plastiku', NULL, 10, 0, 'incorrect', '2022-11-07 06:54:53', NULL),
+(65, 104, 'Požar prema mestu nastanka klasifikujemo na unutrašnje i spoljašnje.', NULL, 'Tačno CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(66, 104, 'Prilikom napuštanja zgrade tokom požara smete da koristite lift.', NULL, 'Tačno CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(67, 104, 'Da li smete da pristupite gašenju požara ukoliko je vatra mala i bez crnog dima?', NULL, 'Da CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(68, 104, 'Prilikom evakuacije trčite što brže kako biste napustili zgradu.', NULL, 'Netačno CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(69, 104, 'Koji su razlozi nastanka požara na radnom mestu?', NULL, 'Korišćenje oštećenih kablova  CORRECT,Korišćenje cigareta, dima,…  CORRECT,Čuvanje zapaljivih materija  CORRECT,Zatrpavanje radnog stola papirima  CORRECT', NULL, 10, 10, 'correct', '2022-11-07 06:54:53', NULL),
+(70, 104, 'Aparat za gašenje požara ugljen dioksidom (CO2) koristi se za', NULL, 'Požar pod naponom od 10.000 Volti CORRECT', NULL, 10, 0, 'incorrect', '2022-11-07 06:54:53', NULL),
+(71, 105, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(72, 105, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(73, 105, 'Који нежељени софтвер је најмање штетан?', NULL, 'Рекламни (Adware)', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(74, 105, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Принципа', NULL, 10, 0, 'incorrect', '2022-11-07 07:10:18', NULL),
+(75, 105, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(76, 105, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(77, 105, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(78, 105, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(79, 105, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Рачунара,Телефона,Сервера,Података', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(80, 105, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Интегритет,Расположивост', NULL, 10, 10, 'correct', '2022-11-07 07:10:18', NULL),
+(81, 106, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Рачунара,Података', NULL, 10, 0, 'incorrect', '2022-11-07 07:42:28', NULL),
+(82, 106, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Објективност', NULL, 10, 0, 'incorrect', '2022-11-07 07:42:28', NULL),
+(83, 106, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(84, 106, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Новца', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(85, 106, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(86, 106, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(87, 106, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(88, 106, 'Који нежељени софтвер је најмање штетан?', NULL, 'Рекламни (Adware)', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(89, 106, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(90, 106, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-07 07:42:29', NULL),
+(101, 108, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Интегритет,Расположивост', NULL, 10, 10, 'correct', '2022-11-07 14:48:16', NULL),
+(102, 108, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Рачунара,Телефона,Сервера,Података', NULL, 10, 10, 'correct', '2022-11-07 14:48:16', NULL),
+(103, 108, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-07 14:48:16', NULL),
+(104, 108, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-07 14:48:17', NULL),
+(105, 108, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-07 14:48:17', NULL),
+(106, 108, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-07 14:48:17', NULL),
+(107, 108, 'Који нежељени софтвер је најмање штетан?', NULL, 'Рекламни (Adware)', NULL, 10, 10, 'correct', '2022-11-07 14:48:17', NULL),
+(108, 108, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-07 14:48:17', NULL),
+(109, 108, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-07 14:48:17', NULL),
+(110, 108, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Новца', NULL, 10, 10, 'correct', '2022-11-07 14:48:17', NULL),
+(111, 109, 'Шпијунски и рекламни нежељени софтвер се користи ради', NULL, 'Новца', NULL, 10, 10, 'correct', '2022-11-08 13:32:10', NULL),
+(112, 109, 'Када добијем ланчану инстант поруку да решим упитник и проследим на 5 контаката за срећу:', NULL, 'Обрисаћу поруку', NULL, 10, 10, 'correct', '2022-11-08 13:32:10', NULL),
+(113, 109, 'Када ми је потребан бесплатан темплејт документа за рад који могу да преузмем са интернета урадићу следеће:', NULL, 'Обратићу се ИТ подршци за проверу', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(114, 109, 'Сајбер криминалац од нас жели да узме', NULL, 'Новац и податке', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(115, 109, 'Када подижемо новац са банкомата са колико фактора аутентификације морамо да се идентификујемо?', NULL, 'Два фактора', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(116, 109, 'Већина \"Ransomware\" (откуп података) напада се дешава као последица:', NULL, 'Phishing e-маил порука које нас преваре', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(117, 109, 'Шта треба да имамо поред ажурираног оперативног система и апликација:', NULL, 'Резервну копију (Бекап) података', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(118, 109, 'Који нежељени софтвер је најмање штетан?', NULL, 'Рекламни (Adware)', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(119, 109, 'Сајбер безбедност се брине о заштити наших:', NULL, 'Рачунара,Телефона,Сервера,Података', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(120, 109, 'Које од следећих карактеристика информација ИТ беѕбедност треба да подржава?', NULL, 'Интегритет,Расположивост', NULL, 10, 10, 'correct', '2022-11-08 13:32:11', NULL),
+(121, 110, 'answer the question 1', NULL, 'this is right', NULL, 10, 10, 'correct', '2022-11-08 20:48:07', NULL),
+(122, 110, 'answer 2', NULL, 'right', NULL, 10, 10, 'correct', '2022-11-08 20:48:07', NULL),
+(123, 110, 'Match the following items with their descriptions: \n1-1 and 2-2 is right answer', NULL, 'Item 1 Match 1,Item 2 Match 2', NULL, 10, 10, 'correct', '2022-11-08 20:48:07', NULL),
+(124, 110, 'check all for correct answer', NULL, 'Option 1,Option 2,Option 3', NULL, 10, 10, 'correct', '2022-11-08 20:48:07', NULL),
+(125, 110, 'TRUE/FALSE QUESTION TYPE\nCOLOR OF THE SKY IS BLUE?', NULL, 'True (CORRECT)', NULL, 10, 10, 'correct', '2022-11-08 20:48:07', NULL),
+(126, 111, 'answer the question 1', NULL, 'this is right', NULL, 10, 10, 'correct', '2022-11-08 20:52:31', NULL),
+(127, 111, 'answer 2', NULL, 'right', NULL, 10, 10, 'correct', '2022-11-08 20:52:31', NULL),
+(128, 111, 'Match the following items with their descriptions: \n1-1 and 2-2 is right answer', NULL, 'Item 1 Match 1,Item 2 Match 2', NULL, 10, 10, 'correct', '2022-11-08 20:52:31', NULL),
+(129, 111, 'check all for correct answer', NULL, 'Option 1,Option 2,Option 3', NULL, 10, 10, 'correct', '2022-11-08 20:52:31', NULL),
+(130, 111, 'TRUE/FALSE QUESTION TYPE\nCOLOR OF THE SKY IS BLUE?', NULL, 'True (CORRECT)', NULL, 10, 10, 'correct', '2022-11-08 20:52:31', NULL),
+(167, 112, 'answer the question 1', NULL, 'this is right', NULL, 10, 10, 'correct', '2022-11-09 15:44:42', NULL),
+(168, 112, 'answer 2', NULL, 'right', NULL, 10, 10, 'correct', '2022-11-09 15:44:42', NULL),
+(169, 112, 'Match the following items with their descriptions: \n1-1 and 2-2 is right answer', NULL, 'Item 1 Match 2,Item 2 Match 1', NULL, 10, 0, 'incorrect', '2022-11-09 15:44:42', NULL),
+(170, 112, 'check all for correct answer', NULL, 'Option 1,Option 2,Option 3', NULL, 10, 10, 'correct', '2022-11-09 15:44:42', NULL),
+(171, 112, 'TRUE/FALSE QUESTION TYPE\nCOLOR OF THE SKY IS BLUE?', NULL, 'True (CORRECT)', NULL, 10, 10, 'correct', '2022-11-09 15:44:42', NULL),
+(172, 112, 'SHORT ANSWER QUESTION TYPE\nWHAT IS YOUR NAME? (answer is alex)', NULL, 'alex', NULL, 10, 10, 'correct', '2022-11-09 15:44:42', NULL),
+(173, 112, 'numeric question\n\nhow much is 2+2?', NULL, '4', NULL, 10, 10, 'correct', '2022-11-09 15:44:42', NULL),
+(174, 112, 'Arrange the following items in the correct order:', NULL, 'third,second,first,fourth', NULL, 10, 0, 'incorrect', '2022-11-09 15:44:42', NULL),
+(175, 112, 'Fill in the blank fields in this text:', NULL, 'yellow,white', NULL, 10, 10, 'correct', '2022-11-09 15:44:43', NULL),
+(176, 112, 'Choose the correct answer in each drop-down list:', 'Choose the correct answer (choose answer 1) ', 'Answer 1', NULL, 10, 10, 'correct', '2022-11-09 15:44:43', NULL),
+(177, 112, 'Drag and drop the words to their places:', 'Somnath is from _____ and Aleksandar is from _____ .', 'India,Serbia', NULL, 10, 10, 'correct', '2022-11-09 15:44:43', NULL),
+(178, 112, 'Hotspot question type. Buttons 1,4,7 are wrong. \nButton 3 and RED button are correct and you must mark both buttons (3 and RED) for correct answer.', NULL, NULL, NULL, 10, 10, 'correct', '2022-11-09 15:44:43', NULL),
+(179, 112, 'Drag and drop the objects to their places:\nPut triangle in circle.', NULL, NULL, NULL, 10, 10, 'correct', '2022-11-09 15:44:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -734,36 +1139,418 @@ CREATE TABLE `question_options` (
   `question_id` int(11) DEFAULT NULL,
   `option_name` varchar(255) DEFAULT NULL,
   `option_id` varchar(255) DEFAULT NULL,
-  `option_type` enum('null','matching_premise','matching_response','choice') NOT NULL DEFAULT 'null',
+  `option_type` enum('null','matching_premise','matching_response','choice','type_in','sequence','multiple_choice_text','word_bank','hotspot_dnd') NOT NULL DEFAULT 'null',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `question_options`
 --
 
 INSERT INTO `question_options` (`id`, `question_id`, `option_name`, `option_id`, `option_type`, `created_at`, `updated_at`) VALUES
-(1, 19, 'Option one', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(2, 19, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(3, 19, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(4, 20, 'Option 1', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(5, 20, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(6, 20, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(7, 21, 'Option 1', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(8, 21, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(9, 21, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(10, 22, 'Option 1', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(11, 22, 'Option 2', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(12, 22, 'Option 3', NULL, 'choice', '2022-11-02 14:03:07', NULL),
-(13, 23, 'Item 1', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
-(14, 23, 'Item 2', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
-(15, 23, 'Match 1', NULL, 'matching_response', '2022-11-02 14:03:07', NULL),
-(16, 23, 'Match 2', NULL, 'matching_response', '2022-11-02 14:03:07', NULL),
-(17, 24, 'Item 1', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
-(18, 24, 'Item 2', NULL, 'matching_premise', '2022-11-02 14:03:07', NULL),
-(19, 24, 'Match 1', NULL, 'matching_response', '2022-11-02 14:03:07', NULL),
-(20, 24, 'Match 2', NULL, 'matching_response', '2022-11-02 14:03:07', NULL);
+(1, 1, 'Sa visokim, povećanim i izvesnim rizikom CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(2, 1, 'Sa visokim i povećanim rizikom', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(3, 1, 'Sa povećanim i izvesnim rizikom', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(4, 2, 'Nakon 15 dana od stupanja na rad', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(5, 2, 'Nakon 30 dana od stupanja na rad CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(6, 2, 'Nakon 60 dana od stupanja na rad', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(7, 3, 'Tvrdi i mekani nameštaj', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(8, 3, 'Papir, mekani nameštaj i plastiku', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(9, 3, 'Mekani nameštaj, drveni nameštaj, plastiku, papir i isključene računare CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(10, 4, 'Mekani nameštaj i plastiku', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(11, 4, 'Drveni nameštaj', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(12, 4, 'Uključenu električnu opremu i zapaljive tečnosti CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(13, 5, 'Tačno CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(14, 5, 'Netačno', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(15, 6, 'Tačno CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(16, 6, 'Netačno', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(17, 7, 'Da CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(18, 7, 'Ne', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(19, 8, 'Tačno', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(20, 8, 'Netačno CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(21, 9, 'Korišćenje oštećenih kablova  CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(22, 9, 'Korišćenje cigareta, dima,…  CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(23, 9, 'Čuvanje zapaljivih materija  CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(24, 9, 'Zatrpavanje radnog stola papirima  CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(25, 10, 'Papir CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(26, 10, 'Računare CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(27, 10, 'Požar pod naponom od 10.000 Volti CORRECT', NULL, 'choice', '2022-11-04 20:51:13', NULL),
+(28, 11, 'Једним фактором', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(29, 11, 'Два фактора', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(30, 11, 'Три фактора', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(31, 12, 'Рекламни (Adware)', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(32, 12, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(33, 12, 'Вирус', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(34, 12, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(35, 13, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(36, 13, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(37, 13, 'Обрисаћу поруку', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(38, 14, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(39, 14, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(40, 15, 'Новца', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(41, 15, 'Славе', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(42, 15, 'Моћи', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(43, 15, 'Принципа', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(44, 16, 'Новац', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(45, 16, 'Податке', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(46, 16, 'Новац и податке', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(47, 17, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(48, 17, 'Хакерског напада', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(49, 17, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(50, 18, 'Резервни рачунар', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(51, 18, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(52, 18, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(53, 19, 'Рачунара', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(54, 19, 'Телефона', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(55, 19, 'Сервера', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(56, 19, 'Података', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(57, 20, 'Интегритет', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(58, 20, 'Објективност', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(59, 20, 'Расположивост', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(60, 20, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-04 21:46:18', NULL),
+(61, 21, 'Рекламни (Adware)', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(62, 21, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(63, 21, 'Вирус', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(64, 21, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(65, 22, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(66, 22, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(67, 23, 'Једним фактором', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(68, 23, 'Два фактора', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(69, 23, 'Три фактора', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(70, 24, 'Резервни рачунар', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(71, 24, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(72, 24, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(73, 25, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(74, 25, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(75, 25, 'Обрисаћу поруку', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(76, 26, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(77, 26, 'Хакерског напада', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(78, 26, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(79, 27, 'Новца', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(80, 27, 'Славе', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(81, 27, 'Моћи', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(82, 27, 'Принципа', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(83, 28, 'Новац', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(84, 28, 'Податке', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(85, 28, 'Новац и податке', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(86, 29, 'Интегритет', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(87, 29, 'Објективност', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(88, 29, 'Расположивост', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(89, 29, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(90, 30, 'Рачунара', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(91, 30, 'Телефона', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(92, 30, 'Сервера', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(93, 30, 'Података', NULL, 'choice', '2022-11-06 12:48:23', NULL),
+(94, 31, 'Новац', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(95, 31, 'Податке', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(96, 31, 'Новац и податке', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(97, 32, 'Једним фактором', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(98, 32, 'Два фактора', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(99, 32, 'Три фактора', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(100, 33, 'Рекламни (Adware)', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(101, 33, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(102, 33, 'Вирус', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(103, 33, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(104, 34, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(105, 34, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(106, 34, 'Обрисаћу поруку', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(107, 35, 'Новца', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(108, 35, 'Славе', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(109, 35, 'Моћи', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(110, 35, 'Принципа', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(111, 36, 'Резервни рачунар', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(112, 36, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(113, 36, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(114, 37, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(115, 37, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(116, 38, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(117, 38, 'Хакерског напада', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(118, 38, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(119, 39, 'Рачунара', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(120, 39, 'Телефона', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(121, 39, 'Сервера', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(122, 39, 'Података', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(123, 40, 'Интегритет', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(124, 40, 'Објективност', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(125, 40, 'Расположивост', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(126, 40, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-06 16:43:45', NULL),
+(127, 41, 'Рекламни (Adware)', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(128, 41, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(129, 41, 'Вирус', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(130, 41, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(131, 42, 'Резервни рачунар', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(132, 42, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(133, 42, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(134, 43, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(135, 43, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(136, 43, 'Обрисаћу поруку', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(137, 44, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(138, 44, 'Хакерског напада', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(139, 44, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(140, 45, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(141, 45, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(142, 46, 'Новац', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(143, 46, 'Податке', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(144, 46, 'Новац и податке', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(145, 47, 'Новца', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(146, 47, 'Славе', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(147, 47, 'Моћи', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(148, 47, 'Принципа', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(149, 48, 'Једним фактором', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(150, 48, 'Два фактора', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(151, 48, 'Три фактора', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(152, 49, 'Интегритет', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(153, 49, 'Објективност', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(154, 49, 'Расположивост', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(155, 49, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-06 16:45:55', NULL),
+(156, 50, 'Рачунара', NULL, 'choice', '2022-11-06 16:45:56', NULL),
+(157, 50, 'Телефона', NULL, 'choice', '2022-11-06 16:45:56', NULL),
+(158, 50, 'Сервера', NULL, 'choice', '2022-11-06 16:45:56', NULL),
+(159, 50, 'Података', NULL, 'choice', '2022-11-06 16:45:56', NULL),
+(160, 51, 'Sa visokim, povećanim i izvesnim rizikom CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(161, 51, 'Sa visokim i povećanim rizikom', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(162, 51, 'Sa povećanim i izvesnim rizikom', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(163, 52, 'Nakon 15 dana od stupanja na rad', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(164, 52, 'Nakon 30 dana od stupanja na rad CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(165, 52, 'Nakon 60 dana od stupanja na rad', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(166, 53, 'Tvrdi i mekani nameštaj', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(167, 53, 'Papir, mekani nameštaj i plastiku', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(168, 53, 'Mekani nameštaj, drveni nameštaj, plastiku, papir i isključene računare CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(169, 54, 'Mekani nameštaj i plastiku', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(170, 54, 'Drveni nameštaj', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(171, 54, 'Uključenu električnu opremu i zapaljive tečnosti CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(172, 55, 'Tačno CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(173, 55, 'Netačno', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(174, 56, 'Tačno CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(175, 56, 'Netačno', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(176, 57, 'Da CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(177, 57, 'Ne', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(178, 58, 'Tačno', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(179, 58, 'Netačno CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(180, 59, 'Korišćenje oštećenih kablova  CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(181, 59, 'Korišćenje cigareta, dima,…  CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(182, 59, 'Čuvanje zapaljivih materija  CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(183, 59, 'Zatrpavanje radnog stola papirima  CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(184, 60, 'Papir CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(185, 60, 'Računare CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(186, 60, 'Požar pod naponom od 10.000 Volti CORRECT', NULL, 'choice', '2022-11-06 16:48:01', NULL),
+(187, 61, 'Sa visokim, povećanim i izvesnim rizikom CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(188, 61, 'Sa visokim i povećanim rizikom', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(189, 61, 'Sa povećanim i izvesnim rizikom', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(190, 62, 'Nakon 15 dana od stupanja na rad', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(191, 62, 'Nakon 30 dana od stupanja na rad CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(192, 62, 'Nakon 60 dana od stupanja na rad', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(193, 63, 'Tvrdi i mekani nameštaj', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(194, 63, 'Papir, mekani nameštaj i plastiku', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(195, 63, 'Mekani nameštaj, drveni nameštaj, plastiku, papir i isključene računare CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(196, 64, 'Mekani nameštaj i plastiku', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(197, 64, 'Drveni nameštaj', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(198, 64, 'Uključenu električnu opremu i zapaljive tečnosti CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(199, 65, 'Tačno CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(200, 65, 'Netačno', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(201, 66, 'Tačno CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(202, 66, 'Netačno', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(203, 67, 'Da CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(204, 67, 'Ne', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(205, 68, 'Tačno', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(206, 68, 'Netačno CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(207, 69, 'Korišćenje oštećenih kablova  CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(208, 69, 'Korišćenje cigareta, dima,…  CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(209, 69, 'Čuvanje zapaljivih materija  CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(210, 69, 'Zatrpavanje radnog stola papirima  CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(211, 70, 'Papir CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(212, 70, 'Računare CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(213, 70, 'Požar pod naponom od 10.000 Volti CORRECT', NULL, 'choice', '2022-11-07 06:54:53', NULL),
+(214, 71, 'Новац', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(215, 71, 'Податке', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(216, 71, 'Новац и податке', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(217, 72, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(218, 72, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(219, 73, 'Рекламни (Adware)', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(220, 73, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(221, 73, 'Вирус', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(222, 73, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(223, 74, 'Новца', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(224, 74, 'Славе', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(225, 74, 'Моћи', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(226, 74, 'Принципа', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(227, 75, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(228, 75, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(229, 75, 'Обрисаћу поруку', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(230, 76, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(231, 76, 'Хакерског напада', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(232, 76, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(233, 77, 'Једним фактором', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(234, 77, 'Два фактора', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(235, 77, 'Три фактора', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(236, 78, 'Резервни рачунар', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(237, 78, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(238, 78, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(239, 79, 'Рачунара', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(240, 79, 'Телефона', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(241, 79, 'Сервера', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(242, 79, 'Података', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(243, 80, 'Интегритет', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(244, 80, 'Објективност', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(245, 80, 'Расположивост', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(246, 80, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-07 07:10:18', NULL),
+(247, 81, 'Рачунара', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(248, 81, 'Телефона', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(249, 81, 'Сервера', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(250, 81, 'Података', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(251, 82, 'Интегритет', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(252, 82, 'Објективност', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(253, 82, 'Расположивост', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(254, 82, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-07 07:42:28', NULL),
+(255, 83, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(256, 83, 'Хакерског напада', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(257, 83, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(258, 84, 'Новца', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(259, 84, 'Славе', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(260, 84, 'Моћи', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(261, 84, 'Принципа', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(262, 85, 'Једним фактором', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(263, 85, 'Два фактора', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(264, 85, 'Три фактора', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(265, 86, 'Резервни рачунар', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(266, 86, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(267, 86, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(268, 87, 'Новац', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(269, 87, 'Податке', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(270, 87, 'Новац и податке', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(271, 88, 'Рекламни (Adware)', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(272, 88, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(273, 88, 'Вирус', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(274, 88, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(275, 89, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(276, 89, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(277, 90, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(278, 90, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(279, 90, 'Обрисаћу поруку', NULL, 'choice', '2022-11-07 07:42:29', NULL),
+(313, 101, 'Интегритет', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(314, 101, 'Објективност', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(315, 101, 'Расположивост', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(316, 101, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(317, 102, 'Рачунара', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(318, 102, 'Телефона', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(319, 102, 'Сервера', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(320, 102, 'Података', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(321, 103, 'Новац', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(322, 103, 'Податке', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(323, 103, 'Новац и податке', NULL, 'choice', '2022-11-07 14:48:16', NULL),
+(324, 104, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(325, 104, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(326, 105, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(327, 105, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(328, 105, 'Обрисаћу поруку', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(329, 106, 'Једним фактором', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(330, 106, 'Два фактора', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(331, 106, 'Три фактора', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(332, 107, 'Рекламни (Adware)', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(333, 107, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(334, 107, 'Вирус', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(335, 107, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(336, 108, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(337, 108, 'Хакерског напада', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(338, 108, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(339, 109, 'Резервни рачунар', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(340, 109, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(341, 109, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(342, 110, 'Новца', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(343, 110, 'Славе', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(344, 110, 'Моћи', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(345, 110, 'Принципа', NULL, 'choice', '2022-11-07 14:48:17', NULL),
+(346, 111, 'Новца', NULL, 'choice', '2022-11-08 13:32:10', NULL),
+(347, 111, 'Славе', NULL, 'choice', '2022-11-08 13:32:10', NULL),
+(348, 111, 'Моћи', NULL, 'choice', '2022-11-08 13:32:10', NULL),
+(349, 111, 'Принципа', NULL, 'choice', '2022-11-08 13:32:10', NULL),
+(350, 112, 'Нећу решити упитник али ћу проследити поруку контактима', NULL, 'choice', '2022-11-08 13:32:10', NULL),
+(351, 112, 'Решићу упитник и проследити поруку контактима', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(352, 112, 'Обрисаћу поруку', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(353, 113, 'Обратићу се ИТ подршци за проверу', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(354, 113, 'Скинућу документ и ставити у мој фолдер и тамо га испробати', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(355, 114, 'Новац', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(356, 114, 'Податке', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(357, 114, 'Новац и податке', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(358, 115, 'Једним фактором', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(359, 115, 'Два фактора', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(360, 115, 'Три фактора', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(361, 116, 'Phishing e-маил порука које нас преваре', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(362, 116, 'Хакерског напада', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(363, 116, 'Неовлашћеног преузимања података', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(364, 117, 'Резервни рачунар', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(365, 117, 'Број телефона ИТ подршке', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(366, 117, 'Резервну копију (Бекап) података', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(367, 118, 'Рекламни (Adware)', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(368, 118, 'Шпијунски (Spyware)', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(369, 118, 'Вирус', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(370, 118, 'Ransomware (софтвер који тражи откуп података)', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(371, 119, 'Рачунара', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(372, 119, 'Телефона', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(373, 119, 'Сервера', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(374, 119, 'Података', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(375, 120, 'Интегритет', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(376, 120, 'Објективност', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(377, 120, 'Расположивост', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(378, 120, 'Усаглашеност са Законом', NULL, 'choice', '2022-11-08 13:32:11', NULL),
+(379, 121, 'this is right', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(380, 121, 'wrong answer', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(381, 122, 'right', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(382, 122, 'wrong', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(383, 122, 'also wrong', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(384, 123, 'Item 1', NULL, 'matching_premise', '2022-11-08 20:48:07', NULL),
+(385, 123, 'Item 2', NULL, 'matching_premise', '2022-11-08 20:48:07', NULL),
+(386, 123, 'Match 1', NULL, 'matching_response', '2022-11-08 20:48:07', NULL),
+(387, 123, 'Match 2', NULL, 'matching_response', '2022-11-08 20:48:07', NULL),
+(388, 124, 'Option 1', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(389, 124, 'Option 2', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(390, 124, 'Option 3', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(391, 125, 'True (CORRECT)', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(392, 125, 'False', NULL, 'choice', '2022-11-08 20:48:07', NULL),
+(393, 126, 'this is right', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(394, 126, 'wrong answer', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(395, 127, 'right', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(396, 127, 'wrong', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(397, 127, 'also wrong', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(398, 128, 'Item 1', NULL, 'matching_premise', '2022-11-08 20:52:31', NULL),
+(399, 128, 'Item 2', NULL, 'matching_premise', '2022-11-08 20:52:31', NULL),
+(400, 128, 'Match 1', NULL, 'matching_response', '2022-11-08 20:52:31', NULL),
+(401, 128, 'Match 2', NULL, 'matching_response', '2022-11-08 20:52:31', NULL),
+(402, 129, 'Option 1', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(403, 129, 'Option 2', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(404, 129, 'Option 3', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(405, 130, 'True (CORRECT)', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(406, 130, 'False', NULL, 'choice', '2022-11-08 20:52:31', NULL),
+(493, 167, 'this is right', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(494, 167, 'wrong answer', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(495, 168, 'right', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(496, 168, 'wrong', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(497, 168, 'also wrong', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(498, 169, 'Item 1', NULL, 'matching_premise', '2022-11-09 15:44:42', NULL),
+(499, 169, 'Item 2', NULL, 'matching_premise', '2022-11-09 15:44:42', NULL),
+(500, 169, 'Match 1', NULL, 'matching_response', '2022-11-09 15:44:42', NULL),
+(501, 169, 'Match 2', NULL, 'matching_response', '2022-11-09 15:44:42', NULL),
+(502, 170, 'Option 1', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(503, 170, 'Option 2', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(504, 170, 'Option 3', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(505, 171, 'True (CORRECT)', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(506, 171, 'False', NULL, 'choice', '2022-11-09 15:44:42', NULL),
+(507, 172, NULL, NULL, 'type_in', '2022-11-09 15:44:42', NULL),
+(508, 173, NULL, NULL, 'type_in', '2022-11-09 15:44:42', NULL),
+(509, 174, 'second', NULL, 'sequence', '2022-11-09 15:44:42', NULL),
+(510, 174, 'third', NULL, 'sequence', '2022-11-09 15:44:42', NULL),
+(511, 174, 'fourth', NULL, 'sequence', '2022-11-09 15:44:42', NULL),
+(512, 174, 'first', NULL, 'sequence', '2022-11-09 15:44:42', NULL),
+(513, 175, 'sun is _____ (yellow) and moon is _____ (white).', NULL, 'choice', '2022-11-09 15:44:43', NULL),
+(514, 176, 'Answer 1', NULL, 'multiple_choice_text', '2022-11-09 15:44:43', NULL),
+(515, 176, 'Answer 2', NULL, 'multiple_choice_text', '2022-11-09 15:44:43', NULL),
+(516, 177, 'France', NULL, 'word_bank', '2022-11-09 15:44:43', NULL),
+(517, 177, 'Spain', NULL, 'word_bank', '2022-11-09 15:44:43', NULL),
+(518, 177, 'India', NULL, 'word_bank', '2022-11-09 15:44:43', NULL),
+(519, 177, 'Serbia', NULL, 'word_bank', '2022-11-09 15:44:43', NULL),
+(520, 178, NULL, NULL, 'hotspot_dnd', '2022-11-09 15:44:43', NULL),
+(521, 179, NULL, NULL, 'hotspot_dnd', '2022-11-09 15:44:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -774,7 +1561,7 @@ INSERT INTO `question_options` (`id`, `question_id`, `option_name`, `option_id`,
 CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `name` varchar(55) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `role`
@@ -800,7 +1587,7 @@ CREATE TABLE `social_media` (
   `link` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -820,16 +1607,16 @@ CREATE TABLE `task` (
   `task_status` enum('pending','approve','disapprove') NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `task`
 --
 
 INSERT INTO `task` (`id`, `created_by`, `task_name`, `task_describtion`, `task_start_date`, `task_end_date`, `group_id`, `course_id`, `task_status`, `created_at`, `updated_at`) VALUES
-(1, 63, 'task 1', '<p>xsadsadasas</p>', '2022-09-14', '2022-09-29', NULL, 1, 'approve', '2022-09-30 08:41:53', NULL),
-(2, 63, 'task 2', '<p>sdfsfds</p>', '2022-10-08', '2022-10-29', NULL, 4, 'approve', '2022-10-19 11:16:23', NULL),
-(4, 63, 'test 2 task', '<p>&nbsp;dfdsf dsf fdsfdsfdsqdfsdfdfsd</p>', '2022-10-01', '2022-11-30', NULL, 7, 'approve', '2022-10-31 11:02:06', NULL);
+(1, 63, 'task 1', '<p>xsadsadasas</p>', '2022-09-14', '2022-11-19', NULL, 8, 'approve', '2022-09-30 08:41:53', '2022-11-08 15:03:05'),
+(3, 63, 'task 2', '<p>asdsadsadsadsa</p>', '2022-11-01', '2022-11-17', NULL, 9, 'approve', '2022-11-07 07:00:58', NULL),
+(4, 63, 'task 3', '<p>sd sad d</p>', '2022-11-01', '2022-11-24', NULL, 10, 'approve', '2022-11-07 07:37:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -843,22 +1630,24 @@ CREATE TABLE `task_group` (
   `group_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `task_group`
 --
 
 INSERT INTO `task_group` (`id`, `task_id`, `group_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, '2022-09-30 08:41:53', NULL),
-(2, 1, 2, '2022-09-30 08:41:53', NULL),
-(3, 1, 1, '2022-09-30 08:41:53', NULL),
-(4, 2, 3, '2022-10-19 11:16:23', NULL),
-(5, 2, 2, '2022-10-19 11:16:23', NULL),
-(6, 2, 1, '2022-10-19 11:16:23', NULL),
-(10, 4, 3, '2022-10-31 11:02:06', NULL),
-(11, 4, 2, '2022-10-31 11:02:06', NULL),
-(12, 4, 1, '2022-10-31 11:02:06', NULL);
+(10, 3, 5, '2022-11-07 07:00:58', NULL),
+(11, 3, 3, '2022-11-07 07:00:58', NULL),
+(12, 3, 2, '2022-11-07 07:00:58', NULL),
+(13, 3, 1, '2022-11-07 07:00:58', NULL),
+(14, 4, 5, '2022-11-07 07:37:50', NULL),
+(15, 4, 3, '2022-11-07 07:37:50', NULL),
+(16, 4, 2, '2022-11-07 07:37:50', NULL),
+(17, 4, 1, '2022-11-07 07:37:50', NULL),
+(34, 1, 2, '2022-11-08 15:03:05', NULL),
+(35, 1, 1, '2022-11-08 15:03:05', NULL),
+(36, 1, 5, '2022-11-08 15:03:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -895,7 +1684,7 @@ CREATE TABLE `users` (
   `login_Status` enum('active','inactive') DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -903,12 +1692,33 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role`, `user_hr_no`, `group_id`, `date`, `username`, `firstname`, `lastname`, `email`, `login_type`, `image`, `qualification_id`, `language_id`, `details`, `organization_id`, `password`, `sign_in_count`, `courses_count`, `enrollment_count`, `comment_count`, `user_lesson_count`, `organization_unit`, `social_link_1`, `social_link_2`, `is_active`, `login_Status`, `created_at`, `updated_at`) VALUES
 (1, 1, 'HR000001', NULL, NULL, NULL, 'admin', 'admin', 'admin@gmail.com', 'local', NULL, NULL, NULL, NULL, NULL, '$2a$12$wB.OydtwAnbuj0IRg4T2h.RqqHAvv21Pupz64J1vlV4XxwaKRpFEu', 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, '2022-08-08 09:50:19', NULL),
-(62, 4, 'HR56', NULL, '2022-09-07', NULL, 'creator', '1', 'creator1@gmail.com', 'local', NULL, '2', '2', NULL, NULL, '$2a$12$IADLJtIpoZZSgZ7I4u4XQOKaDyHOOfBl0dTbMmPnAZwhzTuBZ5cz2', 0, 0, 0, 0, 0, 'ssd', '', '', 1, NULL, '2022-09-19 07:03:10', '2022-10-28 07:09:32'),
-(63, 2, 'HR8546', NULL, '2022-09-17', NULL, 'supervisor', '1', 'supervisor1@gmail.com', 'local', NULL, '1', '1', NULL, NULL, '$2a$12$WMiNye48Dv6GHpSC1B46Q.WAEuoZm56hxgJCb9HQN3yMpuY5fbohu', 0, 0, 0, 0, 0, NULL, '', '', 1, 'inactive', '2022-09-19 07:20:18', '2022-11-03 13:55:56'),
-(108, 5, 'mk56', NULL, '2022-10-12', NULL, 'student', 'test166', 's166@g.in', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$34YPt6YW0hAXyy1etWQA8upnuB0oUmjCgQ8Dx.dF2t15QwEuJi0L.', 0, 0, 0, 0, 0, 'ssd3', '', '', 1, NULL, '2022-10-28 07:01:10', '2022-10-28 07:09:32'),
-(109, 5, 'hr45f', NULL, '1970-01-01', NULL, 'asdsa', 'assa', 'lgf56@g.o', 'local', NULL, '2', '1', '', NULL, '$2a$12$Je7lfrdbAYFq60V7F7BYt.kz7k8rLR7S5ybMOkC97D3l5BLTWK2h6', 0, 0, 0, 0, 0, 'null', '', '', 1, NULL, '2022-10-28 11:05:45', '2022-10-28 11:07:05'),
-(110, 5, 'sad34', NULL, '2022-09-29', NULL, 'aSS', 'ASaSA', 'fg@h.ind', 'local', '1667288260826_ZDResearch-online-certified-ethical-hacking-training-course.jpg', '2', '1', NULL, NULL, '$2a$12$OsXnopsNBA/M/9PvdTbyYu.UpxF.L58DtkoRXGQzLAldmUmfwt/ZC', 0, 0, 0, 0, 0, 'dsad', NULL, NULL, 1, 'inactive', '2022-10-28 15:07:43', '2022-11-03 13:54:41'),
-(111, 5, 'HR56sdas', NULL, '2022-11-24', NULL, 'sad', 'sadd', 'nh@f.ui4', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$r2nOBRRB93pIcBWnDlbAz.eVGgwsx6Bs/qMVoPPbWqYurWKt6w9F.', 0, 0, 0, 0, 0, 'dd32', NULL, NULL, 1, 'active', '2022-11-03 13:55:48', '2022-11-03 13:56:02');
+(62, 4, 'HR56', NULL, '2022-09-07', NULL, 'creator', 'test', 'creator1@gmail.com', 'local', NULL, '2', '1', '', NULL, '$2a$12$IADLJtIpoZZSgZ7I4u4XQOKaDyHOOfBl0dTbMmPnAZwhzTuBZ5cz2', 0, 0, 0, 0, 0, 'ssd', '', '', 1, NULL, '2022-09-19 07:03:10', '2022-11-04 15:42:43'),
+(63, 2, 'HR8546', NULL, '2022-09-17', NULL, 'supervisor', '1', 'supervisor1@gmail.com', 'local', NULL, '1', '1', '', NULL, '$2a$12$WMiNye48Dv6GHpSC1B46Q.WAEuoZm56hxgJCb9HQN3yMpuY5fbohu', 0, 0, 0, 0, 0, 'null', '', '', 1, 'inactive', '2022-09-19 07:20:18', '2022-11-11 13:09:33'),
+(108, 5, 'HR567', NULL, '2022-10-18', NULL, NULL, 'rout', 'jagan33@gmail.com', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$z.oIzbCybOaEZLIZH16D9.4tGQktNhxYxkVxQgB4yAwMXMWhP80jS', 0, 0, 0, 0, 0, 'ssd', '', '', 1, NULL, '2022-10-21 09:30:55', '2022-10-28 21:11:16'),
+(109, 5, 'H654', NULL, NULL, NULL, NULL, 'das', 'avik99@gmail.com', 'local', NULL, NULL, '1', NULL, NULL, '$2a$12$32HPP/DM2bRwyFebeV2WY.2VVswcKE7FHkRBCX7HyTmeBsP8sE9gm', 0, 0, 0, 0, 0, NULL, '', '', 1, NULL, '2022-10-21 12:27:07', '2022-10-28 21:11:16'),
+(110, 5, '3131223', NULL, '2020-10-22', NULL, NULL, 'Andrejin', 'aandrejin@ers.rs', 'ms', NULL, '2', '3', NULL, NULL, '$2a$12$tyONezEryp9TgZTTSwkVmuYsnljslEHTtDmCYNQ24dc/r0DENgy7a', 0, 0, 0, 0, 0, 'ERSS Advisory doo, Beograd', '', '', 1, 'inactive', '2022-10-22 17:17:26', '2022-11-06 12:07:54'),
+(111, 5, '1234', NULL, '2022-10-21', NULL, 'aaa', 'and', 'andrejin@gmail.com', 'google', NULL, '2', '2', '', NULL, '$2a$12$QmaB.1JTCu4v.lzXJvW6qOneHqkZLpu15d22za07BdpRXuDh/tO86', 0, 0, 0, 0, 0, 'qq', '', '', 1, 'inactive', '2022-10-22 17:47:49', '2022-11-06 12:46:32'),
+(112, 5, '44', NULL, '2022-10-26', NULL, NULL, 'alek', 'bgdalek011@gmail.com', 'google', NULL, '1', '2', NULL, NULL, '$2a$12$GkEh8NyTqqr7zi6sCMxrk.h7kvwzely0CBRkzBG2GpaN3KHE1.gjq', 0, 0, 0, 0, 0, 'my org', '', '', 1, NULL, '2022-10-23 07:18:56', '2022-10-28 21:11:16'),
+(113, 5, '2', NULL, '2022-10-12', NULL, 'asfsd', 's2', 'student2@gmail.com', 'local', NULL, '1', '2', '', NULL, '$2a$12$12oig8UP9ALhxiuLLBwXcOil2tFzjll5VDHXyyBsRutsS7aA5ZE86', 0, 0, 0, 0, 0, '2', '', '', 1, 'inactive', '2022-10-23 08:26:16', '2022-11-06 16:42:26'),
+(114, 5, '3', NULL, '2022-10-03', NULL, NULL, 'bbbf', 'aandrejin@outlook.com', 'ms', NULL, '2', '3', NULL, NULL, '$2a$12$UkOKpFvvXfR8rdEPtZsKf.LZ74h0NLzD/OK2vu9QcsNLXh739p42i', 0, 0, 0, 0, 0, '3', '', '', 1, NULL, '2022-10-23 09:19:56', '2022-10-28 21:11:16'),
+(115, 5, 'hr54237', NULL, '2022-10-12', NULL, NULL, 'das', 'akashdas1998@gmail.com', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$LmLJlipE.0oWtAuJ7SAhUexHPtT.yr66w5iraGoyZKC2HeACIckqa', 0, 0, 0, 0, 0, 'fdf4f', '', '', 1, NULL, '2022-10-24 03:58:22', '2022-10-28 21:11:16'),
+(116, 5, 'HR5645', NULL, '2022-10-06', NULL, 'somnath', 'halder', 'somnath.elvirainfotech@gmail.com', 'local', NULL, '2', '1', '', NULL, '$2a$12$T9MznLbxwKRECTxCS8yBoe3mrkK0iawXC24fXDMeEpEoeqaObwpme', 0, 0, 0, 0, 0, 'dasd', '', '', 1, 'inactive', '2022-10-25 06:50:21', '2022-11-11 15:34:52'),
+(117, 5, 'HR343434', NULL, '0000-00-00', NULL, NULL, 'asdsad', 'sw@f.inf', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$YMQt3IAVkdMwY7khmC2gc.8yHgj61lZiyyKIog0snvlj0ajnG21tG', 0, 0, 0, 0, 0, 'null', '', '', 1, NULL, '2022-10-25 10:08:58', '2022-10-28 21:11:16'),
+(118, 5, 'HR34e3', NULL, '2022-10-15', NULL, NULL, 'Halder', 'sd34hj@mail.com', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$oax0rUw1x9enTWTBgpDD0uL2DbG6ohrQBh9VZxzBSD1nCoIoFwgoa', 0, 0, 0, 0, 0, 'dg3', '', '', 1, NULL, '2022-10-27 08:29:09', '2022-10-28 21:11:16'),
+(119, 5, 'HR99876sd', NULL, '2022-10-22', NULL, NULL, 'Das', 'mk98@g.in', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$gSEtUXnJUT.W2DjVmTwI/eiYU1qgxyp1p4luwKO56dyvg.Tf7j0sO', 0, 0, 0, 0, 0, 'dasd', '', '', 1, NULL, '2022-10-27 12:16:21', '2022-10-28 21:11:16'),
+(120, 5, 'user123', NULL, NULL, NULL, NULL, 'test', 'test123@gmail.com', 'local', NULL, NULL, '1', NULL, NULL, '$2a$12$ok7niM6evsdieWhE4Yi/Zu5klvWXvi7lvclhdsc6FvgpaNgMklG6m', 0, 0, 0, 0, 0, NULL, '', '', 1, NULL, '2022-10-28 11:45:15', '2022-10-28 21:11:16'),
+(121, 5, '888', NULL, NULL, NULL, 'mojime', 'mojprez', 'moj@moj.com', 'local', NULL, NULL, '2', NULL, NULL, '$2a$12$9sRXSKk9J.OvFMkSPxL4xe0z.vemFFRrhQhBXqIbposG0MJ0UkLpu', 0, 0, 0, 0, 0, NULL, '', '', 1, 'active', '2022-10-28 21:14:45', '2022-11-09 13:03:59'),
+(122, 5, '999', NULL, '2022-10-29', NULL, 'user6', 'user6', 'user6@gmail.com', 'local', NULL, '2', '2', NULL, NULL, '$2a$12$Q4V.U201VKExxEFho0d2k.yNdM/kJ36HuKoZI1zpKm/A.FVmMCn62', 0, 0, 0, 0, 0, 'ERSS Advisory doo, Beograd', NULL, NULL, 1, 'inactive', '2022-10-30 22:23:39', '2022-11-04 19:49:42'),
+(123, 5, 'HR56776', NULL, '2022-10-22', NULL, 'new user', '98', 'nuser989@g.in', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$pvWgSRTdt6xlKn3v1lOz1./jnbUxOndaW3Ug5Dp9TvIeBCiKfj4C.', 0, 0, 0, 0, 0, 'ssdh', NULL, NULL, 1, NULL, '2022-10-31 09:24:43', NULL),
+(124, 5, 'HR567y', NULL, '2022-12-01', NULL, 'dasdsa', 'sadd', 'utest97@g.in', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$JhZ9GLbxnRGGdEkZWiHIJ.27OYe8eQVG4kx/TBt9j9d7psA2vLYzS', 0, 0, 0, 0, 0, 'dasd', NULL, NULL, 1, NULL, '2022-11-01 13:17:43', NULL),
+(125, 5, 'HR56ssd', NULL, '2022-11-26', NULL, 'adf', 'sad', 'testu56@g.in', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$VfeA2.9sxzztWJ8ItOCDH.XJnJihw9ncDrigeINVSNnIbxnnagvaa', 0, 0, 0, 0, 0, 'ssd', NULL, NULL, 1, NULL, '2022-11-01 14:40:57', NULL),
+(126, 5, 'HR56fdsfsd', NULL, '2022-12-01', NULL, 'test', 'user34', 'tu4@g.in', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$xaY9YlvfZGvyTHbYX8XF4u9ygJ4GmEnY8s29CvomrD1gEHTcFtEdS', 0, 0, 0, 0, 0, 'ssd', NULL, NULL, 1, NULL, '2022-11-01 15:09:26', NULL),
+(127, 5, 'HR5645', NULL, '2022-11-25', NULL, 'sada', 'sad', 'vf@gmail.com', 'local', NULL, '1', '1', NULL, NULL, '$2a$12$dRKgxhmsIZ1BvR2Fk.rhnuzWpXbFlDyLh.0UUuc7fP6tG5vSiV.dC', 0, 0, 0, 0, 0, 'ssd', NULL, NULL, 1, NULL, '2022-11-01 15:41:08', NULL),
+(128, 5, 'HR5632', NULL, '2022-11-12', NULL, 'demo test', 'user', 'testuser909@g.uk', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$Cgw6c5sUSY6E1PV1FPxLJu.5Hz9JntG.D/0GRbMFA/2WH3TCCt.XS', 0, 0, 0, 0, 0, 'ssd3', NULL, NULL, 1, 'inactive', '2022-11-07 06:38:35', '2022-11-07 09:52:01'),
+(129, 5, 'HR567', NULL, '2022-11-02', NULL, 'demo', 'test', 'demotest675@f.jk', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$vk6kWebd/JfGIjQFSY69peHp7vr1g8QyrgFH/1XOzXAZjTKhHQhue', 0, 0, 0, 0, 0, 'dg3', NULL, NULL, 1, 'inactive', '2022-11-07 10:16:36', '2022-11-07 12:46:51'),
+(130, 5, 'HR5632dd', NULL, '2022-11-17', NULL, 'sdaddasd', 'sadsdad', 'xapiuser343@gmail.com', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$rCRS.1uQgqp/DemRApBU6OjDiWnu7TinXqlHPzd3bF/OwNs8cC2dy', 0, 0, 0, 0, 0, 'dd32d', NULL, NULL, 1, 'active', '2022-11-07 14:32:02', '2022-11-08 11:31:51'),
+(131, 5, 'HR3434cd', NULL, '2022-11-23', NULL, 'somnath ', 'test', 'testSom@g.th', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$5hMg2d0qP6ABOJHWndOpIe9rslAbBtVAH8sInFl4AjLFzdzzKpcwC', 0, 0, 0, 0, 0, 'ssd', NULL, NULL, 1, 'inactive', '2022-11-11 03:43:47', '2022-11-11 03:52:12'),
+(132, 5, 'dsf232322df', NULL, '2022-11-22', NULL, 'local ', 'text', 'lctextuser@d.ik', 'local', NULL, '2', '1', NULL, NULL, '$2a$12$MEuR8cTvQY/pj0PhgKIeruLrMEdbLvk5gZ9q8zh8qppjWWVrZ0bAS', 0, 0, 0, 0, 0, 'ssd5f', NULL, NULL, 1, 'inactive', '2022-11-11 04:49:35', '2022-11-11 06:22:41');
 
 -- --------------------------------------------------------
 
@@ -920,7 +1730,7 @@ CREATE TABLE `user_group` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_group`
@@ -1063,22 +1873,92 @@ INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
 (435, 107, 3),
 (436, 107, 2),
 (437, 107, 1),
-(441, 108, 3),
-(442, 108, 2),
-(443, 108, 1),
-(444, 63, 3),
-(445, 63, 2),
-(446, 62, 3),
-(447, 62, 1),
-(450, 109, 1),
-(451, 109, 2),
-(452, 109, 3),
-(453, 110, 3),
-(454, 110, 2),
-(455, 110, 1),
-(456, 111, 3),
-(457, 111, 2),
-(458, 111, 1);
+(643, 120, 1),
+(644, 120, 2),
+(645, 120, 3),
+(646, 120, 5),
+(647, 119, 5),
+(648, 119, 3),
+(649, 119, 2),
+(650, 119, 1),
+(651, 118, 5),
+(652, 118, 3),
+(653, 118, 2),
+(654, 118, 1),
+(655, 117, 5),
+(656, 117, 1),
+(658, 115, 3),
+(659, 115, 2),
+(660, 115, 1),
+(661, 114, 3),
+(662, 114, 2),
+(663, 114, 1),
+(667, 112, 3),
+(668, 112, 2),
+(669, 112, 1),
+(673, 110, 3),
+(674, 110, 2),
+(675, 110, 1),
+(676, 109, 1),
+(677, 109, 2),
+(678, 109, 3),
+(679, 108, 3),
+(680, 108, 2),
+(681, 108, 1),
+(686, 121, 1),
+(687, 122, 5),
+(688, 122, 3),
+(689, 122, 2),
+(690, 122, 1),
+(691, 123, 5),
+(692, 123, 3),
+(693, 123, 2),
+(694, 123, 1),
+(695, 124, 5),
+(696, 124, 3),
+(697, 124, 2),
+(698, 124, 1),
+(699, 125, 5),
+(700, 125, 3),
+(701, 125, 2),
+(702, 125, 1),
+(703, 126, 5),
+(704, 126, 3),
+(705, 126, 2),
+(706, 126, 1),
+(707, 127, 5),
+(708, 127, 3),
+(709, 127, 2),
+(710, 127, 1),
+(711, 62, 3),
+(712, 62, 1),
+(713, 111, 3),
+(714, 111, 2),
+(715, 111, 1),
+(718, 113, 2),
+(719, 113, 1),
+(720, 128, 5),
+(721, 128, 3),
+(722, 128, 2),
+(723, 128, 1),
+(724, 129, 5),
+(725, 129, 3),
+(726, 129, 2),
+(727, 129, 1),
+(728, 130, 5),
+(729, 130, 3),
+(730, 130, 2),
+(731, 130, 1),
+(734, 116, 3),
+(735, 63, 3),
+(736, 131, 5),
+(737, 131, 3),
+(738, 131, 2),
+(739, 131, 1),
+(740, 132, 5),
+(741, 132, 3),
+(742, 132, 2),
+(743, 132, 1);
 
 -- --------------------------------------------------------
 
@@ -1094,48 +1974,29 @@ CREATE TABLE `user_task` (
   `user_task_status` enum('failed','passed','attempted') NOT NULL DEFAULT 'attempted',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_task`
 --
 
 INSERT INTO `user_task` (`id`, `task_id`, `user_id`, `no_attempted`, `user_task_status`, `created_at`, `updated_at`) VALUES
-(1, 1, 79, 1, 'passed', '2022-09-30 08:47:28', '2022-09-30 08:50:05'),
-(2, 1, 81, 1, 'passed', '2022-10-01 06:17:20', '2022-10-01 23:38:50'),
-(3, 1, 87, 1, 'passed', '2022-10-11 07:39:10', '2022-10-19 10:40:16'),
-(4, 1, 88, 1, 'passed', '2022-10-11 09:23:01', '2022-10-12 09:55:32'),
-(5, 1, 89, 1, 'passed', '2022-10-12 12:35:41', '2022-10-12 12:36:34'),
-(6, 1, 90, 2, 'passed', '2022-10-18 07:00:09', '2022-10-18 10:06:56'),
-(7, 1, 91, 1, 'failed', '2022-10-18 10:08:15', '2022-10-18 10:09:42'),
-(8, 1, 85, 2, 'passed', '2022-10-18 11:15:27', '2022-10-18 11:17:46'),
-(9, 1, 94, 1, 'passed', '2022-10-19 10:45:20', '2022-10-19 10:54:25'),
-(10, 1, 95, 1, 'passed', '2022-10-19 10:56:13', '2022-10-19 11:02:01'),
-(11, 1, 96, 1, 'passed', '2022-10-19 11:09:40', '2022-10-19 11:17:45'),
-(12, 2, 96, 1, 'failed', '2022-10-19 11:16:46', '2022-10-19 11:17:45'),
-(13, 1, 97, 1, 'passed', '2022-10-19 11:19:45', '2022-10-19 11:24:33'),
-(14, 1, 98, 1, 'passed', '2022-10-19 11:26:11', '2022-10-19 11:48:14'),
-(15, 1, 99, 1, 'passed', '2022-10-19 11:49:42', '2022-10-19 12:06:18'),
-(16, 1, 100, 1, 'passed', '2022-10-19 11:59:29', '2022-10-19 11:59:51'),
-(17, 1, 103, 1, 'passed', '2022-10-19 13:59:14', '2022-10-20 06:36:12'),
-(18, 2, 103, 2, 'passed', '2022-10-19 13:59:44', '2022-10-20 06:36:12'),
-(19, 1, 104, 1, 'passed', '2022-10-20 06:41:39', '2022-10-20 10:46:47'),
-(20, 2, 104, 1, 'passed', '2022-10-20 07:02:37', '2022-10-20 10:46:47'),
-(21, 1, 105, 2, 'passed', '2022-10-20 10:51:48', '2022-10-20 11:53:48'),
-(22, 2, 105, 1, 'passed', '2022-10-20 11:46:31', '2022-10-20 11:53:48'),
-(23, 1, 106, 1, 'passed', '2022-10-20 11:55:46', '2022-10-20 15:23:56'),
-(24, 2, 106, 1, 'passed', '2022-10-20 12:01:45', '2022-10-20 15:23:56'),
-(25, 1, 107, 1, 'passed', '2022-10-21 07:27:42', '2022-10-21 07:33:02'),
-(26, 2, 107, 1, 'passed', '2022-10-21 07:31:09', '2022-10-21 07:33:02'),
-(27, 1, 108, 6, 'passed', '2022-10-28 07:34:46', '2022-10-28 10:46:59'),
-(28, 2, 108, 2, 'attempted', '2022-10-28 10:54:05', '2022-10-28 11:01:46'),
-(29, 1, 109, 5, 'passed', '2022-10-28 11:10:13', '2022-10-28 15:04:25'),
-(30, 2, 109, 6, 'attempted', '2022-10-28 11:13:12', '2022-10-28 15:06:17'),
-(31, 1, 110, 9, 'passed', '2022-10-28 15:08:06', '2022-11-03 11:27:22'),
-(32, 4, 110, 2, 'attempted', '2022-10-31 11:03:21', '2022-11-03 07:18:26'),
-(33, 2, 110, 1, 'passed', '2022-11-01 06:53:08', '2022-11-01 06:54:20'),
-(34, 0, 111, 0, 'attempted', '2022-11-03 13:59:12', NULL),
-(35, 1, 111, 6, 'attempted', '2022-11-03 13:59:13', '2022-11-03 14:29:06');
+(1, 0, 111, 0, 'attempted', '2022-11-04 20:13:25', '2022-11-06 12:42:24'),
+(2, 0, 113, 0, 'attempted', '2022-11-04 20:49:33', '2022-11-06 12:47:31'),
+(3, 0, 110, 0, 'attempted', '2022-11-06 12:02:14', '2022-11-06 12:05:01'),
+(4, 0, 121, 0, 'attempted', '2022-11-06 16:42:45', '2022-11-08 20:49:04'),
+(5, 0, 128, 0, 'attempted', '2022-11-07 06:51:43', '2022-11-07 07:40:44'),
+(6, 1, 128, 1, 'passed', '2022-11-07 06:51:45', '2022-11-07 06:54:53'),
+(7, 3, 128, 1, 'passed', '2022-11-07 07:03:17', '2022-11-07 07:10:18'),
+(8, 4, 128, 1, 'passed', '2022-11-07 07:40:47', '2022-11-07 07:42:29'),
+(9, 0, 129, 0, 'attempted', '2022-11-07 11:08:39', NULL),
+(10, 0, 130, 0, 'attempted', '2022-11-07 14:32:34', NULL),
+(11, 3, 130, 2, 'passed', '2022-11-07 14:32:36', '2022-11-07 14:45:03'),
+(12, 0, 116, 0, 'attempted', '2022-11-08 12:56:28', '2022-11-11 07:34:53'),
+(13, 3, 116, 4, 'passed', '2022-11-08 12:56:31', '2022-11-08 13:32:11'),
+(14, 0, 131, 0, 'attempted', '2022-11-11 03:44:25', NULL),
+(15, 0, 132, 0, 'attempted', '2022-11-11 04:50:53', '2022-11-11 04:58:36'),
+(16, 4, 116, 4, 'attempted', '2022-11-11 07:46:06', '2022-11-11 08:27:52');
 
 --
 -- Indexes for dumped tables
@@ -1323,7 +2184,7 @@ ALTER TABLE `assignments`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `certificate_list`
@@ -1347,49 +2208,49 @@ ALTER TABLE `chapters`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `course_comments`
 --
 ALTER TABLE `course_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `course_group`
 --
 ALTER TABLE `course_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `course_languages`
 --
 ALTER TABLE `course_languages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `course_track`
 --
 ALTER TABLE `course_track`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `course_track_details`
 --
 ALTER TABLE `course_track_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -1407,7 +2268,7 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=385;
 
 --
 -- AUTO_INCREMENT for table `maintenance`
@@ -1419,7 +2280,7 @@ ALTER TABLE `maintenance`
 -- AUTO_INCREMENT for table `qns_ans_comment`
 --
 ALTER TABLE `qns_ans_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `qualification`
@@ -1431,13 +2292,13 @@ ALTER TABLE `qualification`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
 
 --
 -- AUTO_INCREMENT for table `question_options`
 --
 ALTER TABLE `question_options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=522;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -1455,31 +2316,31 @@ ALTER TABLE `social_media`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `task_group`
 --
 ALTER TABLE `task_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT for table `user_group`
 --
 ALTER TABLE `user_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=459;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=744;
 
 --
 -- AUTO_INCREMENT for table `user_task`
 --
 ALTER TABLE `user_task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

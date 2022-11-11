@@ -324,6 +324,11 @@ exports.xapiRead = async (req, res) => {
         choices: [],
         source: [],
         target: [],
+        type_in:[],
+        sequence:[],
+        multiple_choice_text:[],
+        word_bank:[],
+        hotspot_dnd:[]
       };
       for (var i of data) {
         if (i.option_type == "choice") {
@@ -332,6 +337,16 @@ exports.xapiRead = async (req, res) => {
           ditem.source.push(i);
         } else if (i.option_type == "matching_response") {
           ditem.target.push(i);
+        }else if (i.option_type == "type_in") {
+          ditem.type_in.push(i);
+        }else if (i.option_type == "sequence") {
+          ditem.sequence.push(i);
+        }else if (i.option_type == "multiple_choice_text") {
+          ditem.multiple_choice_text.push(i);
+        }else if (i.option_type == "word_bank") {
+          ditem.word_bank.push(i);
+        }else if (i.option_type == "hotspot_dnd") {
+          ditem.hotspot_dnd.push(i);
         }
       }
 
@@ -1166,15 +1181,73 @@ exports.storeResult = async (req, res) => {
             await multipleChoiceQuestionQA(data['quizReport']['questions'][0].multipleChoiceQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
           }
           else if (q == "multipleResponseQuestion") {
-            await multipleResponseQuestionQA(data['quizReport']['questions'][0].multipleResponseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp,req.body.ps)
+            await multipleResponseQuestionQA(data['quizReport']['questions'][0].multipleResponseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
           }
           else if (q == "matchingQuestion") {
-            await matchingQuestionQA(data['quizReport']['questions'][0].matchingQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp,req.body.ps)
+            await matchingQuestionQA(data['quizReport']['questions'][0].matchingQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
           } else if (q == "trueFalseQuestion") {
-            await multipleChoiceQuestionQA(data['quizReport']['questions'][0].trueFalseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp,req.body.ps)
+            await multipleChoiceQuestionQA(data['quizReport']['questions'][0].trueFalseQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "typeInQuestion") {
+            await typeInQuestionQA(data['quizReport']['questions'][0].typeInQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "numericQuestion") {
+            await typeInQuestionQA(data['quizReport']['questions'][0].numericQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "sequenceQuestion") {
+            await sequenceQuestionQA(data['quizReport']['questions'][0].sequenceQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "fillInTheBlankQuestion") {
+            await fillInTheBlankQuestionQA(data['quizReport']['questions'][0].fillInTheBlankQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "multipleChoiceTextQuestion") {
+            await multipleChoiceTextQuestionQA(data['quizReport']['questions'][0].multipleChoiceTextQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "wordBankQuestion") {
+            await wordBankQuestionQA(data['quizReport']['questions'][0].wordBankQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "hotspotQuestion") {
+            await hotspotQuestionQA(data['quizReport']['questions'][0].hotspotQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
+          }
+          else if (q == "dndQuestion") {
+            await hotspotQuestionQA(data['quizReport']['questions'][0].dndQuestion, ENROLL_ID, TASK_ID, USER_ID, req.body.sp, req.body.tp, req.body.ps)
           }
 
+        }
 
+        if (allQnsName.length > 0) {
+          // enrollment update --------------------------------------------------
+          if (ENROLL_ID != 0) {
+            await new Promise((resolve, reject) => {
+              var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+                100
+              )},enrollment_status='completed',total_number=${mysql.escape(
+                req.body.tp
+              )},
+      pass_number=${mysql.escape(req.body.ps)}
+      ,score_number=${mysql.escape(
+        req.body.sp
+              )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+              conn.query(sql, (err, result) => {
+                if (err) throw err;
+                resolve("true");
+              });
+            });
+          }
+
+          // task update --------------------------------------------------------
+          if (TASK_ID != 0) {
+
+            await new Promise((resolve, reject) => {
+              var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+                TASK_ID
+              )} AND user_id=${mysql.escape(USER_ID)}`;
+              conn.query(sql, (err, result) => {
+                if (err) throw err;
+                resolve("true");
+              });
+            });
+          }
         }
 
         res.json({ mag: "successfull" });
@@ -1197,12 +1270,23 @@ exports.storeResult = async (req, res) => {
             })
           })
 
+          var data = await new Promise((resolve, reject) => {
+            parseString(req.body.dr, { trim: true }, function (err, result) {
+              if (err) throw err;
+              resolve(result);
+            });
+          });
+
+          var failp=data['quizReport']['groups'][0].group[0]['$'].awardedPercent;
+
+          console.log(failp)
+
           if (enrollChk) {
             // enrollment update --------------------------------------------------
             if (ENROLL_ID != 0) {
               await new Promise((resolve, reject) => {
                 var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
-                  0
+                  failp
                 )},enrollment_status='failed',total_number=${mysql.escape(
                   req.body.tp
                 )},score_number=${mysql.escape(
@@ -1248,7 +1332,7 @@ exports.storeResult = async (req, res) => {
     res.json({ mag: "not a valid user" });
   }
 
-   
+
 
 };
 
@@ -1469,7 +1553,7 @@ var quessStore = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_poi
 }
 
 // multipleChoiceQuestion
-var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point,pass_number) => {
+var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
   for (var i of data) {
 
     // console.log(i['$']);
@@ -1505,7 +1589,6 @@ var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_po
 
 
     //  database store question ------------------------------------------
-
     var sql = `INSERT INTO question set created_at=NOW(), ? `;
     var qnsId = await new Promise((resolve, reject) => {
       conn.query(sql, questionData, (err, result) => {
@@ -1540,37 +1623,37 @@ var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_po
   }
 
   // enrollment update --------------------------------------------------
-  if (ENROLL_ID != 0) {
-    await new Promise((resolve, reject) => {
-      var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
-        100
-      )},enrollment_status='completed',total_number=${mysql.escape(
-        total_point
-      )},
-      pass_number=${mysql.escape(pass_number)}
-      ,score_number=${mysql.escape(
-        user_point
-      )} WHERE id=${mysql.escape(ENROLL_ID)}`;
-      conn.query(sql, (err, result) => {
-        if (err) throw err;
-        resolve("true");
-      });
-    });
-  }
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
 
   // task update --------------------------------------------------------
-  if (TASK_ID != 0) {
+  // if (TASK_ID != 0) {
 
-    await new Promise((resolve, reject) => {
-      var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
-        TASK_ID
-      )} AND user_id=${mysql.escape(USER_ID)}`;
-      conn.query(sql, (err, result) => {
-        if (err) throw err;
-        resolve("true");
-      });
-    });
-  }
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
 
 
 
@@ -1578,7 +1661,7 @@ var multipleChoiceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_po
 
 
 // multipleResponseQuestion
-var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point,pass_number) => {
+var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
 
   console.log(data);
 
@@ -1659,37 +1742,37 @@ var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_
   }
 
   // enrollment update --------------------------------------------------
-  if (ENROLL_ID != 0) {
-    await new Promise((resolve, reject) => {
-      var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
-        100
-      )},enrollment_status='completed',total_number=${mysql.escape(
-        total_point
-      )},
-      pass_number=${mysql.escape(pass_number)}
-      ,score_number=${mysql.escape(
-        user_point
-      )} WHERE id=${mysql.escape(ENROLL_ID)}`;
-      conn.query(sql, (err, result) => {
-        if (err) throw err;
-        resolve("true");
-      });
-    });
-  }
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
 
   // task update --------------------------------------------------------
-  if (TASK_ID != 0) {
+  // if (TASK_ID != 0) {
 
-    await new Promise((resolve, reject) => {
-      var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
-        TASK_ID
-      )} AND user_id=${mysql.escape(USER_ID)}`;
-      conn.query(sql, (err, result) => {
-        if (err) throw err;
-        resolve("true");
-      });
-    });
-  }
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
 
 
 
@@ -1698,9 +1781,9 @@ var multipleResponseQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_
 
 
 // matchingQuestion
-var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point,pass_number) => {
+var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
 
-  console.log(data);
+  // console.log(data);
 
   for (var i of data) {
 
@@ -1732,7 +1815,7 @@ var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, t
     var items = i.premises[0].premise;
 
     for (var item of items) {
-      console.log(item.text[0]);
+      // console.log(item.text[0]);
       premiseArr.push(item.text[0]);
 
     }
@@ -1742,13 +1825,13 @@ var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, t
     var matchings = i.responses[0].response;
 
     for (var item of matchings) {
-      console.log(item.text[0]);
+      // console.log(item.text[0]);
       responseArr.push(item.text[0]);
 
     }
 
     // userAnswer
-    console.log(i.userAnswer[0].match);
+    // console.log(i.userAnswer[0].match);
     var uresult = i.userAnswer[0].match;
     var user_answer = '';
     for (var item of uresult) {
@@ -1815,44 +1898,801 @@ var matchingQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, t
   }
 
   // enrollment update --------------------------------------------------
-  if (ENROLL_ID != 0) {
-    await new Promise((resolve, reject) => {
-      var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
-        100
-      )},enrollment_status='completed',total_number=${mysql.escape(
-        total_point
-      )},
-      pass_number=${mysql.escape(pass_number)}
-      ,score_number=${mysql.escape(
-        user_point
-      )} WHERE id=${mysql.escape(ENROLL_ID)}`;
-      conn.query(sql, (err, result) => {
-        if (err) throw err;
-        resolve("true");
-      });
-    });
-  }
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
 
   // task update --------------------------------------------------------
-  if (TASK_ID != 0) {
+  // if (TASK_ID != 0) {
 
-    await new Promise((resolve, reject) => {
-      var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
-        TASK_ID
-      )} AND user_id=${mysql.escape(USER_ID)}`;
-      conn.query(sql, (err, result) => {
-        if (err) throw err;
-        resolve("true");
-      });
-    });
-  }
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
 
 
 
 
 }
 
+// typeInQuestion  
+var typeInQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
+  for (var i of data) {
 
+    // console.log(i['$']);
+    // console.log(i['$'].status);
+
+
+    var optionData = [];
+
+    var questionData = {
+      question_name: i.direction[0].text[0],
+      // correct_answer:item.questionAns.definition.correctResponsesPattern[0],
+      enrollment_id: ENROLL_ID,
+      total_marks: i['$'].maxPoints,
+      user_marks: i['$'].awardedPoints,
+      answer_status: i['$'].status
+    };
+
+    // console.log(questionData);
+    // var tempAr
+
+    // question name
+    // i.direction[0].text[0]
+    // console.log(i.direction[0].text[0]);
+
+    // var tempArr = i.answers[0].answer;
+    // console.log(i.acceptableAnswers[0].answer[0])
+    // for (var item of tempArr) {
+    //   optionData.push(item.text[0])
+    // }
+
+
+    // user answer ------------------------------
+    questionData.user_answer = i['$'].userAnswer;
+
+    // console.log(i);
+    console.log(questionData);
+
+
+    //  database store question ------------------------------------------
+    var sql = `INSERT INTO question set created_at=NOW(), ? `;
+    var qnsId = await new Promise((resolve, reject) => {
+      conn.query(sql, questionData, (err, result) => {
+        if (err) throw err;
+        resolve(result.insertId);
+      });
+    });
+
+
+    //  database store options ------------------------------------------
+
+     var o_temp = {
+        question_id: qnsId,
+        // option_name: '',
+        // option_id: i.id,
+        option_type: "type_in",
+      };
+
+      var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+      await new Promise((resolve, reject) => {
+        conn.query(sql, o_temp, (err, result) => {
+          if (err) throw err;
+          resolve(true);
+        });
+      });
+
+
+
+    //  end ------------------------------------------------------------------
+  }
+
+  // enrollment update --------------------------------------------------
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+  // task update --------------------------------------------------------
+  // if (TASK_ID != 0) {
+
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+
+
+}
+
+// sequenceQuestion
+var sequenceQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
+
+
+  for (var i of data) {
+
+    // console.log(i['$']);
+    // console.log(i['$'].status);
+
+
+    var optionData = [];
+    var user_answer = '';
+
+    var questionData = {
+      question_name: i.direction[0].text[0],
+      // correct_answer:item.questionAns.definition.correctResponsesPattern[0],
+      enrollment_id: ENROLL_ID,
+      total_marks: i['$'].maxPoints,
+      user_marks: i['$'].awardedPoints,
+      answer_status: i['$'].status
+    };
+
+    console.log(questionData);
+    // var tempAr
+
+    // question name
+    // i.direction[0].text[0]
+    // console.log(i.direction[0].text[0]);
+
+    var tempArr = i.answers[0].answer;
+    for (var item of tempArr) {
+      optionData.push(item.text[0])
+      user_answer += item.text[0] + ",";
+    }
+
+    optionData = shuffleArray(optionData);
+
+    // user answer ------------------------------
+    questionData.user_answer = user_answer.slice(0, -1);
+
+    // console.log(questionData);
+    // console.log(optionData)
+
+
+    //  database store question ------------------------------------------
+    var sql = `INSERT INTO question set created_at=NOW(), ? `;
+    var qnsId = await new Promise((resolve, reject) => {
+      conn.query(sql, questionData, (err, result) => {
+        if (err) throw err;
+        resolve(result.insertId);
+      });
+    });
+
+
+    //  database store options ------------------------------------------
+
+    for (var i of optionData) {
+      o_temp = {
+        question_id: qnsId,
+        option_name: i,
+        // option_id: i.id,
+        option_type: "sequence",
+      };
+
+      var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+      await new Promise((resolve, reject) => {
+        conn.query(sql, o_temp, (err, result) => {
+          if (err) throw err;
+          resolve(true);
+        });
+      });
+    }
+
+
+
+    //  end ------------------------------------------------------------------
+  }
+
+  // enrollment update --------------------------------------------------
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+  // task update --------------------------------------------------------
+  // if (TASK_ID != 0) {
+
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+
+
+}
+
+// fillInTheBlankQuestion
+var fillInTheBlankQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
+
+
+  for (var i of data) {
+
+    // console.log(i['$']);
+    // console.log(i['$'].status);
+
+
+    var optionData = '';
+    var user_answer = '';
+
+
+    var questionData = {
+      question_name: i.direction[0].text[0],
+      // correct_answer:item.questionAns.definition.correctResponsesPattern[0],
+      enrollment_id: ENROLL_ID,
+      total_marks: i['$'].maxPoints,
+      user_marks: i['$'].awardedPoints,
+      answer_status: i['$'].status
+    };
+
+    // console.log(questionData);
+    // console.log(i)
+    // console.log(i.details[0])
+    // console.log(i.details[0].blank)
+    // var tempAr
+
+
+    // option add ----------------------------------------
+    var tempArr = i.details[0].text;
+    for (var item = 0; item < tempArr.length; item++) {
+
+      if (item != (tempArr.length - 1))
+        optionData += tempArr[item] + " _____ ";
+      else
+        optionData += tempArr[item];
+    }
+
+    // user ans add ----------------------------------------
+    var tempArr = i.details[0].blank;
+    for (var item of tempArr) {
+      user_answer += item['$'].userAnswer + ",";
+    }
+
+
+    // user answer ------------------------------
+    questionData.user_answer = user_answer.slice(0, -1);
+
+    // console.log(questionData);
+    // console.log(optionData)
+
+
+    //  database store question ------------------------------------------
+    var sql = `INSERT INTO question set created_at=NOW(), ? `;
+    var qnsId = await new Promise((resolve, reject) => {
+      conn.query(sql, questionData, (err, result) => {
+        if (err) throw err;
+        resolve(result.insertId);
+      });
+    });
+
+
+    //  database store options ------------------------------------------
+
+
+     var o_temp = {
+        question_id: qnsId,
+        option_name: optionData,
+        // option_id: i.id,
+        option_type: "choice",
+      };
+
+      var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+      await new Promise((resolve, reject) => {
+        conn.query(sql, o_temp, (err, result) => {
+          if (err) throw err;
+          resolve(true);
+        });
+      });
+
+
+
+
+    //  end ------------------------------------------------------------------
+  }
+
+  // enrollment update --------------------------------------------------
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+  // task update --------------------------------------------------------
+  // if (TASK_ID != 0) {
+
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+
+
+}
+
+
+//  multipleChoiceTextQuestion
+var multipleChoiceTextQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
+
+
+  for (var i of data) {
+
+    // console.log(i['$']);
+    // console.log(i['$'].status);
+
+
+    var optionData = [];
+    var user_answer = '';
+    var second_qns = '';
+
+
+    var questionData = {
+      question_name: i.direction[0].text[0],
+      // correct_answer:item.questionAns.definition.correctResponsesPattern[0],
+      enrollment_id: ENROLL_ID,
+      total_marks: i['$'].maxPoints,
+      user_marks: i['$'].awardedPoints,
+      answer_status: i['$'].status
+    };
+
+    // console.log(questionData);
+    // console.log(i)
+    // console.log(i.details[0])
+    // console.log(i.details[0].blank)
+    // var tempAr
+
+
+    // second qns add ----------------------------------------
+    var tempArr = i.details[0].text;
+    for (var item of tempArr) {
+      second_qns += item + " ";
+    }
+    questionData.question_name_2 = second_qns;
+
+    // user ans add ----------------------------------------
+    optionData = i.details[0].blank[0].answer;
+
+
+    // // user answer ------------------------------
+    questionData.user_answer = optionData[Number(i.details[0].blank[0]['$'].userAnswerIndex)];
+
+    console.log(questionData);
+    // console.log(optionData)
+
+
+    //  database store question ------------------------------------------
+
+    var sql = `INSERT INTO question set created_at=NOW(), ? `;
+    var qnsId = await new Promise((resolve, reject) => {
+      conn.query(sql, questionData, (err, result) => {
+        if (err) throw err;
+        resolve(result.insertId);
+      });
+    });
+
+
+    //  database store options ------------------------------------------
+
+    for(var i of optionData)
+    {
+     var o_temp = {
+        question_id: qnsId,
+        option_name: i,
+        // option_id: i.id,
+        option_type: "multiple_choice_text",
+      };
+
+      var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+      await new Promise((resolve, reject) => {
+        conn.query(sql, o_temp, (err, result) => {
+          if (err) throw err;
+          resolve(true);
+        });
+      });
+    }
+
+
+
+    //  end ------------------------------------------------------------------
+  }
+
+  // enrollment update --------------------------------------------------
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+  // task update --------------------------------------------------------
+  // if (TASK_ID != 0) {
+
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+
+
+}
+
+
+// wordBankQuestion
+var wordBankQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
+
+
+  for (var i of data) {
+
+    // console.log(i['$']);
+    // console.log(i['$'].status);
+
+
+    var optionData = i.words[0].word;
+    var user_answer = '';
+    var second_qns = '';
+
+
+
+    var questionData = {
+      question_name: i.direction[0].text[0],
+      // correct_answer:item.questionAns.definition.correctResponsesPattern[0],
+      enrollment_id: ENROLL_ID,
+      total_marks: i['$'].maxPoints,
+      user_marks: i['$'].awardedPoints,
+      answer_status: i['$'].status
+    };
+
+    // console.log(questionData);
+    console.log(i)
+    console.log(i.details[0])
+    // console.log(i.details[0].blank[0]['_'])
+    console.log(i.words[0].word)
+    // var tempAr
+
+
+    // second qns add ----------------------------------------
+    var tempArr = i.details[0].text;
+    for (var item = 0; item < tempArr.length; item++) {
+
+      if (item != (tempArr.length - 1))
+        second_qns += tempArr[item] + " _____ ";
+      else
+        second_qns += tempArr[item];
+    }
+    questionData.question_name_2 = second_qns;
+
+
+    // // user ans add ----------------------------------------
+    var tempArr = i.details[0].blank;
+    for (var item of tempArr) {
+      user_answer += item['$'].userAnswer + ",";
+
+      if (!optionData.includes(item['_']))
+        optionData.push(item['_'])
+    }
+
+
+    // // // user answer ------------------------------
+    questionData.user_answer = user_answer.slice(0, -1);
+
+    // console.log(questionData); 
+    // console.log(optionData)
+
+
+    //  database store question ------------------------------------------
+
+    var sql = `INSERT INTO question set created_at=NOW(), ? `;
+    var qnsId = await new Promise((resolve, reject) => {
+      conn.query(sql, questionData, (err, result) => {
+        if (err) throw err;
+        resolve(result.insertId);
+      });
+    });
+
+
+    //  database store options ------------------------------------------
+
+    for(var i of optionData)
+    {
+     var o_temp = {
+        question_id: qnsId,
+        option_name: i,
+        // option_id: i.id,
+        option_type: "word_bank",
+      };
+
+      var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+      await new Promise((resolve, reject) => {
+        conn.query(sql, o_temp, (err, result) => {
+          if (err) throw err;
+          resolve(true);
+        });
+      });
+    }
+
+
+
+    //  end ------------------------------------------------------------------
+  }
+
+  // enrollment update --------------------------------------------------
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+  // task update --------------------------------------------------------
+  // if (TASK_ID != 0) {
+
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+
+
+}
+
+
+// hotspotQuestion
+var hotspotQuestionQA = async (data, ENROLL_ID, TASK_ID, USER_ID, user_point, total_point, pass_number) => {
+
+
+  for (var i of data) {
+
+    // console.log(i['$']);
+    // console.log(i['$'].status);
+
+
+    var optionData = [];
+    var user_answer = '';
+    var second_qns = '';
+
+
+
+    var questionData = {
+      question_name: i.direction[0].text[0],
+      // correct_answer:item.questionAns.definition.correctResponsesPattern[0],
+      enrollment_id: ENROLL_ID,
+      total_marks: i['$'].maxPoints,
+      user_marks: i['$'].awardedPoints,
+      answer_status: i['$'].status
+    };
+
+    // console.log(questionData);
+    //   console.log(i)
+    //  console.log(i.userAnswer[0].point)
+    //  console.log(i.hotspots[0])
+    //  console.log(i.hotspots[0].oval)
+    // console.log(i.details[0].blank[0]['_'])
+    //console.log(i.words[0].word)
+    // var tempAr
+
+
+    // second qns add ----------------------------------------
+    // var tempArr = i.details[0].text;
+    // for (var item=0 ; item < tempArr.length;item++) {
+
+    //   if(item != (tempArr.length-1))
+    //   second_qns+=tempArr[item]+" _____ ";
+    //   else
+    //   second_qns+=tempArr[item];
+    // }
+    // questionData.question_name_2=second_qns;
+
+
+    // // // user ans add ----------------------------------------
+    // var tempArr = i.details[0].blank;
+    // for (var item of tempArr) {
+    //   user_answer+=item['$'].userAnswer+",";
+
+    //   if(!optionData.includes(item['_']))
+    //       optionData.push(item['_'])
+    // }
+
+
+    // // // // user answer ------------------------------
+    // questionData.user_answer = user_answer.slice(0,-1);
+
+    console.log(questionData);
+    // console.log(optionData)
+
+
+    //  database store question ------------------------------------------
+
+    var sql = `INSERT INTO question set created_at=NOW(), ? `;
+    var qnsId = await new Promise((resolve, reject) => {
+      conn.query(sql, questionData, (err, result) => {
+        if (err) throw err;
+        resolve(result.insertId);
+      });
+    });
+
+
+    //  database store options ------------------------------------------
+
+
+     var o_temp = {
+        question_id: qnsId,
+        // option_name: i,
+        // option_id: i.id,
+        option_type: "hotspot_dnd",
+      };
+
+      var sql = `INSERT INTO question_options set created_at=NOW(), ? `;
+
+      await new Promise((resolve, reject) => {
+        conn.query(sql, o_temp, (err, result) => {
+          if (err) throw err;
+          resolve(true);
+        });
+      });
+
+
+
+
+    //  end ------------------------------------------------------------------
+  }
+
+  // enrollment update --------------------------------------------------
+  // if (ENROLL_ID != 0) {
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE enrollments SET updated_at=NOW(),course_progress=${mysql.escape(
+  //       100
+  //     )},enrollment_status='completed',total_number=${mysql.escape(
+  //       total_point
+  //     )},
+  //     pass_number=${mysql.escape(pass_number)}
+  //     ,score_number=${mysql.escape(
+  //       user_point
+  //     )} WHERE id=${mysql.escape(ENROLL_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+  // task update --------------------------------------------------------
+  // if (TASK_ID != 0) {
+
+  //   await new Promise((resolve, reject) => {
+  //     var sql = `UPDATE user_task SET updated_at=NOW(),user_task_status='passed' WHERE task_id=${mysql.escape(
+  //       TASK_ID
+  //     )} AND user_id=${mysql.escape(USER_ID)}`;
+  //     conn.query(sql, (err, result) => {
+  //       if (err) throw err;
+  //       resolve("true");
+  //     });
+  //   });
+  // }
+
+
+
+}
+
+
+
+//  fully random 
+const shuffleArray = arr => arr
+  .map(a => [Math.random(), a])
+  .sort((a, b) => a[0] - b[0])
+  .map(a => a[1]);
 
 //end -----------------------------------------------------------------------
 
