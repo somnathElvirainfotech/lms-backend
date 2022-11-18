@@ -12,6 +12,6 @@ module.exports = app => {
     app.post('/user-status', loginAuth, user.statusChange);
 
     // edit user details
-    app.get('/edit-list', loginAuth, user.editUser);
+    app.get('/edit-list/:id', loginAuth, user.editUser);
     app.post('/edit-list', loginAuth, user.updateUser);
 }

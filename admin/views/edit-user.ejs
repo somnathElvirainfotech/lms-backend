@@ -1,70 +1,86 @@
 <%- include('./include/header.ejs') %>
 
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <!-- <h1 class="m-0">Dashboard</h1> -->
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Create User</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1 class="m-0">Dashboard</h1> -->
         </div>
-        <!-- /.content-header -->
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Create User</li>
+          </ol>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <a href="/user-list">
+                <button type="button" class="btn btn-primary">Back</button>
+              </a>
+            </div>
 
-                <!-- Small boxes (Stat box) -->
+            <div class="card-body">
+              <form action="/edit-list" method="post">
+                <input
+                  type="hidden"
+                  name="id"
+                  id="id"
+                  value="<%= user.id %>"
+                />
+
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <a href="/user-list">
-                                    <button type="button" class="btn btn-primary">Back</button>
-                                </a>
-                            </div>
+                  <div class="input-group col-md-6 mb-3">
+                    <input
+                      type="text"
+                      name="firstname"
+                      id="firstname"
+                      class="form-control"
+                      placeholder="Enter Firstname"
+                      value="<%= user.firstname %>"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                      </div>
+                    </div>
+                  </div>
 
-                            <div class="card-body">
-                                <form action="/edit-list" method="post">
+                  <div class="input-group col-md-6 mb-3">
+                    <input
+                      type="text"
+                      name="lastname"
+                      id="lastname"
+                      class="form-control"
+                      placeholder="Enter Lastname"
+                      value="<%= user.lastname %>"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                                    <input type="hidden" name="email" id="email" value="<%= user.email %>">
-
-                                    <div class="row">
-                                        <div class="input-group col-md-6 mb-3">
-                                            <input type="text" name="firstname" id="firstname" class="form-control"
-                                                placeholder="Enter Firstname" value="<%= user.firstname %>">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fas fa-user"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="input-group col-md-6 mb-3">
-                                            <input type="text" name="lastname" id="lastname" class="form-control"
-                                                placeholder="Enter Lastname" value="<%= user.lastname %>">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fas fa-user"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                    <!-- <div class="input-group mb-3 col-sm-6">
+                <!-- <div class="input-group mb-3 col-sm-6">
 
                                         <input id="date" type="date" name="date" class="form-control"
                                             placeholder="Enter date" value="<%= user.date %>" />
@@ -76,123 +92,282 @@
                                         </div>
                                     </div> -->
 
+                <div class="row">
+                  <div class="input-group col-md-6 mb-3">
+                    <select
+                      id="qualification_id"
+                      name="qualification_id"
+                      class="form-control"
+                    >
+                      <option value="">-- Select qualification --</option>
+                      <% qualiData.forEach(item=> { %> <%
+                      if(item.id==user.qualification_id) { %>
+                      <option selected value="<%= item.id %>">
+                        <%= item.name.toUpperCase() %>
+                      </option>
+                      <% } else{ %>
+                      <option value="<%= item.id %>">
+                        <%= item.name.toUpperCase() %>
+                      </option>
 
-                                    <div class="row">
-                                        <div class="input-group col-md-6 mb-3">
-                                            <select id="qualification_id" name="qualification_id" class="form-control">
-                                                <option value=""> -- Select qualification -- </option>
-                                                <% qualiData.forEach(item=> { %>
-
-                                                   <% if(item.id==user.qualification_id)
-                                                    { %>
-                                                    <option selected value="<%= item.id %>">
-                                                        <%= item.name.toUpperCase() %>
-                                                    </option>
-                                                  <%  }
-                                                    else{ %>
-                                                    <option value="<%= item.id %>">
-                                                        <%= item.name.toUpperCase() %>
-                                                    </option>
-                                                    
-
-                                                    <% }}); %>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fas fa-user"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="input-group col-md-6 mb-3">
-                                            <select id="language_id" name="language_id" class="form-control">
-                                                <option value=""> -- Select language -- </option>
-                                                <% langData.forEach(item=> { %>
-                                                   <% if(item.id==user.language_id)
-                                                    { %>
-                                                    <option selected value="<%= item.id %>">
-                                                        <%= item.name.toUpperCase() %>
-                                                    </option>
-                                                   <% }
-                                                    else{ %>
-                                                    <option value="<%= item.id %>">
-                                                        <%= item.name.toUpperCase() %>
-                                                    </option>
-                                                  
-                                                    <% }}); %>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fas fa-user"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="input-group col-md-6 mb-3">
-                                            <input id="social_link_1" type="text" name="social_link_1"
-                                                class="form-control" placeholder="Add Linkedin link"
-                                                value="<%= user.social_link_1 %>">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fas fa-envelope"></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="input-group col-md-6 mb-3">
-                                            <input id="social_link_2" type="text" name="social_link_2"
-                                                class="form-control" placeholder="Add MS Teams link"
-                                                value="<%= user.social_link_2 %>" />
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fas fa-lock"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-12">
-                                            <label>ABOUT YOURSELF</label>
-                                            <textarea name="details" class="form-control" id="details" cols="30"
-                                                rows="5"><%=  user.details %></textarea>
-                                            <small>120 character only.</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <button id="submit" type="submit" class="btn btn-success">Update</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                      <% }}); %>
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                      </div>
                     </div>
+                  </div>
+
+                  <div class="input-group col-md-6 mb-3">
+                    <select
+                      id="language_id"
+                      name="language_id"
+                      class="form-control"
+                    >
+                      <option value="">-- Select language --</option>
+                      <% langData.forEach(item=> { %> <%
+                      if(item.id==user.language_id) { %>
+                      <option selected value="<%= item.id %>">
+                        <%= item.name.toUpperCase() %>
+                      </option>
+                      <% } else{ %>
+                      <option value="<%= item.id %>">
+                        <%= item.name.toUpperCase() %>
+                      </option>
+
+                      <% }}); %>
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3 col-md-6">
+                    <select required name="role" id="role" class="form-control">
+                      <option value="">--- Select user type ---</option>
+                      <option <%= user.role==2?"selected":"" %> value="2">Supervisor</option>
+                      <option <%= user.role==4?"selected":"" %> value="4">Creator</option>
+                      <option <%= user.role==5?"selected":"" %> value="5">User</option>
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3 col-md-6">
+                    <select
+                      required
+                      name="group_id[]"
+                      id="group_id"
+                      class="form-control selectpicker select2"
+                      multiple="multiple"
+                      data-placeholder="Select group"
+                    >
+                      <% group.forEach((item)=>{ %> <%
+                      if(item.g_status=='active') { 
+                        
+                        for(var i of user.group_details)
+                        { if(i.group_id==item.id)
+                        {
+                        %>
+                      
+                        
+                        <option selected value="<%= item.id %>"><%= item.g_name %></option>
+                     
+                     
+                      <%}
+                            else{ %>
+
+                                <option  value="<%= item.id %>"><%= item.g_name %></option>
+                      
+                      <%  }
+                    }} }) %>
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="input-group mb-3 col-md-6">
+                    <select
+                      required
+                      name="status"
+                      id="status"
+                      class="form-control"
+                    >
+                      <option value="">-- Select status --</option>
+                      <option <%= user.is_active==1?"selected":"" %> value="1">Approve</option>
+                      <option <%= user.is_active==0?"selected":"" %> value="0">Dis-Approve</option>
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3 col-md-6">
+                    <input
+                      type="date"
+                      name="date"
+                      id="date"
+                      value="<%= user.date %>"
+                      class="form-control"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3 col-md-6">
+                    <input
+                      required
+                      type="text"
+                      name="user_hr_no"
+                      id="user_hr_no"
+                      class="form-control"
+                      placeholder="HR NUMBER"
+                      value="<%= user.user_hr_no %>"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3 col-md-6">
+                    <input
+                      type="text"
+                      name="organization_unit"
+                      id="organization_unit"
+                      class="form-control"
+                      placeholder="Organization Unit"
+                      value="<%= user.organization_unit %>"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3 col-md-6">
+                    <select
+                      required
+                      name="login_type"
+                      id="login_type"
+                      class="form-control"
+                    >
+                      <option value="">-- Select Login Type --</option>
+                      <option <%= user.login_type=="local"?"selected":"" %> value="local">Local</option>
+                      <option <%= user.login_type=="google"?"selected":"" %> value="google">Google</option>
+                      <option <%= user.login_type=="ms"?"selected":"" %> value="ms">Microsoft</option>
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
                 </div>
-                <!-- /.row -->
 
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+                <div class="row">
+                  <div class="input-group col-md-6 mb-3">
+                    <input
+                      id="social_link_1"
+                      type="text"
+                      name="social_link_1"
+                      class="form-control"
+                      placeholder="Add Linkedin link"
+                      value="<%= user.social_link_1 %>"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="input-group col-md-6 mb-3">
+                    <input
+                      id="social_link_2"
+                      type="text"
+                      name="social_link_2"
+                      class="form-control"
+                      placeholder="Add MS Teams link"
+                      value="<%= user.social_link_2 %>"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-12">
+                    <label>ABOUT YOURSELF</label>
+                    <textarea
+                      name="details"
+                      class="form-control"
+                      id="details"
+                      cols="30"
+                      rows="5"
+                    >
+<%=  user.details %></textarea
+                    >
+                    <small>120 character only.</small>
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <button id="submit" type="submit" class="btn btn-success">
+                    Update
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
+<%- include('./include/footer.ejs') %>
 
-    <%- include('./include/footer.ejs') %>
+<script>
+  let err_msg = `<%= err_msg%>`;
+  let err_type = `<%= err_type %>`;
+  if (err_msg) {
+    if (err_type) {
+      toastr.success(err_msg);
+    } else {
+      toastr.error(err_msg);
+    }
+  }
 
-    <script>
-        let err_msg = `<%= err_msg%>`;
-        let err_type = `<%= err_type %>`;
-        if (err_msg) {
-            if (err_type) {
-                toastr.success(err_msg)
-            }
-            else{
-                toastr.error(err_msg)
-            }
-        }
+  $('.select2').select2()
 
-    </script>
+</script>
+
+ 

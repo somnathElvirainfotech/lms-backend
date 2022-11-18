@@ -13,6 +13,7 @@ const category = require('./admin/controllers/category.controller');
 const groupController = require('./admin/controllers/group.controller');
 const courseController = require('./admin/controllers/course.controller');
 const maintenanceController = require('./admin/controllers/maintenance.controller');
+const resultController=require("./admin/controllers/result.controller.js")
 const loginAuth = require('./admin/middlewares/loginAuth');
 // const formData = require('express-form-data');
 
@@ -109,6 +110,9 @@ app.post('/course/approve/status', loginAuth, courseController.approveStatus);
 //maintenance mode
 app.get('/maintenance', loginAuth, maintenanceController.getAll);
 app.post('/maintenance', loginAuth, maintenanceController.create);
+
+// result ------------------------
+app.get('/result',loginAuth,resultController.result)
 
  
 

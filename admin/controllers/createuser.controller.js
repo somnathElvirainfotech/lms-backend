@@ -110,9 +110,12 @@ exports.statusChange = async (req, res) => {
 }
 
 exports.editUser = async (req, res) => {
-    var response = await createUserService.getUser(req);
+
+ 
+    var response = await createUserService.getUserByID(req);
     var languageRes = await languageService.getAll(req);
     var qualificationRes = await createUserService.qualification(req);
+    var groupData = await groupService.getAll(req);
 
     // error msg
     var err_msg = req.session.error;
@@ -124,11 +127,17 @@ exports.editUser = async (req, res) => {
 
     var msg = req.flash("msg");
     var status = req.flash("status");
-    response.data.date = common.formatDate(response.data.date);
-    console.log(response.data)
+    response.data[0].date = common.formatDate(response.data[0].date);
+    
+    // group details -----------------------------
+    console.log("fsdsffsdfd",JSON.stringify(response.data[0].group_details))
+
+    // ---------------------------------------
+
     res.render('edit-user.ejs', {
         username: common.Capitalize(req.session.username), msg, status,
-        user: response.data,
+        group:groupData.data,
+        user: response.data[0],
         langData: languageRes.data,
         qualiData: qualificationRes.data,
         err_msg: err_msg,
@@ -154,5 +163,5 @@ exports.updateUser = async (req, res) => {
         req.session.err_type = response.status
     }
 
-    res.redirect('/edit-list?email=' + req.body.email);
+    res.redirect('/edit-list/' + req.body.id);
 }

@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 var conn = require('../config/dbconfig');
+require("dotenv").config();
 
 class Task {
 
@@ -281,7 +282,7 @@ class Task {
 
     // show by group id
     taskSearch(data, callback) {
-        var sql = `SELECT task.*,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email AS creator_email,courses.course_name FROM task LEFT JOIN task_group ON task_group.task_id=task.id LEFT JOIN users ON users.id=task.created_by LEFT JOIN courses ON courses.id=task.course_id WHERE `;
+        var sql = `SELECT task.*,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email AS creator_email,courses.course_name,courses.image FROM task LEFT JOIN task_group ON task_group.task_id=task.id LEFT JOIN users ON users.id=task.created_by LEFT JOIN courses ON courses.id=task.course_id WHERE `;
         if (data.group_id) {
             sql += ` task_group.group_id IN (${data.group_id}) `;
             if (data.created_by) {
@@ -312,7 +313,7 @@ class Task {
         if (data.group_id || data.course_id || data.created_by) {
             sql += `  GROUP BY task.id order by task.id desc`;
         } else {
-            sql = `SELECT task.*,courses.course_name,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email as creator_email FROM task LEFT JOIN courses ON courses.id=task.course_id LEFT JOIN users ON users.id=task.created_by GROUP BY task.id  ORDER BY task.id DESC `;
+            sql = `SELECT task.*,courses.course_name,courses.image,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email as creator_email FROM task LEFT JOIN courses ON courses.id=task.course_id LEFT JOIN users ON users.id=task.created_by GROUP BY task.id  ORDER BY task.id DESC `;
         }
 
 
@@ -338,6 +339,9 @@ class Task {
                         task_end_date: item.task_end_date,
                         course_id: item.course_id,
                         course_name: item.course_name,
+                        course_image: item.image != null
+                        ? process.env.images_path + `${item.image}`
+                        : "",
                         task_status: item.task_status,
                         created_at: item.created_at,
                         updated_at: item.updated_at,

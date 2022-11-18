@@ -56,7 +56,15 @@ exports.registration = (req, res) => {
         if (password1 === password2) {
           const salt = await bcrypt.genSalt(12);
           const hashPassword = await bcrypt.hash(password1, salt);
-          var group_arr = req.body.group_id ? req.body.group_id.split(",") : [];
+          console.log("user group ",req.body.group_id);
+          var group_arr=[];
+          if(typeof(req.body.group_id) == "string")
+          {
+            group_arr = req.body.group_id ? req.body.group_id.split(",") : [];
+          }else{
+            group_arr = req.body.group_id ? req.body.group_id : [];
+          }
+         
           let userData = {
             firstname: firstname,
             lastname: lastname,
@@ -601,7 +609,7 @@ exports.updateUser = (req, res) => {
 //by user id
 exports.updateUserById = (req, res) => {
   const { id } = req.body;
-  var group_arr = req.body.group_id ? req.body.group_id.split(",") : [];
+  // var group_arr = req.body.group_id ? req.body.group_id.split(",") : [];
   var data = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -617,6 +625,15 @@ exports.updateUserById = (req, res) => {
     organization_unit: req.body.organization_unit,
     login_type:req.body.login_type
   };
+
+  var group_arr=[];
+    if(typeof(req.body.group_id) == "string")
+      {
+        group_arr = req.body.group_id ? req.body.group_id.split(",") : [];
+      }else{
+        group_arr = req.body.group_id ? req.body.group_id : [];
+      }
+
 
   console.log("upppppppppppp", data);
 

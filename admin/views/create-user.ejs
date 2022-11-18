@@ -39,6 +39,7 @@
 
             <div class="card-body">
               <form action="/create-user" method="post">
+
                 <div class="row">
                   <div class="input-group mb-3 col-md-6">
                     <input
@@ -71,6 +72,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="input-group mb-3 col-md-6">
                     <input
@@ -87,6 +89,7 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="input-group mb-3 col-md-6">
                     <select required name="role" id="role" class="form-control">
                       <option value="">--- Select user type ---</option>
@@ -105,14 +108,18 @@
                   <div class="input-group mb-3 col-md-6">
                     <select
                       required
-                      name="group_id"
+                      name="group_id[]"
                       id="group_id"
-                      class="form-control selectpicker"
-                      multiple
+                      class="form-control selectpicker select2"
+                      multiple="multiple"
+                      data-placeholder="Select group"
                     >
-                      <option value="">-- Select group --</option>
+                       
                       <% group.forEach((item)=>{ %> <%
-                      if(item.g_status=='active') {%>
+                      if(item.g_status=='active') {
+                        
+                        %>
+                        
                       <option value="<%= item.id %>"><%= item.g_name %></option>
                       <%}%> <% }) %>
                     </select>
@@ -122,6 +129,8 @@
                       </div>
                     </div>
                   </div>
+
+                  
 
                   <div class="input-group mb-3 col-md-6">
                     <select
@@ -279,6 +288,8 @@
                       </div>
                     </div>
                   </div>
+
+
                 </div>
 
                 <div class="col-4">
@@ -286,6 +297,7 @@
                     Submit
                   </button>
                 </div>
+
               </form>
 
               <!-- <div class="row">
@@ -323,8 +335,6 @@
 
 <%- include('./include/footer.ejs') %>
 
- 
-
 <script>
   let err_msg = `<%= err_msg%>`;
   let err_type = `<%= err_type %>`;
@@ -336,12 +346,16 @@
     }
   }
 
-  $(document).ready(function() {
-    $('#group_id').multiselect({
-      buttonWidth: '300px'
-    });
+  $(document).ready(function () {
+
+
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+     
+
+    // $("#group_id").multiselect({
+    //   buttonWidth: "300px",
+    // });
   });
-
 </script>
-
- 

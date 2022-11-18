@@ -35,12 +35,17 @@
                                 <form action="">
                                     <div class="row">
 
+                                       
+
+                                        <div class="input-group col-md-2 mb-3">
+                                             
+                                            <input type="date" name="fromdate" id="fromdate" class="form-control"
+                                                placeholder="Enter FRoge">
+
+                                        </div>
+
                                         <div class="input-group col-md-3 mb-3">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <span>Course</span>
-                                                </div>
-                                            </div>
+                                             
                                             <select name="cid" id="cid" class="form-control">
                                                 <option value=""> -- Select Course -- </option>
                                                 <% course.forEach(item=>{ %>
@@ -55,17 +60,22 @@
                                         </div>
 
                                         <div class="input-group col-md-3 mb-3">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <span>From Date</span>
-                                                </div>
-                                            </div>
-                                            <input type="date" name="fromdate" id="fromdate" class="form-control"
-                                                placeholder="Enter FRoge">
+                                             
+                                            <input type="email" name="user_email" id="user_email" class="input-group-prepend form-control"
+                                                placeholder="course Creator Email">
 
                                         </div>
 
                                         <div class="input-group col-md-3 mb-3">
+                                             
+                                            <input type="text" name="std_no" id="std_no" class="input-group-prepend form-control"
+                                                placeholder="User/Student No">
+
+                                        </div>
+
+
+
+                                        <!-- <div class="input-group col-md-3 mb-3">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">
                                                     <span>To Date</span>
@@ -74,12 +84,12 @@
                                             <input type="date" name="todate" id="todate" class="form-control"
                                                 placeholder="Enter FRoge">
 
-                                        </div>
+                                        </div> -->
 
-                                        <div class="input-group col-md-3 mb-3">
+                                        <div class="input-group col-md-1 mb-3">
                                             <div class="col-4">
                                                 <button id="fsubmit" type="button"
-                                                    class="btn btn-success">Search</button>
+                                                    class="btn btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
 
@@ -96,7 +106,7 @@
                         <div class="card">
 
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="example2" style="font-size: 12px;" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
@@ -106,16 +116,13 @@
                                             <th>Course Name</th>
                                             <th>Course Type</th>
                                             <th>Course Category</th>
-                                            <tH>Enroll Status</tH>
-                                            <th>Course Total Number</th>
-                                            <th>Course Score Number</th>
+                                            <th>Enroll Status</th>
+                                            <th>Total No</th>
+                                            <th>Score No</th>
                                             <th>User Progress</th>
                                             <th>Total Rating</th>
-                                            <th>Total Comment</th>
-                                            <th>Assignment no</th>
-
-                                          
-
+                                            <th>Result</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody id="tbody">
@@ -161,7 +168,7 @@
                                                     </td>
 
                                                     <td>
-                                                       <%= data.course_progress != null?data.course_progress:0%> %
+                                                       <%= data.course_progress != null?data.course_progress:"0%" %>
                                                     </td>
                                                     
                                                     
@@ -172,12 +179,10 @@
                                                     </td>
 
                                                     <td>
-                                                        <%= data.comment != null ?data.comment:0 %>
+                                                        <button class="btn-sm btn btn-success">Result</button>
                                                     </td>
-
-                                                    <td>
-                                                        <%= data.assignment_details != null?data.assignment_details.length:0 %>
-                                                    </td>
+                                                   
+                                                     
 
                                                 </tr>
                                                 <% i++; }) %>
@@ -229,7 +234,9 @@
                 $("#fsubmit").click(function (e) {
                     var cid = $("#cid").val();
                     var fromdate = $("#fromdate").val();
-                    var todate = $("#todate").val();
+                    // var todate = $("#todate").val();
+                    var user_email=$("#user_email").val();
+                    var std_no=$("#std_no").val();
                     // alert(fromdate)
 
                     $.ajax({
@@ -238,9 +245,9 @@
                         data: {
                             cid: cid,
                             fromdate: fromdate,
-                            todate: todate,
-                            user_email:'',
-                            std_no:''
+                            todate: "",
+                            user_email:user_email,
+                            std_no:std_no
                         },
                         success: function (data) {
                             console.log(data.result)
@@ -261,34 +268,29 @@ ${i}
 ${element.enrollment_create_date}
 </td>
 <td>
-
+    ${element.user_details[0].user_hr_no}
+</td>
+<td>
 ${element.user_details[0].fullname ? element.user_details[0].fullname : ""}
 </td>
 <td>
-
 ${element.course_details[0].course_name}
+</td>
+<td>
+    ${element.course_details[0].course_type.toUpperCase()}
 </td>
 <td>
 
 ${element.course_details[0].category_name}
 </td>
-
 <td>
-0%
+${element.enrollment_status}
 </td>
+<td>${element.total_number}</td>
+<td>${element.score_number}</td>
+<td>${element.course_progress != null?element.course_progress:"0%" }</td>
 <td>
-${element.assignment_details ? element.assignment_details[0].user_name : ''}
-</td>
-<td>
-0
-</td>
-<td>
-    ${element.assignment_details ? element.assignment_details.length : 0}
-</td>
-
-<td>
-
-
+    ${element.rating_number !=null?element.rating_number:0}
 </td>
 
 
@@ -305,7 +307,9 @@ ${element.assignment_details ? element.assignment_details[0].user_name : ''}
 
 
                             $("#tbody").html(tdata)
-
+                            //  refresh div with out page load ------------------------
+                            $('#example2').load(location.href + ' #example2');
+                            console.log("object");
 
                         },
                         error: function (err) {

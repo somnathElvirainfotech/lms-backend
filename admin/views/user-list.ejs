@@ -34,11 +34,40 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <a href="/create-user">
-                <button type="button" class="btn btn-primary">
-                  Create User
-                </button>
-              </a>
+              
+
+              <div class="row">
+
+               
+
+                <div class="col-md-12 mt-4">
+
+                  <a href="/create-user">
+                    <button type="button" class="btn btn-primary">
+                      Create User
+                    </button>
+                    
+                  </a>
+
+                    <form action="/admin/user-csv" method="post" enctype="multipart/form-data">
+                        
+                        <label for="user_csv_file">USER CSV FILE UPLOAD</label>
+                        <div class="input-group mb-3 col-6 ">
+                            <input type="file" name="user_csv_file" id="user_csv_file" class="form-control"
+                                placeholder="First Name">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" input-group col-4">
+                            <button class="btn btn-success" type="submit">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+
             </div>
             <div class="card-body">
               <table id="example2" class="table table-bordered table-hover">
@@ -71,7 +100,7 @@
                       </label>
                     </td>
                     <td>
-                      <a href="/edit-list?email=<%= data.email%>">
+                      <a href="/edit-list/<%= data.id%>">
                         <button class="btn btn-sm btn-success">
                           <span class="fas fa-pen"></span>
                         </button>

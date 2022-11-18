@@ -285,6 +285,7 @@ class User {
                                     role:result[0].role,
                                     email: result[0].email,
                                     organization_id: result[0].organization_id,
+                                    organization_unit:result[0].organization_unit,
                                     sign_in_count: result2[0].sign_in_count,
                                     courses_count: result[0].courses_count,
                                     enrollment_count: result[0].enrollment_count,
@@ -297,7 +298,8 @@ class User {
                                     updated_at: result[0].updated_at,
                                     qualification_id: result[0].qualification_id,
                                     language_id: result[0].language_id,
-                                    login_type: result[0].login_type
+                                    login_type: result[0].login_type,
+                                    user_hr_no:result[0].user_hr_no,
                                 };
 
                                 var sql = `SELECT user_group.*,groups.g_name FROM user_group LEFT JOIN groups on groups.id=user_group.group_id WHERE user_group.user_id=${result[0].id}`;

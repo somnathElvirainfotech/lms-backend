@@ -39,7 +39,7 @@ exports.updateUser = async (req) => {
     var postData = JSON.stringify(req.body);
     
     header.setHeader(req.session.token);
-    var response = await axios.put(api.update_user, postData, header.getHeader());
+    var response = await axios.put(api.get_all_user, postData, header.getHeader());
 
     return response.data;
 }
@@ -52,6 +52,20 @@ exports.getUser = async (req) => {
     });
     header.setHeader(req.session.token);
     var response = await axios.post(api.update_user, postData, header.getHeader());
+
+    return response.data;
+}
+
+exports.getUserByID = async (req) => {
+    // const {emai,status}=req.body;
+    // console.log(req.query.email)
+    // var postData = JSON.stringify({
+    //     id: req.query.id
+    // });
+    // console.log("sdsds",req.param.id);
+    header.setHeader(req.session.token);
+    var response = await axios.get(api.get_all_user+`/${req.params.id}`, header.getHeader());
+    console.log(response.data);
 
     return response.data;
 }

@@ -26,6 +26,7 @@ exports.create = async (req, res) => {
   var avatar_image = null;
   var attachment_file = null;
   var xapi_attachment_file = null;
+  var sample_link=null;
   if (
     course_name &&
     short_description &&
@@ -56,6 +57,14 @@ exports.create = async (req, res) => {
         req.files.attachment_file.mv(newPath3);
         attachment_file = fileName3;
       }
+
+      // if(req.files.sample_vedio && req.body.sample_type=="sample_vedio")
+      // {
+      //   var fileName3 = Date.now() + "_" + req.files.sample_link.name;
+      //   var newPath3 = path.join(process.cwd(), "uploads/vedios", fileName3);
+      //   req.files.sample_link.mv(newPath3);
+      //   sample_link = fileName3;
+      // }
 
       if (req.files.xapi_attachment_file) {
         // console.log(req.files.xapi_attachment_file);
@@ -110,6 +119,7 @@ exports.create = async (req, res) => {
       xapi_attachment_file = req.body.xapi_attachment_file;
     }
 
+    console.log("user group", req.body.group_id );
     var group_arr = req.body.group_id ? req.body.group_id.split(",") : [];
 
     const data = {
@@ -136,8 +146,15 @@ exports.create = async (req, res) => {
       xapi_file_name: req.body.xapi_file_name ? req.body.xapi_file_name : null,
       course_certificate_name:req.body.course_certificate_name,
       author_email:req.body.author_email,
-      author_name:req.body.author_name
+      author_name:req.body.author_name,
+      // sample_type:req.body.sample_type
     };
+
+    // if(req.body.sample_type=="sample_link")
+    // {
+    //     if(req.files.sample_link)
+    //     data.sample_link=req.files.sample_link;
+    // }
 
     console.log("course ... ", data);
 
