@@ -929,7 +929,7 @@ class Enrollment {
           };
 
           var sql1 = `SELECT users.email as u_email,users.firstname as u_firstname,users.lastname as u_lastname,c.*,cl.id as course_languages_id,category.c_name as category_name FROM courses c LEFT JOIN course_languages cl ON cl.course_id=c.id LEFT JOIN category ON category.id=c.category_id LEFT JOIN users ON users.id=c.user_id WHERE c.published_status='active' AND c.approved_status='active' AND c.id=${item.course_id}`;
-          // console.log(sql1)
+          console.log(sql1)
 
           var cdata = await new Promise((resolve, reject) => {
             conn.query(sql1, async (err, result) => {

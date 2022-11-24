@@ -48,7 +48,7 @@ class qnsAnsModel {
 
   async show(data,callback)
   {
-    var {course_id,id}=data;
+    var {course_id,id,limit}=data;
 
     var sql="";
 
@@ -59,6 +59,11 @@ class qnsAnsModel {
     if(course_id && id){
 
         sql+=` SELECT *,(SELECT CONCAT_WS(" ",users.firstname,users.lastname) AS user_nane FROM users WHERE users.id=qns_ans_comment.user_id) AS user_name,(SELECT image FROM users WHERE users.id=qns_ans_comment.user_id ) AS user_image,(SELECT course_name FROM courses WHERE courses.id=qns_ans_comment.course_id ) AS course_name  FROM qns_ans_comment WHERE course_id=${mysql.escape(course_id)} AND parent_id=${mysql.escape(id)}  `;
+
+        if(limit)
+        {
+            sql+=` LIMIT ${limit}`;
+        }
 
         data=await new Promise((resolve,reject)=>{
             conn.query(sql,async(err,result)=>{
@@ -114,6 +119,11 @@ class qnsAnsModel {
     else if(course_id)
     {
         sql+=` SELECT *,(SELECT CONCAT_WS(" ",users.firstname,users.lastname) AS user_nane FROM users WHERE users.id=qns_ans_comment.user_id) AS user_name,(SELECT image FROM users WHERE users.id=qns_ans_comment.user_id ) AS user_image,(SELECT course_name FROM courses WHERE courses.id=qns_ans_comment.course_id ) AS course_name  FROM qns_ans_comment WHERE course_id=${mysql.escape(course_id)} AND parent_id=0  `;
+
+        if(limit)
+        {
+            sql+=` LIMIT ${limit}`;
+        }
 
         data=await new Promise((resolve,reject)=>{
             conn.query(sql,async(err,result)=>{

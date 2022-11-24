@@ -689,7 +689,7 @@ class User {
     }
 
     static countCourseCertificate(id, callback) {
-        var sql = `SELECT COUNT(enrollments.id) as enroll_count,(SELECT count(id) FROM enrollments WHERE enrollments.user_id=users.id AND enrollments.enrollment_status='completed') as complete_course_count FROM users LEFT JOIN enrollments ON enrollments.user_id=users.id WHERE users.id=?`;
+        var sql = `SELECT COUNT(enrollments.id) as enroll_count,(SELECT count(id) FROM enrollments WHERE enrollments.user_id=users.id AND enrollments.enrollment_status='completed') as complete_course_count , (SELECT count(id) FROM enrollments WHERE enrollments.user_id=users.id AND enrollments.enrollment_status='completed' AND certificate_name IS NOT NULL ) as certificate_count FROM users LEFT JOIN enrollments ON enrollments.user_id=users.id WHERE users.id=?`;
         conn.query(sql, id, (err, result) => {
             if (err) throw err;
 

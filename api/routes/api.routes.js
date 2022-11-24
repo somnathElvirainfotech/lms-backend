@@ -24,7 +24,9 @@ const maintenanceController = require("../controllers/maintenanceController");
 const xapiQuestionAns = require('../controllers/xapi.controllers');
 const certificateController = require('../controllers/certificate.controller');
 const qnsAnsController=require('../controllers/qnsAnsController');
-const directorsign=require("../controllers/directorSign.controller")
+const directorsign=require("../controllers/directorSign.controller");
+const logoController=require("../controllers/logo.controller");
+const userCertificate=require('../controllers/userCertificate.controller');
 
 
 // admin user
@@ -236,11 +238,21 @@ router.post("/signature", checkUserAuth, directorsign.create);
 router.put("/signature", checkUserAuth, directorsign.update);
 router.delete("/signature/:id", checkUserAuth, directorsign.delete);
 
+// logo
+router.get("/logo", checkUserAuth, logoController.getAllUser);
+router.get("/logo/:id", checkUserAuth, logoController.getUser);
+router.post("/logo", checkUserAuth, logoController.create);
+router.put("/logo", checkUserAuth, logoController.update);
+router.delete("/logo/:id", checkUserAuth, logoController.delete);
+
 // anstion and answer comment
 router.post("/qns-ans-comment", qnsAnsController.create);
 router.post("/qns-ans-comment-search", qnsAnsController.show);
 router.put("/qns-ans-comment/:id", qnsAnsController.update);
 router.delete("/qns-ans-comment/:id", qnsAnsController.delete);
+
+//certificate genarate;
+router.post("/course-certificate", userCertificate.createCertificate);
 
 
 module.exports = router;

@@ -71,9 +71,10 @@ exports.getAllUser = (req, res) => {
             })
         }
         else {
-
+  
 
             if (result.length > 0) {
+                
                 var tempData = [];
 
                 for (var i of result) {

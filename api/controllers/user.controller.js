@@ -850,7 +850,7 @@ exports.countCourseCertificate = (req, res) => {
           data: {
             enroll_course_count: result[0].enroll_count,
             close_course_count: result[0].complete_course_count,
-            certificate_count: 0,
+            certificate_count: result[0].certificate_count,
           },
         });
       }

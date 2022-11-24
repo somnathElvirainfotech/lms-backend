@@ -1166,7 +1166,7 @@ exports.storeResult = async (req, res) => {
 
         // end delete question -----------------------------------------------
 
-        console.log(data['quizReport'])
+        // console.log(data['quizReport'])
 
         // quess name arr
         var allQnsName = Object.keys(data['quizReport']['questions'][0])
@@ -1215,6 +1215,8 @@ exports.storeResult = async (req, res) => {
 
         }
 
+        console.log("allQnsName ",allQnsName.length);
+
         if (allQnsName.length > 0) {
           // enrollment update --------------------------------------------------
           if (ENROLL_ID != 0) {
@@ -1230,6 +1232,7 @@ exports.storeResult = async (req, res) => {
               )} WHERE id=${mysql.escape(ENROLL_ID)}`;
               conn.query(sql, (err, result) => {
                 if (err) throw err;
+                console.log("enroll ok",ENROLL_ID);
                 resolve("true");
               });
             });
@@ -1244,6 +1247,7 @@ exports.storeResult = async (req, res) => {
               )} AND user_id=${mysql.escape(USER_ID)}`;
               conn.query(sql, (err, result) => {
                 if (err) throw err;
+                console.log("task ok",TASK_ID);
                 resolve("true");
               });
             });
