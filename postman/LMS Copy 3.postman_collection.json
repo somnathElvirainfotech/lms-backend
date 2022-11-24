@@ -293,6 +293,284 @@
 			]
 		},
 		{
+			"name": "logo",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjkxOTUwOTYsImV4cCI6MTY2OTYyNzA5Nn0.1CdxO1RBYbLyYTxnMCxJRxho4739e3-k-7eVK0XOApE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/logo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjkxOTUwOTYsImV4cCI6MTY2OTYyNzA5Nn0.1CdxO1RBYbLyYTxnMCxJRxho4739e3-k-7eVK0XOApE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/logog/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"logog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjkxOTUwOTYsImV4cCI6MTY2OTYyNzA5Nn0.1CdxO1RBYbLyYTxnMCxJRxho4739e3-k-7eVK0XOApE"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "logo_name",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/logo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjkxOTUwOTYsImV4cCI6MTY2OTYyNzA5Nn0.1CdxO1RBYbLyYTxnMCxJRxho4739e3-k-7eVK0XOApE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":1,\n    \"name\":\"esng\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/logo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjkxOTUwOTYsImV4cCI6MTY2OTYyNzA5Nn0.1CdxO1RBYbLyYTxnMCxJRxho4739e3-k-7eVK0XOApE"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/logo/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"logo",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "certificate generate",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjkxMTA3NDksImV4cCI6MTY2OTU0Mjc0OX0.CWLuAsq7nV3EwU-F7km3R5DVqYBHmJRcKYDGRIms1jk"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_name",
+									"value": "somnath halder",
+									"type": "text"
+								},
+								{
+									"key": "cert_course_name",
+									"value": "python",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "2022-11-14 20:39:19",
+									"type": "text"
+								},
+								{
+									"key": "enroll_id",
+									"value": "117",
+									"type": "text"
+								},
+								{
+									"key": "certificate_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "somnath",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "halder",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "somnath@gmail.com",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/course-certificate",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"course-certificate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "qns ans comment",
 			"item": [
 				{
