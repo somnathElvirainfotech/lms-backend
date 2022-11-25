@@ -161,11 +161,13 @@ class CourseTrackModel {
 
         //console.log(payload);
         await new Promise((resolve, reject) => {
-            this.enrollmentCurrentCourseTrackingUpdate(payload, err => err);
+            this.enrollmentCurrentCourseTrackingUpdate(payload, (err) => {
+                resolve(true)
+            });
         })
 
+        
         callback(false, null)
-
 
 
     }
