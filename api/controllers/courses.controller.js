@@ -528,7 +528,7 @@ exports.webCourseDEtailsShowId = (req, res) => {
               result.chapters[i].lessons[j].next_lessons_data={
                 chapter_id:result.chapters[i].id,
                 chapter_name:result.chapters[i].chapter_name,
-                lesson_id:result.chapters[i].lessons[j].id,
+                lesson_id:result.chapters[i].lessons[j+1].id,
                 lesson_vedio_link:result.chapters[i].lessons[j].lesson_vedio_link,
                 lesson_vedio_type:result.chapters[i].lessons[j].lesson_vedio_type,
                 lesson_name:result.chapters[i].lessons[j].lesson_name,
