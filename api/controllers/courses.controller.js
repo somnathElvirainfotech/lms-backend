@@ -529,10 +529,10 @@ exports.webCourseDEtailsShowId = (req, res) => {
                 chapter_id:result.chapters[i].id,
                 chapter_name:result.chapters[i].chapter_name,
                 lesson_id:result.chapters[i].lessons[j+1].id,
-                lesson_vedio_link:result.chapters[i].lessons[j].lesson_vedio_link,
-                lesson_vedio_type:result.chapters[i].lessons[j].lesson_vedio_type,
-                lesson_name:result.chapters[i].lessons[j].lesson_name,
-                lesson_details:result.chapters[i].lessons[j].lesson_details,
+                lesson_vedio_link:result.chapters[i].lessons[j+1].lesson_vedio_link,
+                lesson_vedio_type:result.chapters[i].lessons[j+1].lesson_vedio_type,
+                lesson_name:result.chapters[i].lessons[j+1].lesson_name,
+                lesson_details:result.chapters[i].lessons[j+1].lesson_details,
               }
             }
             else if(result.chapters[i].lessons[j].id == lastLessonId && result.chapters[i].id==lastChapterId)
