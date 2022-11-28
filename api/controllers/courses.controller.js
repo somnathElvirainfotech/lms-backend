@@ -511,11 +511,67 @@ exports.webCourseDEtailsShowId = (req, res) => {
           data: [],
         });
       } else {
+
+
+        var lastChapterIndex=(result.chapters.length-1);
+        var lastChapterId=(result.chapters[lastChapterIndex].id);
+
+        for(var i=0;i<result.chapters.length;i++)
+        {
+          var lastLessonIndex=(result.chapters[i].lessons.length-1);
+          var lastLessonId=(result.chapters[i].lessons[lastLessonIndex].id)
+
+          for(var j=0;j<result.chapters[i].lessons.length;j++)
+          {
+            if(result.chapters[i].lessons[j].id != lastLessonId)
+            {
+              result.chapters[i].lessons[j].next_lessons_data={
+                chapter_id:result.chapters[i].id,
+                chapter_name:result.chapters[i].chapter_name,
+                lesson_id:result.chapters[i].lessons[j].id,
+                lesson_vedio_link:result.chapters[i].lessons[j].lesson_vedio_link,
+                lesson_vedio_type:result.chapters[i].lessons[j].lesson_vedio_type,
+                lesson_name:result.chapters[i].lessons[j].lesson_name,
+                lesson_details:result.chapters[i].lessons[j].lesson_details,
+              }
+            }
+            else if(result.chapters[i].lessons[j].id == lastLessonId && result.chapters[i].id==lastChapterId)
+            {
+              result.chapters[i].lessons[j].next_lessons_data={
+                chapter_id:null,
+                chapter_name:null,
+                lesson_id:null,
+                lesson_vedio_link:null,
+                lesson_vedio_type:null,
+                lesson_name:null,
+                lesson_details:null,
+              }
+
+            }else if(result.chapters[i].lessons[j].id == lastLessonId)
+            {
+              result.chapters[i].lessons[j].next_lessons_data={
+                chapter_id:result.chapters[i+1].id,
+                chapter_name:result.chapters[i+1].chapter_name,
+                lesson_id:result.chapters[i+1].lessons[0].id,
+                lesson_vedio_link:result.chapters[i+1].lessons[0].lesson_vedio_link,
+                lesson_vedio_type:result.chapters[i+1].lessons[0].lesson_vedio_type,
+                lesson_name:result.chapters[i+1].lessons[0].lesson_name,
+                lesson_details:result.chapters[i+1].lessons[0].lesson_details,
+              }
+            }
+
+
+
+          }
+        }
+
+
         res.status(200).json({
           status: true,
           msg: statusMessages.dataFound,
           data: result,
         });
+        
       }
     });
   }
