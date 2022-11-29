@@ -914,48 +914,58 @@ exports.generatePassword = (req, res) => {
     };
     userModel.getUser(data, async (error, user) => {
       if (user.length) {
-        const salt = await bcrypt.genSalt(12);
-        const hashPassword = await bcrypt.hash(password, salt);
-        let userData = {
-          password: hashPassword,
-        };
-        userModel.passwordChange(userData, email, (err, result) => {
-          if (err) {
-            res.status(200).json({
-              status: false,
-              msg: "Password generate but not save db",
-              data: [],
-            });
-          } else {
-            // mail send ------------------------------------------------------
+        if(user[0].login_type=='local')
+        {
+          const salt = await bcrypt.genSalt(12);
+          const hashPassword = await bcrypt.hash(password, salt);
+          let userData = {
+            password: hashPassword,
+          };
+          userModel.passwordChange(userData, email, (err, result) => {
+            if (err) {
+              res.status(200).json({
+                status: false,
+                msg: "Password generate but not save db",
+                data: [],
+              });
+            } else {
+              // mail send ------------------------------------------------------
 
-            var mailOptions = {
-              from: "noreply@elvirainfotech.org",
-              to: email,
-              subject: "RealTimeVillage App Activation Link",
-              html: `<table>
-                                <tr><td>Email: </td><td>${email}</td></tr>
-                                <tr><td>Password: </td><td>${password}</td></tr>
-                            </table>`,
-            };
+              var mailOptions = {
+                from: "noreply@elvirainfotech.org",
+                to: email,
+                subject: "LMS User New Password",
+                html: `<table>
+                                  <tr><td>Email: </td><td>${email}</td></tr>
+                                  <tr><td>Password: </td><td>${password}</td></tr>
+                              </table>`,
+              };
 
-            mail.sendMail(mailOptions, function (error, info) {
-              if (error) {
-                console.log(error);
-              } else {
-                console.log("Email sent: " + info.response);
+              mail.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log("Email sent: " + info.response);
 
-                res.status(200).json({
-                  status: true,
-                  msg: info.response,
-                  data: [],
-                });
-              }
-            });
+                  res.status(200).json({
+                    status: true,
+                    msg: info.response,
+                    data: [],
+                  });
+                }
+              });
 
-            // ----------------------------------------------------------------------
-          }
+              // ----------------------------------------------------------------------
+            }
+          });
+      }else{
+        res.status(200).json({
+          status: false,
+          msg: "User login type not local",
+          data: [],
         });
+      }
+
       } else {
         res.status(200).json({
           status: false,
@@ -984,48 +994,60 @@ exports.forgetPassword = (req, res) => {
 
     userModel.getUser(data, async (error, user) => {
       if (user.length > 0) {
-        const salt = await bcrypt.genSalt(12);
-        const hashPassword = await bcrypt.hash(password, salt);
-        let userData = {
-          password: hashPassword,
-        };
-        userModel.passwordChange(userData, email, (err, result) => {
-          if (err) {
-            res.status(200).json({
-              status: false,
-              msg: "Password generate but not save db",
-              data: [],
-            });
-          } else {
-            // mail send ------------------------------------------------------
 
-            var mailOptions = {
-              from: "noreply@elvirainfotech.org",
-              to: email,
-              subject: "RealTimeVillage App Activation Link",
-              html: `<table>
-                                    <tr><td>Email: </td><td>${email}</td></tr>
-                                    <tr><td>Password: </td><td>${password}</td></tr>
-                                </table>`,
-            };
+        if(user[0].login_type == 'local')
+        {
+          const salt = await bcrypt.genSalt(12);
+          const hashPassword = await bcrypt.hash(password, salt);
+          let userData = {
+            password: hashPassword,
+          };
 
-            mail.sendMail(mailOptions, function (error, info) {
-              if (error) {
-                console.log(error);
-              } else {
-                console.log("Email sent: " + info.response);
+          userModel.passwordChange(userData, email, (err, result) => {
+            if (err) {
+              res.status(200).json({
+                status: false,
+                msg: "Password generate but not save db",
+                data: [],
+              });
+            } else {
+              // mail send ------------------------------------------------------
 
-                res.status(200).json({
-                  status: true,
-                  msg: "Check your email",
-                  data: [],
-                });
-              }
-            });
+              var mailOptions = {
+                from: "noreply@elvirainfotech.org",
+                to: email,
+                subject: "LMS User New Password",
+                html: `<table>
+                                      <tr><td>Email: </td><td>${email}</td></tr>
+                                      <tr><td>Password: </td><td>${password}</td></tr>
+                                  </table>`,
+              };
 
-            // ----------------------------------------------------------------------
-          }
-        });
+              mail.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log("Email sent: " + info.response);
+
+                  res.status(200).json({
+                    status: true,
+                    msg: "Check your email",
+                    data: [],
+                  });
+                }
+              });
+
+              // ----------------------------------------------------------------------
+            }
+          });
+        }else{
+          res.status(200).json({
+            status: false,
+            msg: "User login type not local ",
+            data: [],
+          });
+        }
+
       } else {
         res.status(200).json({
           status: false,

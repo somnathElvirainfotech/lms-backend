@@ -80,10 +80,15 @@ class CourseTrackModel {
                     id: courseTrackDetailsId
                 }
 
-                // course track details update
-                await new Promise((resolve, reject) => {
-                    this.courseDetailsUpdate(payload, err => resolve(err))
-                })
+
+                if(data.lesson_percentage>courseTrackDetailsData.lesson_percentage)
+                    {
+                            // course track details update
+                            await new Promise((resolve, reject) => {
+                                this.courseDetailsUpdate(payload, err => resolve(err))
+                            })
+                    }
+                                
 
 
             } else {
@@ -128,6 +133,8 @@ class CourseTrackModel {
             // course Track Details insert and update
             if (newCourseTrackId) {
 
+
+
                 var payload = {
                     course_track_id: newCourseTrackId,
                     chapter_id: data.chapter_id,
@@ -136,6 +143,8 @@ class CourseTrackModel {
                     current_play_sec: data.current_play_sec,
                     status: track_status
                 }
+                
+
 
 
                 // course track details insert
