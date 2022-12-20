@@ -906,7 +906,7 @@ exports.userSearch = (req, res) => {
 };
 
 exports.generatePassword = (req, res) => {
-  const { email, password } = req.body;
+  const { email, password,email_subject,email_message } = req.body;
   if (email && password) {
     let data = {
       column: "email",
@@ -934,13 +934,10 @@ exports.generatePassword = (req, res) => {
               var mailOptions = {
                 from: "noreply@elvirainfotech.org",
                 to: email,
-                subject: "LMS User New Password",
-                html: `<table>
-                                  <tr><td>Email: </td><td>${email}</td></tr>
-                                  <tr><td>Password: </td><td>${password}</td></tr>
-                              </table>`,
+                subject: `${email_subject}`,
+                html: `<table><tr><td>${email_message}</td></tr><tr><td>Password: </td><td>${password}</td></tr></table>`,
               };
-
+                console.log(mailOptions,"1")
               mail.sendMail(mailOptions, function (error, info) {
                 if (error) {
                   console.log(error);
@@ -1017,12 +1014,9 @@ exports.forgetPassword = (req, res) => {
                 from: "noreply@elvirainfotech.org",
                 to: email,
                 subject: "LMS User New Password",
-                html: `<table>
-                                      <tr><td>Email: </td><td>${email}</td></tr>
-                                      <tr><td>Password: </td><td>${password}</td></tr>
-                                  </table>`,
+                html: `<table><tr><td>Email: </td><td>${email}</td></tr><tr><td>Password: </td><td>${password}</td></tr></table>`,
               };
-
+console.log(mailOptions,"2")
               mail.sendMail(mailOptions, function (error, info) {
                 if (error) {
                   console.log(error);

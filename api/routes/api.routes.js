@@ -196,7 +196,7 @@ router.post(apiRoutes.task, taskContoller.create);
 router.put(apiRoutes.task, taskContoller.update);
 router.delete(apiRoutes.taskId, taskContoller.delete);
 router.post(apiRoutes.taskSearch, taskContoller.taskSearch);
-
+router.get(apiRoutes.taskDownload, taskContoller.taskResultDownload);
 
 //activity
 router.post(apiRoutes.activitySearch, activityController.Search);
@@ -253,6 +253,10 @@ router.delete("/qns-ans-comment/:id", qnsAnsController.delete);
 
 //certificate genarate;
 router.post("/course-certificate", userCertificate.createCertificate);
+
+// admin dashboard -----------------------------------
+router.get("/admin-dashboard",adminController.dashboard)
+
 
 
 module.exports = router;

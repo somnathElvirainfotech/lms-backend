@@ -33,6 +33,7 @@ module.exports = {
         task: '/task',
         taskId: '/task/:id',
         taskSearch: '/task/search',
+        taskDownload:'/task-download/:id',
 
         assignment: '/assignment',
         assignmentId: '/assignment/:id',

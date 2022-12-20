@@ -18,6 +18,8 @@ exports.create = async (req, res) => {
     lang,
     published_status,
     certificate_id,
+    course_duration,
+    quize
   } = req.body;
   console.log(req.body);
   // console.log(req.body)
@@ -33,7 +35,7 @@ exports.create = async (req, res) => {
     long_description &&
     category_id &&
     lang &&
-    published_status 
+    published_status
   ) {
     //console.log(req.body)
     if (req.files) {
@@ -147,6 +149,8 @@ exports.create = async (req, res) => {
       course_certificate_name:req.body.course_certificate_name,
       author_email:req.body.author_email,
       author_name:req.body.author_name,
+        course_duration:course_duration,
+      quize:quize
       // sample_type:req.body.sample_type
     };
 
@@ -215,6 +219,8 @@ exports.update = async (req, res) => {
     lang,
     id,
     certificate_id,
+    course_duration,
+    quize
   } = req.body;
   // console.log("ggggg    ")
   // console.log(req.body)
@@ -320,7 +326,9 @@ exports.update = async (req, res) => {
       certificate_id: certificate_id,
       course_certificate_name:req.body.course_certificate_name,
       author_email:req.body.author_email,
-      author_name:req.body.author_name
+      author_name:req.body.author_name,
+      course_duration:course_duration,
+      quize:quize
     };
 
     if (req.body.user_id) {
@@ -513,6 +521,15 @@ exports.webCourseDEtailsShowId = (req, res) => {
       } else {
 
 
+        if(result.course_type=="xapi")
+        {
+          res.status(200).json({
+            status: true,
+            msg: statusMessages.dataFound,
+            data: result,
+          });
+        }else{
+
         var lastChapterIndex=(result.chapters.length-1);
         var lastChapterId=(result.chapters[lastChapterIndex].id);
 
@@ -571,6 +588,8 @@ exports.webCourseDEtailsShowId = (req, res) => {
           msg: statusMessages.dataFound,
           data: result,
         });
+        
+      }
         
       }
     });

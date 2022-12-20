@@ -20,5 +20,7 @@ module.exports = {
     assignment: api_url + 'assignment',
     enrollment: api_url + 'enrollment',
     enrollment_search:api_url+'enrollment-search',
-    maintenance:api_url+'maintenance'
+    maintenance:api_url+'maintenance',
+    task:api_url+'task',
+    adminDashboard:api_url+"admin-dashboard",
 }

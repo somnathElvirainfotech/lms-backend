@@ -260,7 +260,26 @@ class Task {
         })
     }
 
-    delete(id, callback) {
+   async delete(id, callback) {
+
+        // check task related record;
+        var ssql=`select * from user_task where task_id=${id}`;
+        var delete_task_status=await new Promise((resolve,reject)=>{
+            conn.query(ssql, (err, result) => {
+                if (err) throw err;
+
+                if (result.length > 0) {
+                    resolve(true)
+                } else {
+                    resolve(false)
+                }
+            })
+        })
+        //end
+
+        if(!delete_task_status)
+        {
+
         var sql = `DELETE FROM task WHERE id=?`;
         conn.query(sql, id, (err, result) => {
             if (err) {
@@ -277,12 +296,23 @@ class Task {
                 callback(false, result);
             }
         })
+
+        }else{
+            var sql=`UPDATE task SET delete_status='inactive'  WHERE id=${mysql.escape(id)} `;
+
+            conn.query(sql,(err, result) => {
+                if(err) throw err;
+                callback(false, result);
+            })
+        }
+
+
     }
 
 
     // show by group id
     taskSearch(data, callback) {
-        var sql = `SELECT task.*,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email AS creator_email,courses.course_name,courses.image FROM task LEFT JOIN task_group ON task_group.task_id=task.id LEFT JOIN users ON users.id=task.created_by LEFT JOIN courses ON courses.id=task.course_id WHERE `;
+        var sql = `SELECT task.*,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email AS creator_email,courses.course_name,courses.image FROM task LEFT JOIN task_group ON task_group.task_id=task.id LEFT JOIN users ON users.id=task.created_by LEFT JOIN courses ON courses.id=task.course_id WHERE task.delete_status='active' AND `;
         if (data.group_id) {
             sql += ` task_group.group_id IN (${data.group_id}) `;
             if (data.created_by) {
@@ -308,12 +338,12 @@ class Task {
 
         }
 
-
+        
 
         if (data.group_id || data.course_id || data.created_by) {
             sql += `  GROUP BY task.id order by task.id desc`;
         } else {
-            sql = `SELECT task.*,courses.course_name,courses.image,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email as creator_email FROM task LEFT JOIN courses ON courses.id=task.course_id LEFT JOIN users ON users.id=task.created_by GROUP BY task.id  ORDER BY task.id DESC `;
+            sql = `SELECT * FROM(SELECT task.*,courses.course_name,courses.image,concat_ws(" ",users.firstname,users.lastname) as creator_name,users.email as creator_email FROM task LEFT JOIN courses ON courses.id=task.course_id LEFT JOIN users ON users.id=task.created_by  GROUP BY task.id  ORDER BY task.id DESC)p WHERE delete_status='active' `;
         }
 
 
@@ -348,8 +378,25 @@ class Task {
                         group_name: '',
                         group_details: [],
                         no_attempted: 0,
-                        user_task_status: ""
+                        user_task_status: "",
+                        delete_task_status:""
                     }
+
+                    // check task related record;
+                    var ssql=`select * from user_task where task_id=${item.id}`;
+                    var delete_task_status=await new Promise((resolve,reject)=>{
+                        conn.query(ssql, (err, result) => {
+                            if (err) throw err;
+
+                            if (result.length > 0) {
+                                resolve(false)
+                            } else {
+                                resolve(true)
+                            }
+                        })
+                    })
+                    temp.delete_task_status=delete_task_status;
+                    //end
 
                     var sqlw = `SELECT * FROM user_task where user_id=${mysql.escape(data.user_id)} and task_id=${mysql.escape(item.id)}`;
 
@@ -392,10 +439,10 @@ class Task {
                     /////////////////////////
 
                     for (var i of groups) {
-                        temp.group_name += `${i.g_name},`;
+                        temp.group_name += `${i.g_name}, `;
                     }
 
-                    temp.group_name = temp.group_name.slice(0, -1);
+                    temp.group_name = temp.group_name.slice(0, -2);
 
                     temp.group_details = groups;
                     tempArr.push(temp);
@@ -406,6 +453,109 @@ class Task {
             }
         })
 
+    }
+
+   async taskResultDownload(taskId,callback){
+        var sql=`SELECT * FROM task WHERE task_status='approve' AND delete_status='active' AND id=${taskId}`;
+
+        var taskData=await new Promise((resolve,reject)=>{
+            conn.query(sql, (err, result) => {
+                if (err) throw err;
+
+                if (result.length > 0) {
+                    resolve(result)
+                } else {
+                    resolve([])
+                }
+            })
+        })
+
+        
+
+        const data=[];
+
+            for(var task of taskData)
+            {
+                
+                var sql2=`SELECT p.*,courses.course_name,courses.course_type,users.email as user_email,users.firstname,users.lastname FROM (SELECT user_task.*,task.task_name,task.task_start_date,task.task_end_date,task.task_describtion,task.course_id FROM user_task LEFT JOIN task ON task.id=user_task.task_id WHERE  user_task.task_id=${taskId})p LEFT JOIN courses ON courses.id=p.course_id LEFT JOIN users ON users.id=p.user_id`;
+    
+                // console.log(sql2);
+    
+                var userTaskData=await new Promise((resolve,reject)=>{
+                    conn.query(sql2, (err, result) => {
+                        if (err) throw err;
+        
+                        if (result.length > 0) {
+                            resolve(result)
+                        } else {
+                            resolve([])
+                        }
+                    })
+                });
+    
+                // task group 
+                var tsql = `SELECT task_group.*,groups.g_name from task_group LEFT JOIN groups ON groups.id=task_group.group_id WHERE task_group.task_id=${mysql.escape(taskId)}`;
+    
+                var groups = await new Promise((resolve, reject) => {
+                    conn.query(tsql, (err, result) => {
+                        if (err) throw err;
+        
+                        if (result.length > 0) {
+                            resolve(result)
+                        } else {
+                            resolve([])
+                        }
+                    })
+                })
+    
+                var group_name="";
+                for (var i of groups) {
+                    group_name += `${i.g_name}, `;
+                }
+                group_name = group_name.slice(0, -2);
+                var group_details = groups;
+    
+                //end
+    
+                var temp={};
+
+                for(var userTask of userTaskData)
+                {
+                   temp=userTask;
+                   temp.group_name=group_name;
+                   temp.group_details=group_details;
+
+
+                   var sql=`SELECT * FROM enrollments WHERE user_id=${mysql.escape(userTask.user_id)} AND course_id=${mysql.escape(userTask.course_id)}`;
+
+                   var enrollData = await new Promise((resolve, reject) => {
+                    conn.query(sql, (err, result) => {
+                        if (err) throw err;
+        
+                        if (result.length > 0) {
+                            resolve(result)
+                        } else {
+                            resolve([])
+                        }
+                    })
+                })
+
+                temp.user_enroll_data=enrollData;
+
+                   data.push(temp)
+
+                }
+    
+               
+    
+            }
+
+           
+
+        if(data.length>0)
+        callback(false,data)
+        else
+        callback(true,[])
     }
 
 

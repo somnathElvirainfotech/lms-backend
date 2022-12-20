@@ -31,9 +31,13 @@ exports.postregister = async (req, res) => {
 };
 
 
-exports.index = (req, res) => {
-     
-    res.render("index.ejs", { username: req.session.username?common.Capitalize(req.session.username):"" });
+exports.index = async(req, res) => {
+     var dashboard= await adminService.dashboard(req);
+     console.log("dashboard ",dashboard);
+    res.render("index.ejs", { 
+        username: req.session.username?common.Capitalize(req.session.username):"",
+         dashboard:dashboard.data,
+     });
     
 
 };

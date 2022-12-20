@@ -15,6 +15,7 @@ const courseController = require('./admin/controllers/course.controller');
 const maintenanceController = require('./admin/controllers/maintenance.controller');
 const resultController=require("./admin/controllers/result.controller.js")
 const loginAuth = require('./admin/middlewares/loginAuth');
+const taskController=require("./admin/controllers/task.controller");
 // const formData = require('express-form-data');
 
 // app.use(formData.parse());
@@ -117,8 +118,10 @@ app.post('/maintenance', loginAuth, maintenanceController.create);
 // result ------------------------
 app.get('/result',loginAuth,resultController.result)
 
- 
 
+// task ----------------------------------------
+app.get('/task', loginAuth, taskController.getAll);
+app.get('/task/record/:id', loginAuth, taskController.download);
 
 
 

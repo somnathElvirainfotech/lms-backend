@@ -4,9 +4,12 @@ const ratingCommnetModel = require("./ratingCommnet.model");
 const Language = require("./language.model");
 require("dotenv").config();
 
+
+      
+
 class Courses {
   create(data, callback) {
-    const sql = `INSERT INTO courses(course_name,user_id, short_description, image, avatar_image,attachment_file, course_level,sub_category_id, category_id, course_tag, published_status,xapi_attachment_file,course_type,created_at,long_description,certificate_id,xapi_file_name,course_certificate_name,author_name,author_email)
+    const sql = `INSERT INTO courses(course_name,user_id, short_description, image, avatar_image,attachment_file, course_level,sub_category_id, category_id, course_tag, published_status,xapi_attachment_file,course_type,created_at,long_description,certificate_id,xapi_file_name,course_certificate_name,author_name,author_email,course_duration,quize)
         VALUES 
         (${mysql.escape(data.course_name)},
         ${mysql.escape(data.user_id)},
@@ -27,7 +30,10 @@ class Courses {
         ${mysql.escape(data.xapi_file_name)},
         ${mysql.escape(data.course_certificate_name)},
         ${mysql.escape(data.author_name)},
-        ${mysql.escape(data.author_email)})`;
+        ${mysql.escape(data.author_email)},
+        ${mysql.escape(data.course_duration)},
+        ${mysql.escape(data.quize)}
+        )`;
 
     console.log(sql);
 
@@ -164,6 +170,8 @@ class Courses {
               course_languages_id: item.course_languages_id,
               course_type: item.course_type,
               course_certificate_name: item.course_certificate_name,
+              course_duration:item.course_duration,
+              quize:item.quize
             };
 
             data.push(temp);
@@ -222,6 +230,8 @@ class Courses {
               : "",
             author_name: result[0].author_name,
             author_email: result[0].author_email,
+            course_duration:result[0].course_duration,
+            quize:result[0].quize
           };
 
           var sql = `SELECT course_group.*,groups.g_name FROM course_group LEFT JOIN groups on groups.id=course_group.group_id WHERE course_group.course_id=${data.id}`;
@@ -1540,7 +1550,7 @@ class Courses {
               item.certificate_id != null ? item.certificate_id : 0,
             total_enroll_no: 0,
             category_name:
-              parentCatagoryName != null ? parentCatagoryName[0].c_name : null,
+            parentCatagoryName != null ? parentCatagoryName[0].c_name : null,
             sub_category_id: item.sub_category_id,
             course_tag: null,
             published_status: item.published_status,
@@ -1549,7 +1559,25 @@ class Courses {
             updated_at: item.updated_at,
             course_languages_id: item.course_languages_id,
             language_id: item.language_id,
+            course_duration:item.course_duration,
+            quize:item.quize
           };
+
+          // count lesson ----------------------------------------------------
+          var sql = `SELECT count(id) as total_less  FROM lessons WHERE course_id=${mysql.escape(item.id)}`;
+
+          var total_vedio = await new Promise((resolve, reject) => {
+            conn.query(sql, (err, result) => {
+              if (err) throw err;
+
+              if (result.length > 0) resolve(result[0].total_less);
+              else resolve(0);
+            });
+          });
+
+          temp.total_lesson_vedio = total_vedio;
+
+          //--------------------------------------------------------------------
 
           // group details add
           var sql = `SELECT course_group.*,groups.g_name FROM course_group LEFT JOIN groups on groups.id=course_group.group_id WHERE course_group.course_id=${item.id}`;

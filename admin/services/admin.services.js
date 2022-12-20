@@ -36,3 +36,11 @@ exports.userCsvUpload = async (req) => {
     }
 }
 
+
+
+exports.dashboard = async (req) => {
+    header.setHeader(req.session.token);
+    var response = await axios.get(api.adminDashboard, header.getHeader());
+    return response.data;
+}
+
