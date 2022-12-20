@@ -8,8 +8,11 @@ const { use } = require("../routes/api.routes");
 const path = require("path");
 const { resolve } = require("path");
 const conn = require("../config/dbconfig");
+const mysql=require('mysql');
 
-exports.registration = (req, res) => {
+
+
+exports.registration = async (req, res) => {
   let { email, password1, password2 } = req.body;
   let obj = {
     column: "email",
@@ -36,23 +39,28 @@ exports.registration = (req, res) => {
             email: email,
             password: hashPassword,
             role: 1,
-            status: 1,
+            is_active: 1,
+            login_type:'local',
+            login_Status:"active"
           };
-          userModel.create(data, function (err, result) {
-            if (err) {
-              res.status(200).json({
-                status: false,
-                msg: statusMessages.userNotCreate,
-                data: [],
-              });
-            } else {
-              res.status(200).json({
-                status: true,
-                msg: "Admin " + statusMessages.userCreate,
-                data: [],
-              });
-            }
+
+          var sql=`INSERT INTO users SET firstname=${mysql.escape(data.firstname)},lastname=${mysql.escape(data.lastname)},email=${mysql.escape(data.email)},password=${mysql.escape(data.password)},role=${mysql.escape(data.role)},is_active=${mysql.escape(data.is_active)},login_type=${mysql.escape(data.login_type)},login_Status=${mysql.escape(data.login_Status)},created_at=NOW()
+          `;
+
+          await new  Promise((resolve,reject)=>{
+              conn.query(sql,(err,result)=>{
+                if(err) throw err;
+                resolve() 
+              })
+          })
+
+          res.status(200).json({
+            status: true,
+            msg: "Admin " + statusMessages.userCreate,
+            data: [],
           });
+ 
+          
         } else {
           res.status(200).json({
             status: false,
