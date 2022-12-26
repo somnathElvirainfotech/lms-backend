@@ -1,4 +1,5 @@
 require('dotenv').config();
+var compression = require('compression');
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
@@ -16,6 +17,15 @@ const maintenanceController = require('./admin/controllers/maintenance.controlle
 const resultController=require("./admin/controllers/result.controller.js")
 const loginAuth = require('./admin/middlewares/loginAuth');
 const taskController=require("./admin/controllers/task.controller");
+
+var http = require('http');
+var https = require('https');
+
+http.globalAgent.maxSockets = Infinity;
+https.globalAgent.maxSockets = Infinity;
+
+app.use(compression());
+
 // const formData = require('express-form-data');
 
 // app.use(formData.parse());
