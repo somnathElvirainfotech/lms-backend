@@ -174,7 +174,28 @@ class Courses {
               quize:item.quize
             };
 
+            
+
+
+            var sql4=`SELECT * FROM enrollments WHERE course_id=${mysql.escape(item.id)}`;
+
+            const total_enroll = await new Promise(function (resolve, reject) {
+              conn.query(sql4, (err3, result3) => {
+                if (err3) throw err3;
+
+                if (result3.length > 0) {
+                  resolve(true);
+                } else {
+                  resolve(false);
+                }
+              });
+            });
+
+            temp.total_enroll_status=total_enroll;
+
             data.push(temp);
+
+
           }
 
           callback(false, data);
@@ -243,6 +264,10 @@ class Courses {
             });
           });
           data.group_details = groups;
+
+
+          
+
           callback(false, data);
         }
       });
@@ -311,6 +336,22 @@ class Courses {
             author_name: item.author_name,
             author_email: item.author_email,
           };
+
+          var sql4=`SELECT * FROM enrollments WHERE course_id=${mysql.escape(item.id)}`;
+
+            const total_enroll = await new Promise(function (resolve, reject) {
+              conn.query(sql4, (err3, result3) => {
+                if (err3) throw err3;
+
+                if (result3.length > 0) {
+                  resolve(true);
+                } else {
+                  resolve(false);
+                }
+              });
+            });
+
+            temp.total_enroll_status=total_enroll;
 
           data.push(temp);
         }
