@@ -929,13 +929,16 @@ exports.generatePassword = (req, res) => {
                 data: [],
               });
             } else {
+
+              // email_message=email_message.replaceAll("###password###",password);
+
               // mail send ------------------------------------------------------
 
               var mailOptions = {
                 from: "noreply@elvirainfotech.org",
                 to: email,
                 subject: `${email_subject}`,
-                html: `<table><tr><td>${email_message}</td></tr><tr><td>Password: </td><td>${password}</td></tr></table>`,
+                html: `<table><tr><td>${email_message}</td></tr></table>`,
               };
                 console.log(mailOptions,"1")
               mail.sendMail(mailOptions, function (error, info) {
